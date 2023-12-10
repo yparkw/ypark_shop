@@ -33,21 +33,10 @@ DEV_APPS = [
 ]
 
 # Application definition
-
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
-]
-
 THIRD_PARTY_APPS = [
     'drf_spectacular',
     'rest_framework',
-    'strawberry.django',
+    'strawberry'
 ]
 
 LOCAL_APPS = [
@@ -57,6 +46,18 @@ LOCAL_APPS = [
     'purchase',
     'user',
 ]
+
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.sites',
+] + THIRD_PARTY_APPS + LOCAL_APPS + DEV_APPS
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -136,9 +137,9 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'staticfiles')
+# ]
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -150,7 +151,7 @@ MEDIA_URL = "/media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'core.paginations.CustomPagination',
+    'DEFAULT_PAGINATION_CLASS': 'common.paginations.CustomPagination',
     'PAGE_SIZE': 10,
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }

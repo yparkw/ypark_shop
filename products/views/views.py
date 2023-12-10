@@ -7,11 +7,11 @@ from drf_spectacular.utils import extend_schema
 
 from common.paginations import CustomPagination
 # from core.paginations import CustomPaginatorInspectorClass
-from ..models import Product
-from ..serializers import ProductListSZ
-from ..serializers import ProductCreateSZ
-from ..serializers import ProductUpdateRequestSZ
-from ..serializers import ProductResponseSZ
+from ..models.product import Product
+from ..serializers.product import ProductListSZ
+from ..serializers.product import ProductCreateSZ
+from ..serializers.product import ProductUpdateRequestSZ
+from ..serializers.product import ProductResponseSZ
 
 # Create your views here.
 class ProductListCreateAV(ListCreateAPIView):

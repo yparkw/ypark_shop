@@ -6,6 +6,7 @@ import strawberry
 from .. import models
 
 
+# GraphQL 타입으로 정의
 @strawberry.django.type(models.Product)
 class Product:
     id: int
