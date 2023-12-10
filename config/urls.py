@@ -17,12 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import path,include
+from django.urls import re_path
 from django.conf import settings
 
+from strawberry_django_jwt.decorators import jwt_cookie
+from strawberry_django_jwt.views import StatusHandlingGraphQLView as GQLView
+
+from config.schema import schema
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls"), name = "api"),
+    re_path(r'^graphql/?$', jwt_cookie(GQLView.as_view(schema=schema))),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

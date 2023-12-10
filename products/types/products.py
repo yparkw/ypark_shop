@@ -3,11 +3,11 @@ import typing
 
 import strawberry
 
-from .. import models
+from products.models.product import Product
 
 
 # GraphQL 타입으로 정의
-@strawberry.django.type(models.Product)
+@strawberry.django.type(Product)
 class Product:
     id: int
     title: str

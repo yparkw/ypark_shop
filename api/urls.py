@@ -8,7 +8,8 @@ from drf_spectacular.views import SpectacularRedocView
 app_name = "api"
 
 urlpatterns = [
-    path('products/', include('products.urls'))
+    path('products/', include('products.urls')),
+    path('user/', include('user.urls'))
 ]
 
 if settings.DEBUG:
