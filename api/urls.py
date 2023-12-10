@@ -10,3 +10,10 @@ app_name = "api"
 urlpattenrs = [
     path('products/', include('products.urls'))
 ]
+
+if settings.DEBUG:
+    urlpattenrs += [
+        path('schema/', SpectacularAPIView.as_view(), name='schema'),
+        path('swagger/', SpectacularSwaggerView.as_view(url_name='api:schema'), name='swagger-ui'),
+        path('redoc/', SpectacularRedocView.as_view(url_name='api:schema'), name='redoc'),
+    ]
