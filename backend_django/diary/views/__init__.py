@@ -1,1 +1,0 @@
-from .diary import DiaryListCreateView, DiaryRetrieveUpdateDestroyView
