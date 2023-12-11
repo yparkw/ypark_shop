@@ -4,9 +4,9 @@ from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema
 
 from kakaopay.payment import KakaoPayClient
-from products.models import Product
-from ..serializers import ReadyRequestSerializer
-from ..serializers import ReadyResponseSerializer
+from products.models.product import Product
+from ..serializers.ready import ReadyRequestSerializer
+from ..serializers.ready import ReadyResponseSerializer
 
 
 #

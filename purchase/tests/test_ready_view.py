@@ -9,8 +9,8 @@ from django.test import TestCase
 from django.urls import reverse
 from django.urls import resolve
 
-from user.models import User
-from products.models import Product
+from user.models.user import User
+from products.models.product import Product
 
 kakaopay_ready_mock_data = dict(
     next_redirect_pc_url="https://mockup-pg-web.kakao.com/v1/xxxxxxxxxx/info"

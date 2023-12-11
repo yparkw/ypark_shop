@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema
 
 from kakaopay.payment import KakaoPayClient
-from ..serializers import ApproveSerializer
+from ..serializers.approve import ApproveSerializer
 
 
 # @swagger_auto_schema(

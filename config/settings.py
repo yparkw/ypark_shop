@@ -56,6 +56,7 @@ LOCAL_APPS = [
     'api',
     'common',
     'products',
+    'kakaopay',
     'purchase',
     'user',
 ]

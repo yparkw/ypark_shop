@@ -9,7 +9,9 @@ app_name = "api"
 
 urlpatterns = [
     path('products/', include('products.urls')),
-    path('user/', include('user.urls'))
+    path('user/', include('user.urls')),
+    path('kakaopay/', include('kakaopay.urls')),
+    path('purchase/', include('purchase.urls')),
 ]
 
 if settings.DEBUG:
