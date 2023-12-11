@@ -59,6 +59,7 @@ LOCAL_APPS = [
     'kakaopay',
     'purchase',
     'user',
+    'cart',
 ]
 
 
