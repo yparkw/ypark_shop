@@ -11,9 +11,9 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/my-page" component={MyPage} />
+        <Route path="/user" component={MyPage} />
         <Route path="/product/:id" component={ProductDetailPage} />
-        <Route path="/shopping-cart" component={ShoppingCartPage} />
+        <Route path="/cart" component={ShoppingCartPage} />
         {/* 다른 라우트들을 여기에 추가할 수 있습니다 */}
       </Switch>
     </Router>
