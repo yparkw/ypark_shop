@@ -12,6 +12,7 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('kakaopay/', include('kakaopay.urls')),
     path('purchase/', include('purchase.urls')),
+    path('cart/', include('cart.urls'))
 ]
 
 if settings.DEBUG:
