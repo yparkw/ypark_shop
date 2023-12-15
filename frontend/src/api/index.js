@@ -1,9 +1,9 @@
-import { axiosInstance } from "./axiosInstance";
 import Cookie from "js-cookie";
+import { axiosInstance } from "./axiosInstance";
 
 export const authorizeToken = async () => {
   const token = Cookie.get("authorization");
-  const res = await axiosInstance.get("/api/v1/members/user", {
+  const res = await axiosInstance.get("/api/user/", {  // URL 수정 필요
     headers: {
       Authorization: token,
     },
@@ -22,13 +22,13 @@ export const imageRegisterFn = async (formData) => {
 };
 
 export const productRegisterFn = async (registerInfo) => {
-  const res = await axiosInstance.post("/api/v2/products", registerInfo);
+  const res = await axiosInstance.post("/api/products/", registerInfo);
   return res;
 };
 
 export const getCartData = async () => {
   const token = Cookie.get("authorization");
-  const res = await axiosInstance.get("/api/v1/carts", {
+  const res = await axiosInstance.get("/api/carts", {
     headers: {
       Authorization: token,
     },

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import useGetFavoriteItem from "../../hooks/useGetFavoriteItem";
-import useGetProductItems from "../../hooks/useGetProductItems";
+import fetchProducts from "../../api/index";
 import { desktop, mobile, tablet } from "../../utils/styleTheme";
 import ItemCard from "../Commons/ItemCard";
 import NoItems from "../Commons/NoItems";
@@ -16,7 +16,7 @@ function MainItems(props) {
   const [onLoading, setOnLoading] = useState(false);
   const userInfo = useSelector((state) => state.user);
   const getFavoriteData = useGetFavoriteItem(userInfo);
-  const getDataList = useGetProductItems(props.params, setOnLoading);
+  const getDataList = fetchProducts(props.params, setOnLoading);
 
   const nextButtonClickHandler = () => {
     props.setPage((prev) => prev + 1);

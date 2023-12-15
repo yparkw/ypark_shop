@@ -2,7 +2,7 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "https://server.statemall.click",
+  baseURL: "http://localhost:8000/api/",
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
@@ -17,3 +17,6 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(err);
   }
 );
+
+
+export default axiosInstance;
