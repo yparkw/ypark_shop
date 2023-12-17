@@ -1,27 +1,17 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { QueryClientProvider } from "react-query";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import App from "./App";
-import store, { persistor } from "./redux/store";
-import { queryClient } from "./utils/queryClient";
-import { ReactQueryDevtools } from 'react-query/devtools';
-import { ThemeProvider } from "styled-components";
-import { themeList } from "./utils/styleTheme";
-import ModalContainer from "./components/Commons/ModalContainer";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <QueryClientProvider client={queryClient}>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider theme={themeList}>
-        <App />
-        <ModalContainer />
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-        </ThemeProvider>
-      </PersistGate>
-    </Provider>
-  </QueryClientProvider>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
