@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { axiosInstance } from "../api/axiosInstance";
 
 const getProductItems = async (param) => {
-  const res = await axiosInstance.get(`/api/v2/products`, {
+  const res = await axiosInstance.get(`/api/products`, {
     params: param,
   });
   return res.data;
