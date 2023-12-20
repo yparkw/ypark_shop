@@ -3,7 +3,7 @@ import { useMutation } from "react-query";
 import { axiosInstance } from "../api/axiosInstance";
 
 const signUpFn = async (payload) => {
-  const res = await axiosInstance.post("/api/v1/members", payload);
+  const res = await axiosInstance.post("/api/user/signup", payload);
   return res.data;
 };
 

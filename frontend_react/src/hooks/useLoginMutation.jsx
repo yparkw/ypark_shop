@@ -8,7 +8,7 @@ import { defaultUser } from "../constance/bannerImage";
 import { setUser } from "../redux/reducer/userSlice";
 
 const loginFn = async (payload) => {
-  const res = await axiosInstance.post("/login", payload);
+  const res = await axiosInstance.post("api/user/login", payload);
   if (res?.headers) {
     Cookies.set("authorization", res.headers["authorization"]);
   }
