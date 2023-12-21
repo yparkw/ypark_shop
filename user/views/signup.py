@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
 from django.contrib.auth import get_user_model
-from ..serializers.signup import UserSignupSZ
+from user.serializers.signup import UserSignupSZ
 
 User = get_user_model()
 

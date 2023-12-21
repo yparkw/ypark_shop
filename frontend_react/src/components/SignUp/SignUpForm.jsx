@@ -20,7 +20,7 @@ export default function SignUpForm() {
   const [postCode, setPostCode] = useState("");
   const [signUpValue, setSignUpValue] = useState({
     email: "",
-    name: "",
+    username: "",
     password: "",
     phone: "",
   });

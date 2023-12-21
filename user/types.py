@@ -14,6 +14,8 @@ class User:
     name: str
     email: str
     password: str
+    address: str
+    postCode: str
     is_active: bool
     is_admin: bool
     is_superuser: bool
@@ -25,6 +27,8 @@ class UserSignupInput:
     name: str
     email: str
     password: str
+    address: str
+    postCode: str
 
 
 @strawberry.django.input(get_user_model())

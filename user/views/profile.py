@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.generics import RetrieveUpdateAPIView
 
 from common.renderers import CustomRenderer
-from ..serializers.profile import ProfileSZ
+from user.serializers.profile import ProfileSZ
 
 
 class UserRetrieveUpdate(RetrieveUpdateAPIView):

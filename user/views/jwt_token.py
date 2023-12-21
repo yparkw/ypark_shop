@@ -3,8 +3,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView
 
-from ..serializers.jwt_token import TokenObtainPairResponseSerializer
-from ..serializers.jwt_token import TokenRefreshResponseSerializer
+from user.serializers.jwt_token import TokenObtainPairResponseSerializer
+from user.serializers.jwt_token import TokenRefreshResponseSerializer
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):

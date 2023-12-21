@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models.user import User
+from user.models.user import User
 
 
 class ProfileSZ(serializers.ModelSerializer):
@@ -8,7 +8,7 @@ class ProfileSZ(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'username',)
+        fields = ('id', 'email', 'username', 'address', 'pastCode',)
         read_only_fields = ('id', 'email',)
 
 
@@ -17,7 +17,7 @@ class PatchProfileSZ(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'username',)
+        fields = ('id', 'email', 'username', 'address', 'pastCode')
         read_only_fields = ('id', 'email',)
 
     def update(self, instance, validated_data):

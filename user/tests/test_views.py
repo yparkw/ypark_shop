@@ -3,18 +3,20 @@ import json
 from django.test import TestCase
 from django.urls import reverse
 
-from ..models.user import User
+from user.models.user import User
 
 
 class UserSignUpViewTestCase(TestCase):
     def test_user_signup_기본(self):
         new_user_data = dict(
-            name='new_user',
+            username='new_user',
             email='new_user@email.com',
-            password='1234'
+            password='1234',
+            address = 'new_adrress',
+            postCode = 'postCode',
         )
 
-        url = reverse('users:signup')
+        url = reverse('api:user:signup')
         response = self.client.post(
             path=url,
             data=new_user_data,

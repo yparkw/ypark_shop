@@ -6,7 +6,7 @@ from .views.signup import UserSignUpCreateAV
 from .views.profile import UserRetrieveUpdate
 from .views.test import celery_test_view
 
-app_name = 'users'
+app_name = 'user'
 
 urlpatterns = [
     path('', UserRetrieveUpdate.as_view(), name='profile'),
