@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 import strawberry
 from strawberry.django import auth
 
-from .models.user import User
+from user.models import User
 
 
 @strawberry.django.type(get_user_model())

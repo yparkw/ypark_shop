@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from user.models.user import User
+from user.models import User
 from user.serializers.signup import UserSignupSZ
 from user.serializers.profile import PatchProfileSZ
 

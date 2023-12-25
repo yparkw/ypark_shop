@@ -8,7 +8,7 @@ import { defaultUser } from "../constance/bannerImage";
 import { setUser } from "../redux/reducer/userSlice";
 
 const loginFn = async (payload) => {
-  const res = await axiosInstance.post("api/user/login", payload);
+  const res = await axiosInstance.post("api/user/login/", payload, {withCredentials: false});
   if (res?.headers) {
     Cookies.set("authorization", res.headers["authorization"]);
   }
@@ -26,14 +26,12 @@ export default function useLoginMutation(value) {
       onSuccess: (res) =>
         dispatch(
           setUser({
-            id: res.data.data.memberId,
+            id: res.data.data.id,
             name: res.data.data.name,
             email: res.data.data.email,
             phone: res.data.data.phone,
-            address: res.data.data.homeAddress,
-            postcode: res.data.data.zipcode,
-            profileImg: res.data.data.profileImage || defaultUser,
-            role: res.data.data.role === "ROLE_MEMBER" ? "Member" : "Admin",
+            address: res.data.data.address,
+            postcode: res.data.data.postcode,
             isLogin: true,
           })
         ),

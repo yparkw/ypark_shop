@@ -7,7 +7,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.db import transaction
 
-from user.models.user import User
+from user.models import User
 from products.models.product import Product
 from purchase.models.purchase import Purchase
 from purchase.models.purchase_approval import PurchaseApprovalResult

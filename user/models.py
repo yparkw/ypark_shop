@@ -5,23 +5,24 @@ from common.models import TimestampBaseModel
 
 
 class CustomUserManager(BaseUserManager):
-
-    def create_user(self, username, email, password, address, postCode):
+    def create_user(self, username, email, password, phone, address, postCode):
         user = self.model(
             username=username,
             email=self.normalize_email(email),
             address = address,
+            phone = phone,
             postCode = postCode,
         )
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, username, email, password, address, postCode):
+    def create_superuser(self, username, email, password, phone, address, postCode):
         user = self.create_user(
             username=username,
             email=self.normalize_email(email),
             password=password,
+            phone = phone,
             address = address,
             postCode = postCode,
         )
@@ -40,6 +41,7 @@ class User(TimestampBaseModel, AbstractBaseUser):
     password = models.CharField(max_length=128)
     address = models.CharField(max_length = 100)
     postCode = models.CharField(max_length = 100)
+    
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)

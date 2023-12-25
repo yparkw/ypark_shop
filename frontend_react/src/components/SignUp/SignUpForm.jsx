@@ -90,8 +90,8 @@ export default function SignUpForm() {
 
   const signUpAction = useSignUpMutation({
     ...signUpValue,
-    homeAddress: address,
-    zipcode: postCode,
+    address: address,
+    postCode: postCode,
   });
 
   const inputChangeHandler = (e) => {
@@ -124,10 +124,10 @@ export default function SignUpForm() {
         label={"Name"}
         text={"Input your Name"}
         type={"text"}
-        name={"name"}
+        name={"username"}
         changeHandler={inputChangeHandler}
         onBlur={nameValidation}
-        value={signUpValue.name}
+        value={signUpValue.username}
         errorMassage={"이름을 입력해주세요."}
         setValid={setInputValid}
       />

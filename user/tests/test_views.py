@@ -3,7 +3,7 @@ import json
 from django.test import TestCase
 from django.urls import reverse
 
-from user.models.user import User
+from user.models import User
 
 
 class UserSignUpViewTestCase(TestCase):
