@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { axiosInstance } from "../api/axiosInstance";
 
 const getProductOne = async (id) => {
-  const res = await axiosInstance.get(`/api/v2/products/info/list/${id}`);
+  const res = await axiosInstance.get(`/api/products/info/list/${id}`);
   return res.data.data;
 };
 

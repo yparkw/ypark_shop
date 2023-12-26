@@ -9,7 +9,7 @@ export default function ProductRegisterPage() {
   const userInfo = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (userInfo.role !== "Admin" || !userInfo.role) {
+    if (userInfo.role !== "is_admin" || !userInfo.role) {
       navigate("/");
     }
   }, []);
