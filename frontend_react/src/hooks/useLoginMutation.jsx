@@ -26,12 +26,12 @@ export default function useLoginMutation(value) {
       onSuccess: (res) =>
         dispatch(
           setUser({
-            id: res.data.data.id,
-            name: res.data.data.name,
-            email: res.data.data.email,
-            phone: res.data.data.phone,
-            address: res.data.data.address,
-            postcode: res.data.data.postcode,
+            // id: res.data.data.id,
+            // name: res.data.data.name,
+            // email: res.data.data.email,
+            // phone: res.data.data.phone,
+            // address: res.data.data.address,
+            // postcode: res.data.data.postcode,
             isLogin: true,
           })
         ),

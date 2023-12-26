@@ -9,7 +9,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.urls import resolve
 
-from user.models.user import User
+from user.models import User
 from products.models.product import Product
 
 kakaopay_ready_mock_data = dict(
