@@ -30,6 +30,9 @@ const HeaderMenu = (props) => {
       <Wrapper hide={!isClick}>
         {props.login ? (
           <>
+            <Link to="/product-register" className="header__register--items">
+              <HideText>Register</HideText>
+            </Link>
             <Link to="/cart" className="header__cart--items">
               <HideText>Cart</HideText>
             </Link>

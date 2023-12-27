@@ -37,7 +37,7 @@ export const routerList = [
   {
     id: 5,
     path: "/product-register",
-    isPrivate: true,
+    isPrivate: true, // # 디버깅 중 true로 변경해야함
     element: <ProductRegisterPage />,
   },
   {

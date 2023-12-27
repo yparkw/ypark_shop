@@ -10,7 +10,7 @@ export default function ProductRegisterPage() {
 
   useEffect(() => {
     if (userInfo.role !== "is_admin" || !userInfo.role) {
-      navigate("/");
+      navigate("/product-register"); // 디버깅 중 기존 네비게이팅 "/"
     }
   }, []);
 
