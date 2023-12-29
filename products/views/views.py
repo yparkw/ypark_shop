@@ -1,8 +1,10 @@
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
-from rest_framework.parsers import FormParser
+from rest_framework.parsers import FormParser, JSONParser
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema
 
 from common.paginations import CustomPagination
@@ -12,13 +14,18 @@ from products.serializers.product import ProductListSZ
 from products.serializers.product import ProductCreateSZ
 from products.serializers.product import ProductUpdateRequestSZ
 from products.serializers.product import ProductResponseSZ
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import AllowAny
 
+@permission_classes([AllowAny, ]) # 디버깅용 AllowAny
 # Create your views here.
 class ProductListCreateAV(ListCreateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     pagination_class = CustomPagination
     queryset = Product.objects.all()
     http_method_names = ['get', 'post']
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (JSONParser,MultiPartParser, FormParser)
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -57,9 +64,9 @@ class ProductListCreateAV(ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.POST)
         if serializer.is_valid():
-            serializer.save(
-                image=request.data.get('image')
-            )
+            # serializer.save(
+            #     image=request.data.get('image')
+            # )
             serializer.save()
             return Response(serializer.data)
         raise ValueError()

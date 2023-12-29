@@ -8,14 +8,14 @@ class ProductListSZ(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'title', 'price', 'image',)
+        fields = ('id', 'title', 'price', 'stock',)
         read_only_fields = ('id',)
 
 
 class ProductCreateSZ(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'title', 'price', 'stock', 'image',)
+        fields = ('id', 'title', 'price', 'stock',)
         read_only_fields = ('id',)
 
     def create(self, validated_data):
@@ -29,7 +29,7 @@ class ProductUpdateRequestSZ(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'title', 'price', 'image',)
+        fields = ('id', 'title', 'price',)
 
     def create(self, validated_data):
         return Product.objects.create(**validated_data)
@@ -40,5 +40,5 @@ class ProductResponseSZ(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'title', 'price', 'image',)
-        read_only_field = ('id', 'title', 'price', 'image',)
+        fields = ('id', 'title', 'price',)
+        read_only_field = ('id', 'title', 'price',)

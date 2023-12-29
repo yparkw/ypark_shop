@@ -171,12 +171,16 @@ AUTH_USER_MODEL = 'user.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_PAGINATION_CLASS': 'common.paginations.CustomPagination',
     'PAGE_SIZE': 10,
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.permissions.AllowAny',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
@@ -243,63 +247,59 @@ CORS_ALLOWED_ORIGINS = [
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'filters' : {
-        'require_debug_false':{
-            '()':'django.utils.log.RequireDebugFalse',
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
         },
-        'require_debug_true':{
-            '()':'django.utils.log.RequireDebugTrue',
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
         },
     },
-    'formatters':{
-        'django.server':{
-            '()':'django.utils.log.ServerFormatter',
-            'format':'[{server_time}] {message}',
-            'style':'{',
+    'formatters': {
+        'django.server': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[{server_time}] {message}',
+            'style': '{',
         },
-        'standard':{
+        'standard': {
             'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
         },
     },
-    'handlers':{
-        'console':{
-            'level':'INFO',
-            'filters':['require_debug_true'],
-            'class':'logging.StreamHandler',
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
         },
-        'django.server':{
-            'level':'INFO',
-            'class':'logging.StreamHandler',
-            'formatter':'django.server',
+        'django.server': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'django.server',
         },
-        'mail_admins':{
-            'level':'ERROR',
-            'filters':['require_debug_false'],
-            'class':'django.utils.log.AdminEmailHandler'
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
         },
-        'file':{
-            'level':'INFO',
-            'filters':['require_debug_false'],
+        'file': {
+            'level': 'INFO',
+            'filters': ['require_debug_false'],
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': BASE_DIR / 'logs/backend.log',
-            'maxBytes':1024*1024*5, # 5 MB
+            'maxBytes': 1024*1024*5,  # 5 MB
             'backupCount': 5,
             'formatter': 'standard',
         },
     },
-    'loggers':{
-        'django':{
-            'handlers':['console','mail_admins', 'file'],
-            'level':'INFO',
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'mail_admins', 'file'],
+            'level': 'INFO',
         },
-        'django.server':{
-            'handlers':['django.server'],
-            'level':'INFO',
+        'django.server': {
+            'handlers': ['django.server'],
+            'level': 'INFO',
             'propagate': False,
         },
-        'pybo':{
-            'handlers':['console', 'file'],
-            'level': 'INFO',
-        }
     }
 }

@@ -7,7 +7,7 @@ import useProductRegister from "../../hooks/useProductRegister";
 import Button from "../Commons/Button";
 import CheckBoxSelector from "./CheckBoxSelector";
 import ColorSelector from "./ColorSelector";
-import ImageSelector from "./ImageSelector";
+// import ImageSelector from "./ImageSelector";
 import InputSelect from "./InputSelect";
 import InputText from "./InputText";
 
@@ -16,20 +16,20 @@ export default function ProductRegisterForm() {
     title: "",
     price: "",
     stock: 0,
-    // major_class: "",
+    // category: "",
     // brand_id: 0,
     // brand_name: "",
     // color: "",
     // size: "90",
   });
 
-  const [thumbImage, setThumbImage] = useState([]);
+  const [images, setImages] = useState([]);
   const [contentImg, setContentImg] = useState([]);
   const [isValid, setIsValid] = useState(false);
 
   const postRegister = useProductRegister({
     ...inputs,
-    thumb_images: thumbImage,
+    // images: images,
     // content_images: contentImg,
   });
 
@@ -42,12 +42,12 @@ export default function ProductRegisterForm() {
       }
     }
 
-    if (!contentImg.length || !thumbImage.length) {
-      valid = false;
-    }
+    // if (!contentImg.length || !images.length) {
+    //   valid = false;
+    // }
     setIsValid(valid);
-  }, [inputs, thumbImage]);
-  // , contentImg  빼 버림
+  }, [inputs]);
+  //, images , contentImg  빼 버림
 
   // useEffect(() => {
   //   if (inputs.brand_name !== "") {
@@ -107,15 +107,15 @@ export default function ProductRegisterForm() {
           type={"text"}
           changeHandler={inputChangeHandler}
         />
-        <CategoryBox>
+        {/* <CategoryBox>
           <InputSelect
-            name="major_class"
+            name="category"
             label={"Category1"}
             text={"Category1"}
             require={true}
             changeHandler={inputChangeHandler}
           />
-        </CategoryBox>
+        </CategoryBox> */}
         {/* <InputSelect
           label={"Brand"}
           name={"brand_name"}
@@ -130,12 +130,12 @@ export default function ProductRegisterForm() {
           changeHandler={inputChangeHandler}
         /> */}
         {/* <CheckBoxSelector /> */}
-        <ImageSelector
+        {/* <ImageSelector
           buttonText={"Select Thumbnail"}
-          label={"Thumbnail"}
-          name="thumb_images"
-          changeHandler={setThumbImage}
-        />
+          label={"images"}
+          name="images"
+          changeHandler={setImages}
+        /> */}
         {/* <ImageSelector
           buttonText={"Select ContentImg"}
           label={"Content Image"}
@@ -144,7 +144,7 @@ export default function ProductRegisterForm() {
         /> */}
       </InputWrapper>
       <SubmitButtonWrapper>
-        <Button disable={!isValid} onClick={postRegisterHandler}>
+        <Button disable={isValid} onClick={postRegisterHandler}>
           Register
         </Button>
       </SubmitButtonWrapper>

@@ -12,6 +12,7 @@ class Product:
     id: int
     title: str
     price: decimal.Decimal
+    stock: int
     image: str
 
 
