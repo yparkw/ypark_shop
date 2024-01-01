@@ -15,8 +15,10 @@ class ProductListSZ(serializers.ModelSerializer):
 class ProductCreateSZ(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'title', 'price', 'stock',)
-        read_only_fields = ('id',)
+        fields = ('title', 'price', 'stock',)
+        # read_only_fields = ('id',)
+        # fields = ('id', 'title', 'price', 'stock',) 디버깅으로 인해 주석처리
+        # read_only_fields = ('id',)
 
     def create(self, validated_data):
         return Product.objects.create(**validated_data)
