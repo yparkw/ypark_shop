@@ -11,13 +11,13 @@ import useDeleteFavorite from "../../hooks/useDeleteFavorite";
 
 // eslint-disable-next-line
 function ItemCard(props) {
-  const [isClicked, setIsClicked] = useState(props.favorite);
-  const addFavoriteAction = useAddFavoriteItem({ productId: props.id });
-  const deleteFavoriteAction = useDeleteFavorite(props.id);
+  // const [isClicked, setIsClicked] = useState(props.favorite);
+  // const addFavoriteAction = useAddFavoriteItem({ productId: props.id });
+  // const deleteFavoriteAction = useDeleteFavorite(props.id);
 
-  useEffect(() => {
-    setIsClicked(props.favorite);
-  }, [props.favorite]);
+  // useEffect(() => {
+  //   setIsClicked(props.favorite);
+  // }, [props.favorite]);
 
   const handleClicked = (e) => {
     e.preventDefault();
@@ -27,18 +27,18 @@ function ItemCard(props) {
     }
     setIsClicked((curr) => !curr);
 
-    if (!props.favorite) {
-      addFavoriteAction.mutate();
-    } else if (props.favorite) {
-      deleteFavoriteAction.mutate();
-    }
+    // if (!props.favorite) {
+    //   addFavoriteAction.mutate();
+    // } else if (props.favorite) {
+    //   deleteFavoriteAction.mutate();
+    // }
   };
 
   return (
     <Container>
       <Link to={`/detail/${props.id}`}>
         <ItemCardImg className="ItemCard-Image">
-          <img src={props.productImg} alt="product_img" />
+          {/* <img src={props.productImg} alt="product_img" /> */}
           {isClicked ? (
             <button onClick={handleClicked}>
               <AiFillHeart className="ItemCard-Heart" />
@@ -50,7 +50,7 @@ function ItemCard(props) {
           )}
         </ItemCardImg>
         <div className="ItemCard-Explain">
-          <TextBox brandName>{props.brand}</TextBox>
+          {/* <TextBox brandName>{props.brand}</TextBox> */}
           <TextBox>{props.title}</TextBox>
           <Price price={props.price} />
         </div>

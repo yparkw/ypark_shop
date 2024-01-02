@@ -76,11 +76,11 @@ class CustomPagination(PageNumberPagination):
                     'properties': {
                         'next': {
                             'type': 'string',
-                            'example': 'http://211.202.74.84/api/conveniences/products/?page=3'
+                            'example': 'http://localhost/api/products/?page=3'
                         },
                         'previous': {
                             'type': 'string',
-                            'example': "http://211.202.74.84/api/conveniences/products/?page=1"
+                            'example': "http://localhost/api/products/?page=1"
                         },
                         'page': {
                             'type': 'integer',

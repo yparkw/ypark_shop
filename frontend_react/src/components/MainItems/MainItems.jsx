@@ -15,7 +15,7 @@ import ErrorPage from "../Commons/ErrorPage";
 function MainItems(props) {
   const [onLoading, setOnLoading] = useState(false);
   const userInfo = useSelector((state) => state.user);
-  const getFavoriteData = useGetFavoriteItem(userInfo);
+  // const getFavoriteData = useGetFavoriteItem(userInfo);
   const getDataList = useGetProductItems(props.params, setOnLoading);
 
   const nextButtonClickHandler = () => {
@@ -29,7 +29,7 @@ function MainItems(props) {
     props.setPage((prev) => prev - 1);
   };
 
-  if (getDataList.isLoading || getFavoriteData.isLoading || onLoading) {
+  if (getDataList.isLoading || onLoading) {
     return (
       <Container mode={props.mode}>
         <Skeleton size={6} />
@@ -55,21 +55,21 @@ function MainItems(props) {
       <Container mode={props.mode}>
         {getDataList.isSuccess &&
           getDataList?.data?.data.map((datas) => {
-            let favorite = false;
-            const fa = getFavoriteData?.data?.map((v) => v.product.product_id);
-            if (fa?.includes(datas.product_id)) {
-              favorite = true;
-            }
+            // let favorite = false;
+            // const fa = getFavoriteData?.data?.map((v) => v.product.product_id);
+            // if (fa?.includes(datas.product_id)) {
+            //   favorite = true;
+            // }
             return (
               <ItemCard
-                key={datas.product_id}
-                id={datas.product_id}
-                productImg={datas.thumb_images[0]}
-                brand={datas.brand_name}
+                key={datas.id}
+                id={datas.id}
+                // productImg={datas.thumb_images[0]}
+                // brand={datas.brand_name}
                 title={datas.name}
                 price={datas.price}
-                favorite={favorite}
-                isLogin={userInfo.isLogin}
+                // favorite={favorite}
+                // isLogin={userInfo.isLogin}
               />
             );
           })}

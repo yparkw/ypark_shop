@@ -8,6 +8,7 @@ class ProductListSZ(serializers.ModelSerializer):
 
     class Meta:
         model = Product
+        # fields = ('title', 'price', 'stock',)
         fields = ('id', 'title', 'price', 'stock',)
         read_only_fields = ('id',)
 

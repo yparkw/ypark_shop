@@ -25,7 +25,7 @@ class ProductListCreateAV(ListCreateAPIView):
     pagination_class = CustomPagination
     queryset = Product.objects.all()
     http_method_names = ['get', 'post']
-    parser_classes = (JSONParser,MultiPartParser, FormParser)
+    parser_classes = (JSONParser, MultiPartParser, FormParser)
 
     def get_serializer_class(self):
         if self.request.method == 'GET':

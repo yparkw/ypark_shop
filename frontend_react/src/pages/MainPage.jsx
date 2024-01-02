@@ -9,7 +9,7 @@ import MainItems from "../components/MainItems/MainItems";
 export default function MainPage() {
   const urlParams = {
     page: 1,
-    pageSize: 8,
+    pageSize: 10,
   };
 
   return (
@@ -17,7 +17,7 @@ export default function MainPage() {
       <MainBanner />
       <MainTextBanner />
       <Category />
-      <ListTitle>TRENDING ITEMS</ListTitle>
+      <ListTitle>ITEMS</ListTitle>
       <MainItems params={urlParams} mode={"main"} />
     </Container>
   );
