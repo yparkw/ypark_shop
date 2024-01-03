@@ -3,7 +3,7 @@ import Cookie from "js-cookie";
 
 export const authorizeToken = async () => {
   const token = Cookie.get("authorization");
-  const res = await axiosInstance.get("/api/v1/members/user", {
+  const res = await axiosInstance.get("/api/user", {
     headers: {
       Authorization: token,
     },
@@ -21,13 +21,9 @@ export const imageRegisterFn = async (formData) => {
   return res;
 };
 
+
 export const productRegisterFn = async (formData) => {
-  const res = await axiosInstance.post("/api/products/", formData, {withCredentials: false},
-  {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const res = await axiosInstance.post("/api/products/", formData, {withCredentials: false},);
   return res;
 };
 
