@@ -7,7 +7,7 @@ import useProductRegister from "../../hooks/useProductRegister";
 import Button from "../Commons/Button";
 import CheckBoxSelector from "./CheckBoxSelector";
 import ColorSelector from "./ColorSelector";
-// import ImageSelector from "./ImageSelector";
+import ImageSelector from "./ImageSelector";
 import InputSelect from "./InputSelect";
 import InputText from "./InputText";
 
@@ -16,11 +16,9 @@ export default function ProductRegisterForm() {
     title: "",
     price: "",
     stock: 0,
-    // category: "",
-    // brand_id: 0,
-    // brand_name: "",
-    // color: "",
-    // size: "90",
+    category: "",
+    images: "", 
+    size: "",
   });
 
   const [images, setImages] = useState([]);
@@ -36,29 +34,27 @@ export default function ProductRegisterForm() {
   useEffect(() => {
     let valid = true;
     for (let i in inputs) {
-      if (!inputs[i]) {
+      if (i === "stock") {
+        if (typeof inputs[i] !== "number" || inputs[i] < 0) {
+          valid = false;
+          break;
+        }
+      } else if (!inputs[i]) {
         valid = false;
         break;
       }
     }
-
-    // if (!contentImg.length || !images.length) {
-    //   valid = false;
-    // }
+  
     setIsValid(valid);
   }, [inputs]);
-  //, images , contentImg  빼 버림
 
-  // useEffect(() => {
-  //   if (inputs.brand_name !== "") {
-  //     const brandId = brandList.filter((v) => {
-  //       if (v.name === inputs.brand_name) {
-  //         return v.id;
-  //       }
-  //     });
-  //     setInputs({ ...inputs, brand_id: brandId[0].id });
-  //   }
-  // }, [inputs.brand_name]);
+  const handlerImageChange = (e) => {
+    const files = e.target.files;
+
+    if(files && files[0]){
+      setInputs({ ...inputs, images: files[0]})
+    }
+  }
 
   const inputChangeHandler = (e) => {
     if (e.target.name === "price") {
@@ -68,9 +64,23 @@ export default function ProductRegisterForm() {
     }
   };
 
+  
   const postRegisterHandler = (e) => {
     e.preventDefault();
-    postRegister.mutate();
+
+    const formData = new FormData()
+    for (const key in inputs) {
+      if (key !== "images") {  // 이미지 필드 제외
+        formData.append(key, inputs[key]);
+      }
+    }
+
+    images.forEach((image, index) => {
+      formData.append(`images[${index}]`, image);
+    });
+
+
+    postRegister.mutate(formData);
   };
 
   if (postRegister.isSuccess) {
@@ -107,44 +117,30 @@ export default function ProductRegisterForm() {
           type={"text"}
           changeHandler={inputChangeHandler}
         />
-        {/* <CategoryBox>
+        <CategoryBox>
           <InputSelect
             name="category"
-            label={"Category1"}
-            text={"Category1"}
+            label={"Category"}
+            text={"Category"}
             require={true}
             changeHandler={inputChangeHandler}
           />
-        </CategoryBox> */}
-        {/* <InputSelect
-          label={"Brand"}
-          name={"brand_name"}
-          text={"Select Brand"}
-          require={true}
-          changeHandler={inputChangeHandler}
-        /> */}
+        </CategoryBox>
         {/* <ColorSelector
           require={true}
           colorList={dummyColor}
           name={"color"}
           changeHandler={inputChangeHandler}
         /> */}
-        {/* <CheckBoxSelector /> */}
-        {/* <ImageSelector
-          buttonText={"Select Thumbnail"}
-          label={"images"}
+        <CheckBoxSelector />
+        <input
+          type="file"
           name="images"
-          changeHandler={setImages}
-        /> */}
-        {/* <ImageSelector
-          buttonText={"Select ContentImg"}
-          label={"Content Image"}
-          name="content_images"
-          changeHandler={setContentImg}
-        /> */}
+          onChange={handlerImageChange}
+        />
       </InputWrapper>
       <SubmitButtonWrapper>
-        <Button disable={isValid} onClick={postRegisterHandler}>
+        <Button disable={!isValid} onClick={postRegisterHandler}>
           Register
         </Button>
       </SubmitButtonWrapper>

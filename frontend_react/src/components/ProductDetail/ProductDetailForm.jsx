@@ -11,17 +11,17 @@ import ProductDetailOrder from "./ProductDetailOrder";
 export default memo(function ProductDetailForm(props) {
   return (
     <Container>
-      <OrderWrapper>
-        <ImageWrapper>
+      {/* <OrderWrapper> */}
+        {/* <ImageWrapper>
           <img src={props.dataInfo.thumb_images[0]} alt="img" />
-        </ImageWrapper>
-        <ProductDetailOrder />
-      </OrderWrapper>
+        </ImageWrapper> */}
+        {/* <ProductDetailOrder />
+      </OrderWrapper> */}
 
       <Comments
-        productId={props.dataInfo.product_id}
-        productName={props.dataInfo.name}
-        contentImg={props.dataInfo.content_images}
+        // productId={props.dataInfo.id}
+        productName={props.dataInfo.title}
+        // contentImg={props.dataInfo.content_images}
       />
     </Container>
   );

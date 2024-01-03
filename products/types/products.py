@@ -1,6 +1,5 @@
 import decimal
 import typing
-
 import strawberry
 
 from products.models.product import Product
@@ -12,6 +11,8 @@ class Product:
     id: int
     title: str
     price: decimal.Decimal
+    category: str
+    size: str
     stock: int
     image: str
 

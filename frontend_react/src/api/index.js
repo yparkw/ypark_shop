@@ -21,11 +21,11 @@ export const imageRegisterFn = async (formData) => {
   return res;
 };
 
-export const productRegisterFn = async (registerInfo) => {
-  const res = await axiosInstance.post("/api/products/", registerInfo, {withCredentials: false},
+export const productRegisterFn = async (formData) => {
+  const res = await axiosInstance.post("/api/products/", formData, {withCredentials: false},
   {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
     },
   });
   return res;

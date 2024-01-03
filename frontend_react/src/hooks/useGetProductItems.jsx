@@ -5,7 +5,7 @@ import { axiosInstance } from "../api/axiosInstance";
 const getProductItems = async (param) => {
   const res = await axiosInstance.get(`/api/products/`, {
     params: param,
-  }, {withCredentials: true});
+  }, {withCredentials: false});
   return res.data;
 };
 
