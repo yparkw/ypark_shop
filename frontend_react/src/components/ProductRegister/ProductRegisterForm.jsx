@@ -1,12 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { brandList } from "../../constance";
-import { dummyColor } from "../../constance/index";
 import useProductRegister from "../../hooks/useProductRegister";
 import Button from "../Commons/Button";
 import CheckBoxSelector from "./CheckBoxSelector";
-import ColorSelector from "./ColorSelector";
 import ImageSelector from "./ImageSelector";
 import InputSelect from "./InputSelect";
 import InputText from "./InputText";
@@ -15,61 +12,65 @@ export default function ProductRegisterForm() {
   const [inputs, setInputs] = useState({
     name: "",
     price: "",
-    stock: 0,
+    stock: "",
     category: "",
-    // color: "",
     size: "",
   });
 
-  const [thumbImage, setThumbImage] = useState([]);
+  const [thumbImage, setThumbImage] = useState(null);
   // const [contentImg, setContentImg] = useState([]);
   const [isValid, setIsValid] = useState(false);
 
 
+  const inputChangeHandler = (e) => {
+    const {name, value} = e.target;
+    const newValue = (name === 'price' || name === 'stock') ? Number(value) : value;
+    setInputs({...inputs, [name]: newValue});
+  };
+
+  const handleSizeChange = (selectedSizes) => {
+    setInputs(prevInputs => ({
+      ...prevInputs,
+      size: selectedSizes.join(', ')
+    }));
+  };
+
+  const {postProduct} = useProductRegister();
+  
+  
+
+  
+
+  const postRegisterHandler = async(e) => {
+    e.preventDefault();
+    console.log('Sending:', inputs, thumbImage);
+    if (isValid) {
+      const result = await postProduct(inputs, thumbImage);
+      console.log('Result:', result);
+      if (result) {
+        console.log('register success');
+      } else {
+        console.log('register failed');
+      }
+    }
+  };
+
   useEffect(() => {
     let valid = true;
+    console.log('isValid', inputs, thumbImage, isValid)
     for (let i in inputs) {
       if (!inputs[i]) {
         valid = false;
         break;
       }
     }
-
-    if (!thumbImage.length) {
+    if (!thumbImage) {
       valid = false;
     }
     setIsValid(valid);
-  }, [thumbImage, inputs]);
+  }, [inputs, thumbImage]);
 
 
-  const inputChangeHandler = (e) => {
-    if (e.target.name === "price") {
-      setInputs({ ...inputs, [e.target.name]: Number(e.target.value) });
-    } else {
-      setInputs({ ...inputs, [e.target.name]: e.target.value });
-    }
-  };
-
-  const { postProduct, isProductRegisterSuccess } = useProductRegister();
-
-  const postRegisterHandler = async (e) => {
-    e.preventDefault();
-    if (isValid) {
-      const result = await postProduct(...inputs, thumbImage);
-    if (result) {
-      console.log('register success');
-    } else {
-      console.log('register failed');
-    }
-    }
-  };
-
-  useEffect(() => {
-    if (isProductRegisterSuccess) {
-      console.log('register success');
-      // 성공 후 처리 로직
-    }
-  }, [isProductRegisterSuccess]);
 
   return (
     <Container>
@@ -111,7 +112,7 @@ export default function ProductRegisterForm() {
             changeHandler={inputChangeHandler}
           />
         </CategoryBox>
-        <CheckBoxSelector />
+        <CheckBoxSelector onChange={handleSizeChange} />
         <ImageSelector
           buttonText={"Select Thumbnail"}
           label={"Thumbnail"}
@@ -132,7 +133,7 @@ export default function ProductRegisterForm() {
         /> */}
       </InputWrapper>
       <SubmitButtonWrapper>
-        <Button disable={!isValid} onClick={postRegisterHandler}>
+        <Button disable={isValid} onClick={postRegisterHandler}>
           Register
         </Button>
       </SubmitButtonWrapper>

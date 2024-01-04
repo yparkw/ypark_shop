@@ -1,19 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { memo } from "react";
-import styled from "styled-components";
 import ImageUploader from "react-images-upload";
-import { useMutation } from "react-query";
-import { productImageRegisterFn } from "../../api";
-import { useEffect } from "react";
+import styled from "styled-components";
 
 export default memo(function ImageSelector(props) {
   const imageChangeHandler = (files) => {
     // 파일이 선택되었을 때의 로직
-    if (files.length > 0) {
-      const selectedImage = files[0];
-      props.changeHandler(selectedImage); // 상위 컴포넌트로 선택된 이미지 전달
-    }
+
+    const selectedImage = files;
+    props.changeHandler(selectedImage); // 상위 컴포넌트로 선택된 이미지 전달
+    
   };
 
   return (
