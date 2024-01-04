@@ -1,5 +1,6 @@
 from rest_framework import serializers
-
+from django.core.files.storage import default_storage
+from django.conf import settings
 from ..models.product import Product
 
 
@@ -13,6 +14,16 @@ class ProductListSZ(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
+class ProductImageUploadSerializer(serializers.Serializer):
+    image = serializers.ImageField()
+
+    def save(self, **kwargs):
+        image_file = self.validated_data['image']
+        file_name = default_storage.save(image_file.name, image_file)
+        file_url = default_storage.url(file_name)
+
+        return {'url': settings.MEDIA_URL + file_url}
+    
 class ProductCreateSZ(serializers.ModelSerializer):
     class Meta:
         model = Product
