@@ -2,7 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const dummySize = ["Small", "Medium", "Large", "X - Large", "Free"];
+const dummySize = ["S", "M", "L", "XL", "Free"];
 
 export default function CheckBoxSelector() {
   return (

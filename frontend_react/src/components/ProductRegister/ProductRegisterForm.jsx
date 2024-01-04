@@ -13,48 +13,34 @@ import InputText from "./InputText";
 
 export default function ProductRegisterForm() {
   const [inputs, setInputs] = useState({
-    title: "",
+    name: "",
     price: "",
     stock: 0,
     category: "",
-    images: "", 
+    // color: "",
     size: "",
   });
 
-  const [images, setImages] = useState([]);
-  const [contentImg, setContentImg] = useState([]);
+  const [thumbImage, setThumbImage] = useState([]);
+  // const [contentImg, setContentImg] = useState([]);
   const [isValid, setIsValid] = useState(false);
 
-  const postRegister = useProductRegister({
-    ...inputs,
-    // images: images,
-    // content_images: contentImg,
-  });
 
   useEffect(() => {
     let valid = true;
     for (let i in inputs) {
-      if (i === "stock") {
-        if (typeof inputs[i] !== "number" || inputs[i] < 0) {
-          valid = false;
-          break;
-        }
-      } else if (!inputs[i]) {
+      if (!inputs[i]) {
         valid = false;
         break;
       }
     }
-  
-    setIsValid(valid);
-  }, [inputs]);
 
-  const handlerImageChange = (e) => {
-    const files = e.target.files;
-
-    if(files && files[0]){
-      setInputs({ ...inputs, images: files[0]})
+    if (!thumbImage.length) {
+      valid = false;
     }
-  }
+    setIsValid(valid);
+  }, [thumbImage, inputs]);
+
 
   const inputChangeHandler = (e) => {
     if (e.target.name === "price") {
@@ -64,34 +50,32 @@ export default function ProductRegisterForm() {
     }
   };
 
-  
-  const postRegisterHandler = (e) => {
+  const { postProduct, isProductRegisterSuccess } = useProductRegister();
+
+  const postRegisterHandler = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData()
-    for (const key in inputs) {
-      if (key !== "images") {  // 이미지 필드 제외
-        formData.append(key, inputs[key]);
-      }
+    if (isValid) {
+      const result = await postProduct(...inputs, thumbImage);
+    if (result) {
+      console.log('register success');
+    } else {
+      console.log('register failed');
     }
-
-    images.forEach((image, index) => {
-      formData.append(`images[${index}]`, image);
-    });
-
-
-    postRegister.mutate(formData);
+    }
   };
 
-  if (postRegister.isSuccess) {
-    console.log("register success");
-  }
+  useEffect(() => {
+    if (isProductRegisterSuccess) {
+      console.log('register success');
+      // 성공 후 처리 로직
+    }
+  }, [isProductRegisterSuccess]);
 
   return (
     <Container>
       <InputWrapper>
         <InputText
-          name={"title"}
+          name={"name"}
           label={"Product Name"}
           text={"Input Product Name"}
           require={true}
@@ -99,6 +83,7 @@ export default function ProductRegisterForm() {
           type={"text"}
           changeHandler={inputChangeHandler}
         />
+
         <InputText
           name={"price"}
           label={"Price"}
@@ -126,18 +111,25 @@ export default function ProductRegisterForm() {
             changeHandler={inputChangeHandler}
           />
         </CategoryBox>
+        <CheckBoxSelector />
+        <ImageSelector
+          buttonText={"Select Thumbnail"}
+          label={"Thumbnail"}
+          name="thumb_images"
+          changeHandler={setThumbImage}
+        />
         {/* <ColorSelector
           require={true}
           colorList={dummyColor}
           name={"color"}
           changeHandler={inputChangeHandler}
         /> */}
-        <CheckBoxSelector />
-        <input
-          type="file"
-          name="images"
-          onChange={handlerImageChange}
-        />
+        {/* <ImageSelector
+          buttonText={"Select ContentImg"}
+          label={"Content Image"}
+          name="content_images"
+          changeHandler={setContentImg}
+        /> */}
       </InputWrapper>
       <SubmitButtonWrapper>
         <Button disable={!isValid} onClick={postRegisterHandler}>
@@ -164,9 +156,8 @@ const InputWrapper = styled.div`
 `;
 
 const CategoryBox = styled.div`
-  grid-column: span 2;
   grid-column-start: 2;
-  grid-column-end: 2;
+  grid-column-end: 3;
   width: 100%;
   display: flex;
   gap: 40px;

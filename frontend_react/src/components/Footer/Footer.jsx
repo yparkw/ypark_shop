@@ -9,9 +9,9 @@ function Footer() {
   return (
     <Container>
       <div className="Footer-Left">
-        <text>
+        <span>
           Take what you want
-        </text>
+        </span>
       </div>
       <div className="Footer-Middle">
         <Link to="/">
@@ -23,8 +23,8 @@ function Footer() {
       </div>
 
       <div className="Footer-Right">
-        <text>CEO: Park</text>
-        <text>E-Mail: part@naver.com</text>
+        <p>CEO: Park</p>
+        <p>E-Mail: part@naver.com</p>
       </div>
     </Container>
   );

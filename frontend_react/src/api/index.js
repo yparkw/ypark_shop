@@ -11,19 +11,16 @@ export const authorizeToken = async () => {
   return res;
 };
 
-export const imageRegisterFn = async (formData) => {
-  const res = axiosInstance.post("/upload/", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
-
+export const productImageRegisterFn = async (formData) => {
+  const res = axiosInstance.post("/api/products/upload/", formData,);
   return res;
 };
 
 
 export const productRegisterFn = async (formData) => {
-  const res = await axiosInstance.post("/api/products/", formData, {withCredentials: false},);
+  const res = await axiosInstance.post("/api/products/", formData, {
+    withCredentials: false,
+  });
   return res;
 };
 

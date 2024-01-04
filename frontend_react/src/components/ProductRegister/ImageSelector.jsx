@@ -4,26 +4,15 @@ import React, { memo } from "react";
 import styled from "styled-components";
 import ImageUploader from "react-images-upload";
 import { useMutation } from "react-query";
-import { imageRegisterFn } from "../../api";
+import { productImageRegisterFn } from "../../api";
 import { useEffect } from "react";
 
 export default memo(function ImageSelector(props) {
-  const { mutate, data } = useMutation((value) => imageRegisterFn(value));
-
-  useEffect(() => {
-    if (data) {
-      props.changeHandler([data.data]);
-    }
-  }, [data]);
-
-  const formData = new FormData();
-
-  const imageChangeHandler = (e) => {
-    if (e[0] !== undefined) {
-      formData.append("data", e[0]);
-      mutate(formData);
-    } else {
-      return;
+  const imageChangeHandler = (files) => {
+    // 파일이 선택되었을 때의 로직
+    if (files.length > 0) {
+      const selectedImage = files[0];
+      props.changeHandler(selectedImage); // 상위 컴포넌트로 선택된 이미지 전달
     }
   };
 
