@@ -15,6 +15,7 @@ from products.models.product import Product
 from products.serializers.product import ProductListSZ
 from products.serializers.product import ProductCreateSZ
 from products.serializers.product import ProductUpdateRequestSZ
+from products.serializers.product import ProductImageUploadSerializer
 from products.serializers.product import ProductResponseSZ
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
