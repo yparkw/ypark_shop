@@ -14,6 +14,8 @@ class ProductListSZ(serializers.ModelSerializer):
 
 
 class ProductCreateSZ(serializers.ModelSerializer):
+    image = serializers.ImageField(required=False)
+    
     class Meta:
         model = Product
         fields = '__all__'
@@ -26,7 +28,7 @@ class ProductCreateSZ(serializers.ModelSerializer):
         image = validated_data.pop('image', None)
 
         # Product 인스턴스 생성
-        product = Product.objects.create(**validated_data)
+        product = super().create(validated_data)
 
         # 이미지가 있으면 설정
         if image:

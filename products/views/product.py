@@ -44,14 +44,20 @@ class ProductListCreateAV(ListCreateAPIView):
         print(request.data)
         # Product에 이미지가 있따면 post로 받아야하고 내용은 form형식이여야 한다.)
         if serializer.is_valid():
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
             # serializer.save(
             #     image=request.data.get('image')
             # )
             serializer.save()
-            return Response(serializer.data, status= status.HTTP_200_OK)
+            return Response(serializer.data, status= status.HTTP_200_OK, headers=headers)
         raise Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+    def perform_create(self, serializer):
+        image = self.request.FILES.get('thumb_image')
+        serializer.save(image=image)
+        
+        
 class ProductRetrieveUpdateDestroyAV(RetrieveUpdateDestroyAPIView):
     serializer_class = ProductUpdateRequestSZ
     queryset = Product.objects.all()
