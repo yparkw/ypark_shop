@@ -1,6 +1,7 @@
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.parsers import FormParser, JSONParser
+from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
@@ -14,6 +15,7 @@ from products.models.product import Product
 from products.serializers.product import ProductListSZ
 from products.serializers.product import ProductCreateSZ
 from products.serializers.product import ProductUpdateRequestSZ
+from products.serializers.product import ProductImageUploadSerializer
 from products.serializers.product import ProductResponseSZ
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
@@ -53,11 +55,23 @@ class ProductListCreateAV(ListCreateAPIView):
             return Response(serializer.data, status= status.HTTP_200_OK, headers=headers)
         raise Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
     def perform_create(self, serializer):
         image = self.request.FILES.get('thumb_image')
         serializer.save(image=image)
         
-        
+
+class ProductImageUploadAV(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def post(self, request, *args, **kwargs):
+        serializer = ProductImageUploadSerializer(data=request.data)
+
+        if serializer.is_valid():
+            data = serializer.save()  # 이미지 저장 및 URL 반환
+            return Response(data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class ProductRetrieveUpdateDestroyAV(RetrieveUpdateDestroyAPIView):
     serializer_class = ProductUpdateRequestSZ
     queryset = Product.objects.all()

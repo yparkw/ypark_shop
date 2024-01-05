@@ -1,10 +1,24 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const dummySize = ["S", "M", "L", "XL", "Free"];
 
-export default function CheckBoxSelector() {
+export default function CheckBoxSelector(props) {
+  const [selectedSizes, setSelectedSizes] = useState([]);
+
+  const handleSizeChange = (event) => {
+    const size = event.target.id;
+    setSelectedSizes(prev =>
+      prev.includes(size) ? prev.filter(s => s !== size) : [...prev, size]
+    );
+  };
+
+  useEffect(() => {
+    // 상위 컴포넌트에 선택된 사이즈 전달
+    props.onChange(selectedSizes);
+  }, [selectedSizes]);
+
   return (
     <Container>
       <span>Size</span>
@@ -12,7 +26,7 @@ export default function CheckBoxSelector() {
         {dummySize.map((v, i) => {
           return (
             <CheckBoxWrapper key={i}>
-              <input type={"checkbox"} id={v} />
+              <input type={"checkbox"} id={v} onChange={handleSizeChange} />
               <Label htmlFor={v}>{v}</Label>
             </CheckBoxWrapper>
           );

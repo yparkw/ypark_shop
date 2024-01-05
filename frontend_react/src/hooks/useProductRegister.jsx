@@ -1,13 +1,15 @@
-import { productRegisterFn, productImageRegisterFn } from "../api";
+import { productImageRegisterFn, productRegisterFn } from "../api";
 
 export default function useProductRegister() {
   const postProduct = async (productInfo, thumbImage) => {
     try {
       // 이미지 업로드 로직
       const imageFormData = new FormData();
-      thumbImage.forEach((image, index) => {
-        imageFormData.append(`thumb_images[${index}]`, image);
-      });
+      // thumbImage.forEach((image, index) => {
+      //   imageFormData.append(`thumb_images[${index}]`, image);
+      // });
+
+      imageFormData.append('thumb_images', thumbImage);
 
       const imageUploadResponse = await productImageRegisterFn(imageFormData);
 
@@ -20,6 +22,9 @@ export default function useProductRegister() {
 
         const productRegisterResponse = await productRegisterFn(updatedProductInfo);
 
+        console.log("Image Upload Response:", imageUploadResponse);
+        console.log("Product Register Response:", productRegisterResponse);
+        
         if (productRegisterResponse.status === 200) {
           return true;
         }
@@ -29,7 +34,6 @@ export default function useProductRegister() {
       return false;
     }
   };
-
   return {
     postProduct
   };

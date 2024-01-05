@@ -1,5 +1,5 @@
-import { axiosInstance } from "./axiosInstance";
 import Cookie from "js-cookie";
+import { axiosInstance } from "./axiosInstance";
 
 export const authorizeToken = async () => {
   const token = Cookie.get("authorization");
@@ -12,7 +12,13 @@ export const authorizeToken = async () => {
 };
 
 export const productImageRegisterFn = async (formData) => {
-  const res = axiosInstance.post("/api/products/upload/", formData,);
+  const res = axiosInstance.post("/api/products/upload/", formData,{
+    withCredentials: false,
+    headers: {
+      "Content-type" : "multipart/form-data"
+    }
+  }
+  );
   return res;
 };
 
