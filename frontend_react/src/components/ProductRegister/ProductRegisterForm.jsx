@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
+import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import useProductRegister from "../../hooks/useProductRegister";
 import Button from "../Commons/Button";
@@ -21,6 +22,7 @@ export default function ProductRegisterForm() {
   // const [contentImg, setContentImg] = useState([]);
   const [isValid, setIsValid] = useState(false);
 
+  
 
   const inputChangeHandler = (e) => {
     const {name, value} = e.target;
@@ -37,12 +39,6 @@ export default function ProductRegisterForm() {
 
   const {postProduct} = useProductRegister();
   
-  
-
-  
-
-  
-
   useEffect(() => {
     let valid = true;
     for (let i in inputs) {
@@ -57,6 +53,8 @@ export default function ProductRegisterForm() {
     setIsValid(valid);
   }, [inputs, thumbImage]);
 
+  const navigate = useNavigate();
+
   const postRegisterHandler = async(e) => {
     e.preventDefault();
     console.log('Sending:', inputs, thumbImage);
@@ -65,6 +63,7 @@ export default function ProductRegisterForm() {
       console.log('Result:', result);
       if (result) {
         console.log('register success');
+        navigate('/');
       } else {
         console.log('register failed');
       }
