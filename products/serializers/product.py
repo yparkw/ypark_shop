@@ -10,7 +10,7 @@ class ProductListSZ(serializers.ModelSerializer):
     class Meta:
         model = Product
         # fields = ('title', 'price', 'stock',)
-        fields = ('id', 'title', 'price', 'size', 'stock', 'category', 'image')
+        fields = ('id', 'name', 'price', 'size', 'stock', 'category', 'image_url')
         read_only_fields = ('id',)
 
 
@@ -22,10 +22,10 @@ class ProductImageUploadSerializer(serializers.Serializer):
         file_name = default_storage.save(image_file.name, image_file)
         file_url = default_storage.url(file_name)
 
-        return {'url': settings.MEDIA_URL + file_url}
+        return {'url': file_url}
     
 class ProductCreateSZ(serializers.ModelSerializer):
-    image = serializers.ImageField(required=False)
+    image_url = serializers.URLField(required=False)
     
     class Meta:
         model = Product
@@ -35,24 +35,12 @@ class ProductCreateSZ(serializers.ModelSerializer):
         # read_only_fields = ('id',)
 
     def create(self, validated_data):
-        # 이미지 데이터를 validated_data에서 추출
-        image = validated_data.pop('image', None)
-
-        # Product 인스턴스 생성
-        product = super().create(validated_data)
-
-        # 이미지가 있으면 설정
-        if image:
-            product.image = image
-            product.save()
-
-        return product
+        return super().create(validated_data)
 
 
 class ProductUpdateRequestSZ(serializers.ModelSerializer):
     title = serializers.CharField(required=False)
     price = serializers.DecimalField(required=False, max_digits=10, decimal_places=2)
-    image = serializers.ImageField(required=False, use_url=True)
 
     class Meta:
         model = Product

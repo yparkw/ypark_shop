@@ -20,6 +20,9 @@ from products.serializers.product import ProductResponseSZ
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
 
+import logging
+logger = logging.getLogger(__name__)
+
 @permission_classes([AllowAny, ]) # 디버깅용 AllowAny
 # Create your views here.
 class ProductListCreateAV(ListCreateAPIView):
@@ -28,7 +31,7 @@ class ProductListCreateAV(ListCreateAPIView):
     pagination_class = CustomPagination
     queryset = Product.objects.all()
     http_method_names = ['get', 'post']
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -42,23 +45,17 @@ class ProductListCreateAV(ListCreateAPIView):
         return self.get_paginated_response(data=serializer.data)
 
     def post(self, request, *args, **kwargs):
+        logger.info(f"Received data: {request.data}")
         serializer = self.get_serializer(data=request.data)
         print(request.data)
         # Product에 이미지가 있따면 post로 받아야하고 내용은 form형식이여야 한다.)
         if serializer.is_valid():
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
-            # serializer.save(
-            #     image=request.data.get('image')
-            # )
-            serializer.save()
             return Response(serializer.data, status= status.HTTP_200_OK, headers=headers)
-        raise Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        logger.error(f"Serializer errors: {serializer.errors}")    
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-    def perform_create(self, serializer):
-        image = self.request.FILES.get('thumb_image')
-        serializer.save(image=image)
         
 
 class ProductImageUploadAV(APIView):
@@ -69,8 +66,11 @@ class ProductImageUploadAV(APIView):
 
         if serializer.is_valid():
             data = serializer.save()  # 이미지 저장 및 URL 반환
+            logger.debug(f"Image Upload Successful: {data}")
             return Response(data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            logger.warning(f"Image Upload Failed: {serializer.errors}")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProductRetrieveUpdateDestroyAV(RetrieveUpdateDestroyAPIView):
     serializer_class = ProductUpdateRequestSZ
