@@ -41,6 +41,22 @@ export default function ProductRegisterForm() {
 
   
 
+  
+
+  useEffect(() => {
+    let valid = true;
+    for (let i in inputs) {
+      if (!inputs[i]) {
+        valid = false;
+        break;
+      }
+    }
+    if (!thumbImage) {
+      valid = false;
+    }
+    setIsValid(valid);
+  }, [inputs, thumbImage]);
+
   const postRegisterHandler = async(e) => {
     e.preventDefault();
     console.log('Sending:', inputs, thumbImage);
@@ -54,22 +70,6 @@ export default function ProductRegisterForm() {
       }
     }
   };
-
-  useEffect(() => {
-    let valid = true;
-    console.log('isValid', inputs, thumbImage, isValid)
-    for (let i in inputs) {
-      if (!inputs[i]) {
-        valid = false;
-        break;
-      }
-    }
-    if (!thumbImage) {
-      valid = false;
-    }
-    setIsValid(valid);
-  }, [inputs, thumbImage]);
-
 
 
   return (

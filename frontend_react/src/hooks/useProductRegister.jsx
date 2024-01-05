@@ -8,16 +8,22 @@ export default function useProductRegister() {
       // thumbImage.forEach((image, index) => {
       //   imageFormData.append(`thumb_images[${index}]`, image);
       // });
+      console.log('productInfo', productInfo)
+      
 
-      imageFormData.append('thumb_images', thumbImage);
+      imageFormData.append('image', thumbImage[0]);
+      console.log('image', imageFormData.get('image'))
 
       const imageUploadResponse = await productImageRegisterFn(imageFormData);
 
-      if (imageUploadResponse.status === 200) {
+      if (imageUploadResponse.status === 201) {
         // 상품 등록 로직
+        console.log('url', imageUploadResponse.data.url)
+        const serverDomain = "http://localhost:8000";
+        const fullImageUrl = `${serverDomain}${imageUploadResponse.data.url}`;
         const updatedProductInfo = {
           ...productInfo,
-          thumb_image_url: imageUploadResponse.data.url,
+          image_url: fullImageUrl,
         };
 
         const productRegisterResponse = await productRegisterFn(updatedProductInfo);
