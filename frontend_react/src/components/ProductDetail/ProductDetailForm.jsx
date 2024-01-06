@@ -20,8 +20,11 @@ export default memo(function ProductDetailForm(props) {
       </OrderWrapper>
 
       {/* <Comments */}
+      <div>
         productId={props.dataInfo.id}
         productName={props.dataInfo?.name}
+      </div>
+        
         {/* // contentImg={props.dataInfo.thumb_images} */}
       {/* /> */}
     </Container>
