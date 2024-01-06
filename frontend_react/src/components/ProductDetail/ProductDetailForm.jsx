@@ -12,18 +12,18 @@ export default memo(function ProductDetailForm(props) {
   console.log("props", props)
   return (
     <Container>
-      {/* <OrderWrapper>
+      <OrderWrapper>
         <ImageWrapper>
           <img src={props.dataInfo.image_url} alt="img" />
         </ImageWrapper>
-        <ProductDetailOrder />
-      </OrderWrapper> */}
+        {/* <ProductDetailOrder /> */}
+      </OrderWrapper>
 
-      <Comments
+      {/* <Comments */}
         productId={props.dataInfo.id}
-        productName={props.dataInfo?.title}
-        // contentImg={props.dataInfo.thumb_images}
-      />
+        productName={props.dataInfo?.name}
+        {/* // contentImg={props.dataInfo.thumb_images} */}
+      {/* /> */}
     </Container>
   );
 });
