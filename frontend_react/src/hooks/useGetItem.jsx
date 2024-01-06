@@ -2,8 +2,11 @@ import { useQuery } from "react-query";
 import { axiosInstance } from "../api/axiosInstance";
 
 const getProductOne = async (id) => {
-  const res = await axiosInstance.get(`/api/products/info/list/${id}`);
-  return res.data.data;
+  const res = await axiosInstance.get(`/api/products/${id}/`,{
+    withCredentials:false
+  });
+  console.log("data", res.data.id)
+  return res.data;
 };
 
 export default function useGetItem(id) {

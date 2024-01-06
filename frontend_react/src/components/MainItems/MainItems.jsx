@@ -64,7 +64,7 @@ function MainItems(props) {
               <ItemCard
                 key={datas.id}
                 id={datas.id}
-                productImg={datas.thumb_images}
+                productImg={datas.image_url}
                 // brand={datas.brand_name}
                 title={datas.name}
                 price={datas.price}

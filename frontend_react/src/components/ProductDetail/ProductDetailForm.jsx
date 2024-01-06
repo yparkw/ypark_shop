@@ -9,19 +9,20 @@ import Comments from "../Comment/Comments";
 import ProductDetailOrder from "./ProductDetailOrder";
 
 export default memo(function ProductDetailForm(props) {
+  console.log("props", props)
   return (
     <Container>
-      {/* <OrderWrapper> */}
-        {/* <ImageWrapper>
-          <img src={props.dataInfo.thumb_images[0]} alt="img" />
-        </ImageWrapper> */}
-        {/* <ProductDetailOrder />
+      {/* <OrderWrapper>
+        <ImageWrapper>
+          <img src={props.dataInfo.image_url} alt="img" />
+        </ImageWrapper>
+        <ProductDetailOrder />
       </OrderWrapper> */}
 
       <Comments
-        // productId={props.dataInfo.id}
-        productName={props.dataInfo.title}
-        // contentImg={props.dataInfo.content_images}
+        productId={props.dataInfo.id}
+        productName={props.dataInfo?.title}
+        // contentImg={props.dataInfo.thumb_images}
       />
     </Container>
   );

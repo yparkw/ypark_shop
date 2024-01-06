@@ -9,7 +9,7 @@ import MainItems from "../components/MainItems/MainItems";
 export default function MainPage() {
   const urlParams = {
     page: 1,
-    pageSize: 8,
+    pageSize: 9,
   };
 
   return (

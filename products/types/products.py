@@ -8,7 +8,7 @@ from products.models.product import Product
 # GraphQL 타입으로 정의
 @strawberry.django.type(Product)
 class Product:
-    id: int
+    id: str
     title: str
     price: decimal.Decimal
     category: str

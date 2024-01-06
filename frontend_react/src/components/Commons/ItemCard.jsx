@@ -38,7 +38,7 @@ function ItemCard(props) {
     <Container>
       <Link to={`/detail/${props.id}`}>
         <ItemCardImg className="ItemCard-Image">
-          {/* <img src={props.productImg} alt="product_img" /> */}
+          <img src={props.image_url} alt="product_img" />
           {/* {isClicked ? (
             <button onClick={handleClicked}>
               <AiFillHeart className="ItemCard-Heart" />

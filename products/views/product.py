@@ -72,67 +72,27 @@ class ProductImageUploadAV(APIView):
             logger.warning(f"Image Upload Failed: {serializer.errors}")
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# @permission_classes([AllowAny, ]) # 디버깅용 AllowAny
 class ProductRetrieveUpdateDestroyAV(RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [AllowAny]
     serializer_class = ProductUpdateRequestSZ
     queryset = Product.objects.all()
     http_method_names = ['get', 'patch', 'delete']
-    parser_classes = (FormParser, MultiPartParser)
+    parser_classes = [JSONParser,FormParser, MultiPartParser]
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
-            return ProductListSZ
+            return ProductResponseSZ
         elif self.request.method == 'PATCH':
             return ProductUpdateRequestSZ
-        return self.serializer_class
-    #
-    # @swagger_auto_schema(
-    #     operation_description='상품 detail API',
-    #     manual_parameters=[
-    #         openapi.Parameter(
-    #             'Authorization',
-    #             openapi.IN_HEADER,
-    #             description="Bearer {token}",
-    #             type=openapi.TYPE_STRING
-    #         )
-    #     ]
-    # )
 
-    @extend_schema(
-        responses=ProductListSZ,
-    )
+
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
 
-    # @swagger_auto_schema(
-    #     operation_description='상품 수정 API',
-    #     manual_parameters=[
-    #         openapi.Parameter(
-    #             'Authorization',
-    #             openapi.IN_HEADER,
-    #             description="Bearer {token}",
-    #             type=openapi.TYPE_STRING
-    #         )
-    #     ],
-    #     responses={
-    #         '200': ProductResponseSZ
-    #     }
-    # )
-    @extend_schema(
-        responses=ProductUpdateRequestSZ,
-    )
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
 
-    # @swagger_auto_schema(
-    #     operation_description='상품 삭제 API',
-    #     manual_parameters=[
-    #         openapi.Parameter(
-    #             'Authorization',
-    #             openapi.IN_HEADER,
-    #             description="Bearer {token}",
-    #             type=openapi.TYPE_STRING
-    #         )
-    #     ]
-    # )
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)

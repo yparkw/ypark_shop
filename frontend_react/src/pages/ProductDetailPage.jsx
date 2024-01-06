@@ -10,8 +10,9 @@ export default function ProductDetailPage() {
   const params = useParams();
   const getItem = useGetItem(params.id);
 
+  console.log("getItem", getItem)
   if (getItem.isError) {
-    <ErrorPage errorText={"Network Error"} retryAction={getItem.refetch} />;
+    return <ErrorPage errorText={"Network Error"} retryAction={getItem.refetch} />;
   }
 
   return (
