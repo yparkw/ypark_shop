@@ -234,7 +234,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True # 개발용, 실제 배포시 보안을 위해 수정 필요
+CORS_ALLOW_ALL_ORIGINS = False # 개발용, 실제 배포시 보안을 위해 수정 필요
 
 
 CORS_ALLOWED_ORIGINS = [
@@ -244,7 +244,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://192.168.30.45:3000"
 ]
 
-# CORS_ALLOW_CREDENTIALS = True 쿠키와 함꼐 요청을 보낼 수있도록
+CORS_ALLOW_CREDENTIALS = True # 쿠키와 함꼐 요청을 보낼 수있도록
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

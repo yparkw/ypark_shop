@@ -39,7 +39,7 @@ function ItemCard(props) {
       <Link to={`/detail/${props.id}`}>
         <ItemCardImg className="ItemCard-Image">
           {/* <img src={props.productImg} alt="product_img" /> */}
-          {isClicked ? (
+          {/* {isClicked ? (
             <button onClick={handleClicked}>
               <AiFillHeart className="ItemCard-Heart" />
             </button>
@@ -47,7 +47,7 @@ function ItemCard(props) {
             <button onClick={handleClicked}>
               <AiOutlineHeart className="ItemCard-Heart" />
             </button>
-          )}
+          )} */}
         </ItemCardImg>
         <div className="ItemCard-Explain">
           {/* <TextBox brandName>{props.brand}</TextBox> */}

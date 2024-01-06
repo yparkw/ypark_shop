@@ -3,10 +3,20 @@ import { useQuery } from "react-query";
 import { axiosInstance } from "../api/axiosInstance";
 
 const getProductItems = async (param) => {
-  const res = await axiosInstance.get(`/api/products/`, {
-    params: param,
-  }, {withCredentials: false});
-  return res.data;
+  try{
+    const res = await axiosInstance.get('/api/products/', {
+      params: param,
+    }, {withCredentials: false});
+    return res.data;
+  } catch(error){
+    console.error('Error fetching product items', 
+    {
+      message: error.message,
+      response: error.response,
+      request: error.request,
+    });
+    throw error;
+  }
 };
 
 export default function useGetProductItems(params, setFunction) {
@@ -22,6 +32,13 @@ export default function useGetProductItems(params, setFunction) {
           setFunction(false);
         }, 1200);
       },
+      onError: (error) => {
+        console.error('Error in useQuery:', {
+          message: error.message,
+          response: error.response,
+          request: error.request,
+        });
+      }
     }
   );
 

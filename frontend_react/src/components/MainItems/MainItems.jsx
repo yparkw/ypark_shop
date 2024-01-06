@@ -32,7 +32,7 @@ function MainItems(props) {
   if (getDataList.isLoading || onLoading) {
     return (
       <Container mode={props.mode}>
-        <Skeleton size={6} />
+        <Skeleton size={8} />
       </Container>
     );
   }
@@ -64,7 +64,7 @@ function MainItems(props) {
               <ItemCard
                 key={datas.id}
                 id={datas.id}
-                // productImg={datas.thumb_images[0]}
+                productImg={datas.thumb_images}
                 // brand={datas.brand_name}
                 title={datas.name}
                 price={datas.price}
