@@ -18,6 +18,7 @@ function MainItems(props) {
   // const getFavoriteData = useGetFavoriteItem(userInfo);
   const getDataList = useGetProductItems(props.params, setOnLoading);
 
+  console.log("datalist", getDataList)
   const nextButtonClickHandler = () => {
     props.setPage((prev) => prev + 1);
   };
