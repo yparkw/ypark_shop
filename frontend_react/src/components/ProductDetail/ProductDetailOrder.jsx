@@ -23,7 +23,7 @@ export default memo(function ProductDetailOrder() {
   const [size, setSize] = useState(0);
   const [totalPrice, setTotalPrice] = useState({});
   const [paymentData, setPaymentData] = useState({});
-  const [sizeId, setSizeId] = useState(getItem.data.product_items[0]);
+  const [sizeId, setSizeId] = useState(getItem.data); // 원래 product_itmes[0]
   const [toLogin, setToLogin] = useState(false);
 
   useEffect(() => {
@@ -61,11 +61,11 @@ export default memo(function ProductDetailOrder() {
     });
   }, [totalPrice, userInfo]);
 
-  const addCartAction = useAddCartMutaion({
-    productItemId: sizeId.productItemId,
-    productQuantity: quantity,
-    isWanted: true,
-  });
+  // const addCartAction = useAddCartMutaion({
+  //   productItemId: sizeId.productItemId,
+  //   productQuantity: quantity,
+  //   isWanted: true,
+  // });
 
   const orderProductAction = useOrderProductItem(
     paymentData,
@@ -73,18 +73,18 @@ export default memo(function ProductDetailOrder() {
     "product"
   );
 
-  const addCartItemHandler = (e) => {
-    e.preventDefault();
-    openModal({
-      type: "orderModal",
-      props: {
-        text: "상품을 카트에 추가하시겠습니까?",
-        img: getItem.data.thumb_images[0],
-        action: addCartAction,
-        setState: setToLogin,
-      },
-    });
-  };
+  // const addCartItemHandler = (e) => {
+  //   e.preventDefault();
+  //   openModal({
+  //     type: "orderModal",
+  //     props: {
+  //       text: "상품을 카트에 추가하시겠습니까?",
+  //       img: getItem.data.thumb_images,
+  //       action: addCartAction,
+  //       setState: setToLogin,
+  //     },
+  //   });
+  // };
 
   const orderProductHandler = (e) => {
     e.preventDefault();
@@ -92,16 +92,16 @@ export default memo(function ProductDetailOrder() {
       type: "orderModal",
       props: {
         text: "상품을 주문하시겠습니까?",
-        img: getItem.data.thumb_images[0],
+        img: getItem.data.thumb_images,
         action: orderProductAction,
         setState: setToLogin,
       },
     });
   };
 
-  if (addCartAction.isLoading || orderProductAction.isLoading) {
-    return;
-  }
+  // if (addCartAction.isLoading || orderProductAction.isLoading) {
+  //   return;
+  // }
 
   return (
     <Container>
@@ -120,9 +120,9 @@ export default memo(function ProductDetailOrder() {
       <OrderFormFooter />
       <OrderInfo totalPrice={totalPrice} size={size} />
       <ButtonWrapper>
-        <Button disable={true} onClick={addCartItemHandler}>
+        {/* <Button disable={true} onClick={addCartItemHandler}>
           ADD TO CART
-        </Button>
+        </Button> */}
         <Button disable={true} mode="apply" onClick={orderProductHandler}>
           BUY NOW
         </Button>

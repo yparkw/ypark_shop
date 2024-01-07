@@ -13,9 +13,8 @@ export default function ProductRegisterForm() {
   const [inputs, setInputs] = useState({
     name: "",
     price: "",
-    stock: "",
     category: "",
-    size: "",
+    sizes: { 'S': 0, 'M': 0, 'L': 0, 'XL': 0, 'FREE': 0 },
   });
 
   const [thumbImage, setThumbImage] = useState(null);
@@ -26,14 +25,19 @@ export default function ProductRegisterForm() {
 
   const inputChangeHandler = (e) => {
     const {name, value} = e.target;
-    const newValue = (name === 'price' || name === 'stock') ? Number(value) : value;
+    const newValue = (name === 'price') ? Number(value) : value;
     setInputs({...inputs, [name]: newValue});
   };
 
-  const handleSizeChange = (selectedSizes) => {
+  const handleSizeQuantityChange = (size, value) => {
+
+    const count = value === '' ? 0 : Number(value);
     setInputs(prevInputs => ({
       ...prevInputs,
-      size: selectedSizes.join(', ')
+      sizes: {
+        ...prevInputs.sizes,
+        [size]: count
+      }
     }));
   };
 
@@ -57,9 +61,20 @@ export default function ProductRegisterForm() {
 
   const postRegisterHandler = async(e) => {
     e.preventDefault();
-    console.log('Sending:', inputs, thumbImage);
+    
+
+    const sizesArray = Object.entries(inputs.sizes).map(([size, count]) => {
+      return { size, count };
+    });
+
+    const requestData = {
+      ...inputs,
+      sizes: sizesArray
+    };
+
+    console.log('Sending:', requestData, thumbImage);
     if (isValid) {
-      const result = await postProduct(inputs, thumbImage);
+      const result = await postProduct(requestData, thumbImage);
       console.log('Result:', result);
       if (result) {
         console.log('register success');
@@ -93,7 +108,7 @@ export default function ProductRegisterForm() {
           type={"text"}
           changeHandler={inputChangeHandler}
         />
-        <InputText
+        {/* <InputText
           name={"stock"}
           label={"Quantity"}
           text={"Input Quantity"}
@@ -101,7 +116,7 @@ export default function ProductRegisterForm() {
           mode={"title"}
           type={"text"}
           changeHandler={inputChangeHandler}
-        />
+        /> */}
         <CategoryBox>
           <InputSelect
             name="category"
@@ -111,13 +126,36 @@ export default function ProductRegisterForm() {
             changeHandler={inputChangeHandler}
           />
         </CategoryBox>
-        <CheckBoxSelector onChange={handleSizeChange} />
+        <SizeQuantityInputWrapper>
+          {Object.entries(inputs.sizes).map(([size, count]) => (
+            <SizeQuantityInput key ={size}>
+              <SizeLabel>{size}</SizeLabel>
+              <SizeInput
+                type={"number"}
+                value={count}
+                onFocus={(e) => e.target.value === 0 ? e.target.select() : null}
+                onChange={(e) => handleSizeQuantityChange(size, Number(e.target.value))}
+                onBlur = {(e) => {
+                  if (e.target.value === ''){
+                    handleSizeQuantityChange(size, 0);
+                  }
+                }
+
+                }
+              />
+            </SizeQuantityInput>
+          ))}
+        </SizeQuantityInputWrapper>
         <ImageSelector
           buttonText={"Select Thumbnail"}
           label={"Thumbnail"}
           name="thumb_images"
           changeHandler={setThumbImage}
         />
+        
+        
+        {/* <CheckBoxSelector onChange={handleSizeChange} /> */}
+        
         {/* <ColorSelector
           require={true}
           colorList={dummyColor}
@@ -156,7 +194,7 @@ const InputWrapper = styled.div`
 `;
 
 const CategoryBox = styled.div`
-  grid-column-start: 2;
+  grid-column-start: 1;
   grid-column-end: 3;
   width: 100%;
   display: flex;
@@ -164,6 +202,27 @@ const CategoryBox = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
+const SizeQuantityInputWrapper = styled.div`
+  grid-column-start: 1;
+  grid-column-end: 3;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const SizeQuantityInput = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const SizeLabel = styled.label`
+  margin-right: 10px;
+`;
+
+const SizeInput = styled.input`
+  width: 60px;
+`;
+
 
 const SubmitButtonWrapper = styled.div`
   display: flex;
