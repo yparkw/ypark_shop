@@ -63,8 +63,8 @@ export default function ProductRegisterForm() {
     e.preventDefault();
     
 
-    const sizesArray = Object.entries(inputs.sizes).map(([size, count]) => {
-      return { size, count };
+    const sizesArray = Object.entries(inputs.sizes).map(([sizeKey, count]) => {
+      return { size: sizeKey, count };
     });
 
     const requestData = {

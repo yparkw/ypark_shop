@@ -5,18 +5,23 @@ from django.conf import settings
 from ..models.product import Product,Size, ProductSize
 import json
 
+class SizeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Size
+        fields = ['size']
+        
+        
+class ProductSizeSerializer(serializers.ModelSerializer):
+    size = serializers.ChoiceField(choices=Size.SIZE_CHOICES)
 
+    class Meta:
+        model = ProductSize
+        fields = ('size', 'count',)
+        
 class ProductCreateSZ(serializers.ModelSerializer):
-    sizes = serializers.ListField(
-            child=serializers.DictField(
-                {
-                    'size': serializers.CharField(max_length=5),  # 사이즈 코드
-                    'count': serializers.IntegerField(), 
-                }
-            ),
-            write_only=True
-        )
-    
+    sizes = ProductSizeSerializer(many=True)
+
+
     image_url = serializers.URLField(required=False)
     
     class Meta:
@@ -26,29 +31,15 @@ class ProductCreateSZ(serializers.ModelSerializer):
 
 
     def create(self, validated_data):
-        sizes_data = validated_data.pop('sizes', [])
+        sizes_data = validated_data.pop('sizes')
         product = super().create(validated_data)
-        
         for size_data in sizes_data:
-            try:
-                size = Size.objects.get(size=size_data['size'])  # Size 인스턴스를 가져옴
-            except Size.DoesNotExist:
-                print(f"Size {size_data['size']} does not exist.")
-                continue
-            ProductSize.objects.create(
-                product=product,
-                size=size,
-                count=size_data['count']
-            )
-
+            size_value = size_data['size']
+            size, _ = Size.objects.get_or_create(size=size_value)
+            ProductSize.objects.create(product=product, size=size, count=size_data['count'])
         return product
-    
-class ProductSizeSerializer(serializers.ModelSerializer):
-    size = serializers.CharField(source='size.size')
 
-    class Meta:
-        model = ProductSize
-        fields = ('size', 'count',)
+
     
 class ProductImageUploadSerializer(serializers.Serializer):
     image = serializers.ImageField()
@@ -70,7 +61,9 @@ class ProductListSZ(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 class ProductResponseSZ(serializers.ModelSerializer):
+    sizes = ProductSizeSerializer(source='product_sizes', many=True, read_only=True)
     id = serializers.CharField(read_only=True)
+    
     class Meta:
         model = Product
         fields = '__all__'
@@ -90,5 +83,3 @@ class ProductUpdateRequestSZ(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Product.objects.create(**validated_data)
-
-
