@@ -15,7 +15,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useModal from "../../hooks/useModal";
 import useGetItem from "../../hooks/useGetItem";
 
-export default memo(function ProductDetailOrder() {
+export default memo(function ProductDetailOrder({ sizes }) {
   const params = useParams();
   const getItem = useGetItem(params.id);
   const userInfo = useSelector((state) => state.user);
@@ -30,12 +30,12 @@ export default memo(function ProductDetailOrder() {
     setTotalPrice(Number(quantity) * Number(getItem.data.price));
   }, [getItem.data, quantity]);
 
-  useEffect(() => {
-    const setId = getItem.data.product_items.filter((v) => v.size === size)[0];
-    if (setId) {
-      setSizeId(setId);
-    }
-  }, [size]);
+  // useEffect(() => {
+  //   const setId = getItem.data.product_items.filter((v) => v.size === size)[0];
+  //   if (setId) {
+  //     setSizeId(setId);
+  //   }
+  // }, [size]);
 
   useEffect(() => {
     if (toLogin) {
@@ -108,12 +108,12 @@ export default memo(function ProductDetailOrder() {
       <OrderFormHeader
         title={getItem.data.name}
         price={getItem.data.price}
-        subTitle={getItem.data.brand_name}
+        // subTitle={getItem.data.brand_name}
       />
       <OrderFormBody
         setSize={setSize}
         setQuantity={setQuantity}
-        sizeList={getItem.data.product_items}
+        sizeList={sizes}
         color={getItem.data.color}
         maxQuantity={sizeId.stock}
       />

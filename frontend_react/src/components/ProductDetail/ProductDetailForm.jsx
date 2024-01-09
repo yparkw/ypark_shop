@@ -16,7 +16,7 @@ export default memo(function ProductDetailForm(props) {
         <ImageWrapper>
           <img src={props.dataInfo.image_url} alt="img" />
         </ImageWrapper>
-        <ProductDetailOrder />
+        <ProductDetailOrder sizes={props.dataInfo.sizes} />
       </OrderWrapper>
 
       {/* <Comments */}

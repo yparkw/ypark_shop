@@ -6,10 +6,20 @@ import "slick-carousel/slick/slick.css";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 
 export default memo(function SizeSelector(props) {
-  const [selectItem, setSelectItem] = useState(props.size[0].size);
+  
+  // Convert size object to array
+  const sizeArray = Object.keys(props.sizes).map((key) => {
+    return { size: key, quantity: props.sizes[key] };
+  });
+
+  
+  // Initialize the selectItem with the first size
+  const [selectItem, setSelectItem] = useState(sizeArray[0].size);
+
   useEffect(() => {
     props.setSize(selectItem);
   }, [selectItem]);
+
 
   const settings = {
     focusOnSelect: true,
@@ -28,9 +38,9 @@ export default memo(function SizeSelector(props) {
     <Container>
       <IoMdArrowDropleft />
       <SliderWrapper arrows={false} {...settings}>
-        {props.size.map((v) => {
+        {sizeArray.map((v) => {
           return (
-            <div key={v.productItemId}>
+            <div key={v.size}>
               <SlideItem
                 selected={selectItem === v.size}
                 onClick={() => slideItemClickHandler(v.size)}

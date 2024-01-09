@@ -9,13 +9,14 @@ export default function OrderFormBody(props) {
     <Container>
       <SizeWrapper>
         <span>SIZE</span>
-        <SizeSelector setSize={props.setSize} size={props.sizeList} />
+        {/* setSize={props.setSize} */}
+        <SizeSelector sizes={props.sizeList} setSize={props.setSize} />  
       </SizeWrapper>
       <SubWrapper>
-        <div>
+        {/* <div>
           <span>Color</span>
           <ColorBox color={props.color} />
-        </div>
+        </div> */}
         <div>
           <span>Quantity</span>
           <QuantitySelector
@@ -57,16 +58,16 @@ const SubWrapper = styled.div`
   padding-bottom: 32px;
 `;
 
-const ColorBox = styled.div`
-  width: 18px;
-  height: 18px;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-  border: ${(props) => (props.checked ? "3px solid #2D7DF4" : "none")};
-  border-radius: ${(props) => (props.checked ? "2px" : "none")};
-  transition: 0.04s;
-  background-color: ${(props) => props.color || "#fff"};
-`;
+// const ColorBox = styled.div`
+//   width: 18px;
+//   height: 18px;
+//   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+//     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+//   border: ${(props) => (props.checked ? "3px solid #2D7DF4" : "none")};
+//   border-radius: ${(props) => (props.checked ? "2px" : "none")};
+//   transition: 0.04s;
+//   background-color: ${(props) => props.color || "#fff"};
+// `;
 
 const SizeWrapper = styled.div`
   padding-bottom: 40px;

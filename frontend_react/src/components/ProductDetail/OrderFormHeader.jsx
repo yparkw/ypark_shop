@@ -9,7 +9,7 @@ export default function OrderFormHeader(props) {
     <Container>
       <TitleBox>
         <h2>{props.title}</h2>
-        <span>{props.subTitle}</span>
+        <span>subTitle</span> {/*props.subTitle*/}
       </TitleBox>
       <PriceBox>
         <FaWonSign />

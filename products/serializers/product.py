@@ -20,8 +20,6 @@ class ProductSizeSerializer(serializers.ModelSerializer):
 
         
     
-        
-    
     
     
         
@@ -100,7 +98,7 @@ class ProductResponseSZ(serializers.ModelSerializer):
         # `ProductSize` 모델을 쿼리하여 사이즈와 count를 가져옵니다.
         product_sizes = ProductSize.objects.filter(product=obj)
         
-        # 각 사이즈와 count를 담을 사전을 초기화합니다.
+        # 각 사이즈와 count를 담을 dict 초기화합니다.
         size_data = {}
         
         # ProductSize 모델에서 가져온 정보를 사전에 추가합니다.
