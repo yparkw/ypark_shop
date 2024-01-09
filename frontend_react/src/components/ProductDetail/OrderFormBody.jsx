@@ -1,16 +1,21 @@
 /* eslint-disable react/prop-types */
 import React from "react";
+import {useState} from "react";
 import styled from "styled-components";
 import QuantitySelector from "../Cart/QuantitySelector";
 import SizeSelector from "./SizeSelector";
 
 export default function OrderFormBody(props) {
+  const [maxQuantity, setMaxQuantity] = useState(0);
+
+  
+  
   return (
     <Container>
       <SizeWrapper>
         <span>SIZE</span>
         {/* setSize={props.setSize} */}
-        <SizeSelector sizes={props.sizeList} setSize={props.setSize} />  
+        <SizeSelector sizes={props.sizeList} setSize={props.setSize} setMaxQuantity={setMaxQuantity} />  
       </SizeWrapper>
       <SubWrapper>
         {/* <div>
@@ -22,7 +27,7 @@ export default function OrderFormBody(props) {
           <QuantitySelector
             setQuantity={props.setQuantity}
             productQuantity={1}
-            maxQuantity={props.maxQuantity}
+            maxQuantity={maxQuantity}
           />
         </div>
       </SubWrapper>

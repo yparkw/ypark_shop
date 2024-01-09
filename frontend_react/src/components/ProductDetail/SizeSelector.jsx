@@ -6,19 +6,19 @@ import "slick-carousel/slick/slick.css";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 
 export default memo(function SizeSelector(props) {
-  
-  // Convert size object to array
   const sizeArray = Object.keys(props.sizes).map((key) => {
     return { size: key, quantity: props.sizes[key] };
   });
 
+  const [selectItem, setSelectItem] = useState(null);
   
-  // Initialize the selectItem with the first size
-  const [selectItem, setSelectItem] = useState(sizeArray[0].size);
-
   useEffect(() => {
-    props.setSize(selectItem);
-  }, [selectItem]);
+    if (selectItem !== null) {
+      props.setSize(selectItem);
+      const maxQuantity = sizeArray.find(sizeObj => sizeObj.size === selectItem).quantity;
+      props.setMaxQuantity(maxQuantity);
+    }
+  }, [selectItem, props, sizeArray]);
 
 
   const settings = {
@@ -32,10 +32,18 @@ export default memo(function SizeSelector(props) {
 
   const slideItemClickHandler = (value) => {
     setSelectItem(value);
+    const maxQuantity = sizeArray.find(sizeObj => sizeObj.size === selectItem).quantity;
+    if (maxQuantity > 0) {
+      setSelectItem(value);
+      props.setMaxQuantity(maxQuantity);
+    }
+    
   };
 
+  
   return (
     <Container>
+      {selectItem === null && <Prompt>Please, select a size</Prompt>}
       <IoMdArrowDropleft />
       <SliderWrapper arrows={false} {...settings}>
         {sizeArray.map((v) => {
@@ -43,6 +51,7 @@ export default memo(function SizeSelector(props) {
             <div key={v.size}>
               <SlideItem
                 selected={selectItem === v.size}
+                quantity={v.quantity}
                 onClick={() => slideItemClickHandler(v.size)}
               >
                 {v.size}
@@ -88,7 +97,8 @@ const SlideItem = styled.button`
   border: none;
   background-color: transparent;
   font-size: 1rem;
-  color: #49474c;
+  color: ${(props) => (props.quantity === 0 ? "#bcbcbc" : "#49474c")};
+  pointer-events: ${(props) => (props.quantity === 0 ? "none" : "auto")};
 
   ${(props) =>
     props.selected &&
@@ -97,4 +107,12 @@ const SlideItem = styled.button`
       font-size: 18px;
       font-weight: 700;
     `}
+`;
+
+const Prompt = styled.div`
+  width: 100%;
+  text-align: left;
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #49474c;
 `;

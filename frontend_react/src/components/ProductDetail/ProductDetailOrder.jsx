@@ -61,11 +61,11 @@ export default memo(function ProductDetailOrder({ sizes }) {
     });
   }, [totalPrice, userInfo]);
 
-  // const addCartAction = useAddCartMutaion({
-  //   productItemId: sizeId.productItemId,
-  //   productQuantity: quantity,
-  //   isWanted: true,
-  // });
+  const addCartAction = useAddCartMutaion({
+    productItemId: sizeId.productItemId,
+    productQuantity: quantity,
+    isWanted: true,
+  });
 
   const orderProductAction = useOrderProductItem(
     paymentData,
@@ -73,18 +73,18 @@ export default memo(function ProductDetailOrder({ sizes }) {
     "product"
   );
 
-  // const addCartItemHandler = (e) => {
-  //   e.preventDefault();
-  //   openModal({
-  //     type: "orderModal",
-  //     props: {
-  //       text: "상품을 카트에 추가하시겠습니까?",
-  //       img: getItem.data.thumb_images,
-  //       action: addCartAction,
-  //       setState: setToLogin,
-  //     },
-  //   });
-  // };
+  const addCartItemHandler = (e) => {
+    e.preventDefault();
+    openModal({
+      type: "orderModal",
+      props: {
+        text: "상품을 카트에 추가하시겠습니까?",
+        img: getItem.data.thumb_images,
+        action: addCartAction,
+        setState: setToLogin,
+      },
+    });
+  };
 
   const orderProductHandler = (e) => {
     e.preventDefault();
@@ -99,9 +99,10 @@ export default memo(function ProductDetailOrder({ sizes }) {
     });
   };
 
-  // if (addCartAction.isLoading || orderProductAction.isLoading) {
-  //   return;
-  // }
+
+  if (addCartAction.isLoading || orderProductAction.isLoading) {
+    return;
+  }
 
   return (
     <Container>
@@ -114,15 +115,15 @@ export default memo(function ProductDetailOrder({ sizes }) {
         setSize={setSize}
         setQuantity={setQuantity}
         sizeList={sizes}
-        color={getItem.data.color}
-        maxQuantity={sizeId.stock}
+        // color={getItem.data.color}
+        // maxQuantity={sizeId.stock}
       />
       <OrderFormFooter />
       <OrderInfo totalPrice={totalPrice} size={size} />
       <ButtonWrapper>
-        {/* <Button disable={true} onClick={addCartItemHandler}>
+        <Button disable={true} onClick={addCartItemHandler}>
           ADD TO CART
-        </Button> */}
+        </Button>
         <Button disable={true} mode="apply" onClick={orderProductHandler}>
           BUY NOW
         </Button>

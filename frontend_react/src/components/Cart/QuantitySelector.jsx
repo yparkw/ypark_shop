@@ -5,12 +5,11 @@ import styled from "styled-components";
 import { FiMinus, FiPlus } from "react-icons/fi";
 
 export default memo(function QuantitySelector(props) {
-  const [quantity, setQuantity] = useState(props.productQuantity);
+const [quantity, setQuantity] = useState(props.productQuantity);
 
   useEffect(() => {
     props.setQuantity(quantity);
-  }),
-    [quantity];
+  }), [quantity];
 
   const quantityPlusHandler = () => {
     quantity < props.maxQuantity ? setQuantity((prev) => prev + 1) : null;
@@ -18,6 +17,8 @@ export default memo(function QuantitySelector(props) {
   const quantityMinusHandler = () => {
     quantity > 1 ? setQuantity((prev) => prev - 1) : null;
   };
+
+  console.log("maxQuantity", props.maxQuantity)
 
   return (
     <Container>
