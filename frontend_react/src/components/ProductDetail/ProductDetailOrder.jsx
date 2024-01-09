@@ -23,19 +23,12 @@ export default memo(function ProductDetailOrder({ sizes }) {
   const [size, setSize] = useState(0);
   const [totalPrice, setTotalPrice] = useState({});
   const [paymentData, setPaymentData] = useState({});
-  const [sizeId, setSizeId] = useState(getItem.data); // 원래 product_itmes[0]
   const [toLogin, setToLogin] = useState(false);
+
 
   useEffect(() => {
     setTotalPrice(Number(quantity) * Number(getItem.data.price));
   }, [getItem.data, quantity]);
-
-  // useEffect(() => {
-  //   const setId = getItem.data.product_items.filter((v) => v.size === size)[0];
-  //   if (setId) {
-  //     setSizeId(setId);
-  //   }
-  // }, [size]);
 
   useEffect(() => {
     if (toLogin) {
@@ -62,9 +55,10 @@ export default memo(function ProductDetailOrder({ sizes }) {
   }, [totalPrice, userInfo]);
 
   const addCartAction = useAddCartMutaion({
-    productItemId: sizeId.productItemId,
-    productQuantity: quantity,
-    isWanted: true,
+    productItemId: getItem.data.id,
+    quantity: quantity,
+    size: size,
+    // isWanted: true,
   });
 
   const orderProductAction = useOrderProductItem(
@@ -79,7 +73,7 @@ export default memo(function ProductDetailOrder({ sizes }) {
       type: "orderModal",
       props: {
         text: "상품을 카트에 추가하시겠습니까?",
-        img: getItem.data.thumb_images,
+        img: getItem.data.image_url,
         action: addCartAction,
         setState: setToLogin,
       },
@@ -92,7 +86,7 @@ export default memo(function ProductDetailOrder({ sizes }) {
       type: "orderModal",
       props: {
         text: "상품을 주문하시겠습니까?",
-        img: getItem.data.thumb_images,
+        img: getItem.data.image_url,
         action: orderProductAction,
         setState: setToLogin,
       },

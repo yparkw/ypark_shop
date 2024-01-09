@@ -3,7 +3,7 @@ import { axiosInstance } from "./axiosInstance";
 
 export const authorizeToken = async () => {
   const token = Cookie.get("authorization");
-  const res = await axiosInstance.get("/api/user", {
+  const res = await axiosInstance.get("/api/user/", {
     headers: {
       Authorization: token,
     },

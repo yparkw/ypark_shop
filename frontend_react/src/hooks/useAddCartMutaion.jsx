@@ -6,7 +6,7 @@ import { queryClient } from "../utils/queryClient";
 
 const addCartItem = async (body) => {
   const token = Cookies.get("authorization");
-  const res = await axiosInstance.post("/api/carts/", body, {
+  const res = await axiosInstance.post("/api/cart/", body, {
     headers: {
       Authorization: token,
     },

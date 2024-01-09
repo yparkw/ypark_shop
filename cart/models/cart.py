@@ -15,6 +15,7 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
     productItemId = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='cart_items')
     quantity = models.PositiveIntegerField(default=1)
+    size = models.CharField(max_length = 5, default = "S")
     added_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

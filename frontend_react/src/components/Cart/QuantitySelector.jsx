@@ -18,8 +18,6 @@ const [quantity, setQuantity] = useState(props.productQuantity);
     quantity > 1 ? setQuantity((prev) => prev - 1) : null;
   };
 
-  console.log("maxQuantity", props.maxQuantity)
-
   return (
     <Container>
       <button onClick={quantityMinusHandler}>
