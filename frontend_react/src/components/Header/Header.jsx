@@ -15,7 +15,7 @@ const Header = () => {
       <LogoBox>
         <Link to="/">
           <img
-            src={`${process.env.PUBLIC_URL}/assets/images/logo_demo02.svg`}
+            src={`${process.env.PUBLIC_URL}/assets/images/main_logo.png`}
             alt="logo"
           />
         </Link>
