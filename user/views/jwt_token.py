@@ -23,17 +23,25 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
     
     def post(self, request, *args, **kwargs):
+        logger.debug(f"request_data: {request.data}")
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            user = serializer.validated_data['user']
-            if not user:
-                return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-            with transaction.atomic():
-                try:
+        logger.debug(f"serializer: {str(serializer)}")
+        try:
+            # 유효성 검사를 진행합니다.
+            if serializer.is_valid(raise_exception=True):
+                user = serializer.validated_data['user']
+                logger.debug(f"user: {str(user)}")
+                
+                # User 객체가 존재하는지 확인합니다.
+                if not user or not user.is_active:
+                    return Response({'detail': 'User not found or inactive'}, status=status.HTTP_404_NOT_FOUND)
+                
+                with transaction.atomic():
+                    # 토큰을 생성합니다.
                     refresh = RefreshToken.for_user(user)
                     access_token = str(refresh.access_token)
-
-                    # 사용자 정보 및 토큰을 포함한 응답 생성
+                    
+                    # 응답 데이터를 생성합니다.
                     response_data = CustomTokenObtainPairResponseSerializer({
                         'refresh': str(refresh),
                         'access': access_token,
@@ -46,13 +54,16 @@ class CustomTokenObtainPairView(TokenObtainPairView):
                         'is_admin': user.is_admin,
                         'is_active': user.is_active,
                         'is_staff': user.is_staff
-                    })
-                    return Response(response_data.data, status=status.HTTP_200_OK)
-                except Exception as e:
-                    logger.error(f"Error during user login: {e}")
-                    return Response({'detail': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        return Response({'detail': 'Invalid credentials'}, status = status.HTTP_401_UNAUTHORIZED)
-
+                    }).data
+                    
+                    return Response(response_data, status=status.HTTP_200_OK)
+                
+        except Exception as e:
+            # 예외가 발생했을 때 로그에 기록합니다.
+            logger.error(f"Error during user login: {str(e)}")
+            # 클라이언트에게는 일반적인 오류 메시지를 보냅니다.
+            return Response({'detail': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
 class CustomTokenRefreshView(TokenRefreshView):
     
     def post(self, request, *args, **kwargs):

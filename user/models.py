@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.base_user import BaseUserManager
 from common.models import TimestampBaseModel
+from django.utils import timezone
+from datetime import timedelta
 import uuid
 
 
@@ -58,13 +60,3 @@ class User(TimestampBaseModel, AbstractBaseUser):
 
     def has_module_perms(self, app_label=None):
         return self.is_admin
-    
-class OutstandingToken(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'outstanding_tokens')
-    jti = models.UUIDField(default=uuid.uuid4, editable=False)
-    token = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField()
-
-    def __str__(self):
-        return f"Token for {self.user} (expires at {self.expires_at})"

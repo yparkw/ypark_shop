@@ -1,14 +1,17 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
+import logging
+
+logger = logging.getLogger(__name__)
 # TokenObtain == Access Token 으로 생각하면 됨! 
 # 즉, 이곳에서 claim에 어떤 정보를 담고 싶은지에 대한 커스터마이징을 진행하면 됨!
 
+
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    email = serializers.EmailField()
+    username_field = "email"
     @classmethod
     def get_token(cls, user):
-        if not user:
-            raise serializers.ValidationError("User not found")
         
         token = super().get_token(user)
 
