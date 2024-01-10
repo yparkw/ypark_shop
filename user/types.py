@@ -16,6 +16,7 @@ class User:
     password: str
     address: str
     postCode: str
+    role: str
     is_active: bool
     is_admin: bool
     is_superuser: bool

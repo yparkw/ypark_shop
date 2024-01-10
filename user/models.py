@@ -38,13 +38,12 @@ class User(TimestampBaseModel, AbstractBaseUser):
     username = models.CharField(max_length=20, null=True, blank=True, help_text='유저 이름')
     email = models.EmailField(max_length = 50, unique=True, help_text='유저 이메일')
     phone = models.CharField(max_length = 20, help_text = '연락가능한 번호')
-    password = models.CharField(max_length=128)
     address = models.CharField(max_length = 100)
     postCode = models.CharField(max_length = 100)
+
     
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 
     objects = CustomUserManager()

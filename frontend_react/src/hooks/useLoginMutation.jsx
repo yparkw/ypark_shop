@@ -10,7 +10,7 @@ import { setUser } from "../redux/reducer/userSlice";
 const loginFn = async (payload) => {
   const res = await axiosInstance.post("api/user/login/", payload, {withCredentials: false});
   if (res?.headers) {
-    Cookies.set("authorization", res.headers["authorization"]);
+    Cookies.set("authorization", res.data.access);
   }
 
   return res;
@@ -24,17 +24,22 @@ export default function useLoginMutation(value) {
     {
       retry: 2,
       onSuccess: (res) =>
+      {console.log('Server response:', res);
         dispatch(
           setUser({
-            // id: res.data.data.id,
-            // name: res.data.data.name,
-            // email: res.data.data.email,
-            // phone: res.data.data.phone,
-            // address: res.data.data.address,
-            // postcode: res.data.data.postcode,
+            id: res.data.id,
+            name: res.data.username,
+            email: res.data.email,
+            phone: res.data.phone,
+            address: res.data.address,
+            postcode: res.data.postcode,
+            is_active: res.data.is_active,
+            is_admin: res.data.is_admin,
+            is_staff: res.data.is_staff,
             isLogin: true,
           })
-        ),
+        );
+      },
     }
   );
 

@@ -188,9 +188,9 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=720),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "ROTATE_REFRESH_TOKENS": False,
-    "BLACKLIST_AFTER_ROTATION": False,
-    "UPDATE_LAST_LOGIN": False,
+    # "ROTATE_REFRESH_TOKENS": False,
+    # "BLACKLIST_AFTER_ROTATION": False,
+    # "UPDATE_LAST_LOGIN": False,
 
     # "ALGORITHM": "HS256",
     # "SIGNING_KEY": SECRET_KEY,
@@ -219,10 +219,10 @@ SIMPLE_JWT = {
 
     # #### customize한 serializer로 변경함.
     
-    # "TOKEN_OBTAIN_SERIALIZER": "users.serializers.LoginSerializer",
+    # "TOKEN_OBTAIN_SERIALIZER": "users.serializers.jwt_token.SeasonTokenObtainPairSerializer",
     # #### "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
     
-    # "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
+    # "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.CustomRefreshToken",
     # "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
     # "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
     # "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",

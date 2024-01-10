@@ -8,6 +8,7 @@
 "axios 버전문제로 인한 formData 인식실패"
 "쿠키와 CORS 정책의 관계"
 "SerializerMethodField()를 사용하여 두개의 테이블에서 데이터 파싱하기"
+"Redux 상태관리시스템을 통한 상태 관리"
 
 # 진행순서
 ## 순서대로 진행합시다 frontend/

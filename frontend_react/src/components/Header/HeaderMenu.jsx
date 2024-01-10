@@ -25,14 +25,17 @@ const HeaderMenu = (props) => {
   const menuButtonHandler = () => {
     setIsClick((prev) => !prev);
   };
+  console.log("header_props", props)
   return (
     <Container>
       <Wrapper hide={!isClick}>
         {props.login ? (
           <>
-            <Link to="/product-register" className="header__register--items">
+            {props.role === 'admin' && (
+              <Link to="/product-register" className="header__register--items">
               <HideText>Register</HideText>
-            </Link>
+              </Link>
+            )}
             <Link to="/cart" className="header__cart--items">
               <HideText>Cart</HideText>
             </Link>
