@@ -7,10 +7,12 @@ from rest_framework_simplejwt.tokens import RefreshToken
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
+        if not user:
+            raise serializers.ValidationError("User not found")
+        
         token = super().get_token(user)
 
         # 사용자 정보를 토큰에 추가
-        token['username'] = user.username
         token['email'] = user.email
 
         return token
@@ -19,7 +21,7 @@ class CustomTokenObtainPairResponseSerializer(serializers.Serializer):
     access = serializers.CharField()
     refresh = serializers.CharField()
     username = serializers.CharField(read_only=True)
-    email = serializers.EmailField(read_only=True)
+    email = serializers.CharField(read_only=True)
     phone = serializers.CharField(read_only=True)
     address = serializers.CharField(read_only=True)
     postCode = serializers.CharField(read_only=True)

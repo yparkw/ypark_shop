@@ -1,3 +1,4 @@
+from django.db import transaction
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -10,6 +11,9 @@ from drf_yasg.utils import swagger_auto_schema
 from user.serializers.jwt_token import CustomTokenObtainPairResponseSerializer, CustomTokenObtainPairSerializer
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
+import logging
+
+logger = logging.getLogger(__name__)
 
 User = get_user_model()
 
@@ -20,27 +24,33 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-
         if serializer.is_valid(raise_exception=True):
             user = serializer.validated_data['user']
-            refresh = RefreshToken.for_user(user)
-            access_token = str(refresh.access_token)
+            if not user:
+                return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+            with transaction.atomic():
+                try:
+                    refresh = RefreshToken.for_user(user)
+                    access_token = str(refresh.access_token)
 
-            # 사용자 정보 및 토큰을 포함한 응답 생성
-            response_data = CustomTokenObtainPairResponseSerializer({
-                'refresh': str(refresh),
-                'access': access_token,
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'phone': user.phone,
-                'address': user.address,
-                'postCode': user.postcode,
-                'is_admin': user.is_admin,
-                'is_active': user.is_active,
-                'is_staff': user.is_staff
-            })
-            return Response(response_data, status=status.HTTP_200_OK)
+                    # 사용자 정보 및 토큰을 포함한 응답 생성
+                    response_data = CustomTokenObtainPairResponseSerializer({
+                        'refresh': str(refresh),
+                        'access': access_token,
+                        'id': user.id,
+                        'username': user.username,
+                        'email': user.email,
+                        'phone': user.phone,
+                        'address': user.address,
+                        'postCode': user.postcode,
+                        'is_admin': user.is_admin,
+                        'is_active': user.is_active,
+                        'is_staff': user.is_staff
+                    })
+                    return Response(response_data.data, status=status.HTTP_200_OK)
+                except Exception as e:
+                    logger.error(f"Error during user login: {e}")
+                    return Response({'detail': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response({'detail': 'Invalid credentials'}, status = status.HTTP_401_UNAUTHORIZED)
 
 class CustomTokenRefreshView(TokenRefreshView):
