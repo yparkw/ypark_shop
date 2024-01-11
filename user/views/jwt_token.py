@@ -23,14 +23,11 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
     
     def post(self, request, *args, **kwargs):
-        logger.debug(f"request_data: {request.data}")
         serializer = self.get_serializer(data=request.data)
-        logger.debug(f"serializer: {str(serializer)}")
         try:
             # 유효성 검사를 진행합니다.
             if serializer.is_valid(raise_exception=True):
                 user = serializer.validated_data['user']
-                logger.debug(f"user: {str(user)}")
                 
                 # User 객체가 존재하는지 확인합니다.
                 if not user or not user.is_active:
@@ -50,7 +47,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
                         'email': user.email,
                         'phone': user.phone,
                         'address': user.address,
-                        'postCode': user.postcode,
+                        'postCode': user.postCode,
                         'is_admin': user.is_admin,
                         'is_active': user.is_active,
                         'is_staff': user.is_staff
