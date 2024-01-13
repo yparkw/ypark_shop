@@ -223,9 +223,6 @@ SIMPLE_JWT = {
     
     "TOKEN_OBTAIN_SERIALIZER": "users.serializers.jwt_token.CustomTokenObtainPairSerializer",
     'TOKEN_OBTAIN_PAIR_RESPONSE_SERIALIZER': 'users.serializers.jwt_token.CustomTokenObtainPairResponseSerializer',
-    # #### "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
-    
-    # "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.CustomRefreshToken",
     # "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
     # "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
     # "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",

@@ -2,19 +2,20 @@ import Cookie from "js-cookie";
 import { axiosInstance } from "./axiosInstance";
 
 export const authorizeToken = async () => {
-  const token = Cookie.get("authorization");
+  const token = Cookie.get("access"); // JWT 토큰을 쿠키에서 가져옵니다.
   const res = await axiosInstance.get("/api/user/", {
     headers: {
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
   });
   return res;
 };
 
 export const productImageRegisterFn = async (formData) => {
+  const token = Cookie.get("access"); // 토큰 가져오기
   const res = axiosInstance.post("/api/products/upload/", formData,{
-    withCredentials: false,
     headers: {
+      Authorization: `Bearer ${token}`, // 토큰 헤더에 추가
       "Content-type" : "multipart/form-data"
     }
   }
@@ -24,8 +25,11 @@ export const productImageRegisterFn = async (formData) => {
 
 
 export const productRegisterFn = async (formData) => {
+  const token = Cookie.get("access"); // 토큰 가져오기
   const res = await axiosInstance.post("/api/products/", formData, {
-    withCredentials: false,
+    headers: {
+      Authorization: `Bearer ${token}`, // 토큰 헤더에 추가
+    }
   });
   return res;
 };

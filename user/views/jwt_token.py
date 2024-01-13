@@ -61,7 +61,6 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             # 클라이언트에게는 일반적인 오류 메시지를 보냅니다.
             return Response({'detail': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-class CustomTokenRefreshView(TokenRefreshView):
-    
+class CustomTokenRefreshView(TokenRefreshView): 
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)

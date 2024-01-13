@@ -31,7 +31,7 @@ const HeaderMenu = (props) => {
       <Wrapper hide={!isClick}>
         {props.login ? (
           <>
-            {props.is_staff === true && (
+            {props.info.is_staff === true && (
               <Link to="/product-register" className="header__register--items">
               <HideText>Register</HideText>
               </Link>

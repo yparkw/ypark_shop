@@ -59,6 +59,8 @@ class ProductListCreateAV(ListCreateAPIView):
         
 
 class ProductImageUploadAV(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request, *args, **kwargs):
@@ -75,7 +77,7 @@ class ProductImageUploadAV(APIView):
 # @permission_classes([AllowAny, ]) # 디버깅용 AllowAny
 class ProductRetrieveUpdateDestroyAV(RetrieveUpdateDestroyAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = ProductUpdateRequestSZ
     queryset = Product.objects.all()
     http_method_names = ['get', 'patch', 'delete']
