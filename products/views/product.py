@@ -34,6 +34,15 @@ class ProductListCreateAV(ListCreateAPIView):
     http_method_names = ['get', 'post']
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
+    def get_permissions(self):
+        """
+        'GET' 요청에 대해서는 모든 사용자가 접근할 수 있도록 권한 설정을 변경합니다.
+        """
+        if self.request.method == 'GET':
+            return [AllowAny()]
+        return super().get_permissions()
+    
+    
     def get_serializer_class(self):
         if self.request.method == 'GET':
             return ProductListSZ
@@ -82,6 +91,14 @@ class ProductRetrieveUpdateDestroyAV(RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     http_method_names = ['get', 'patch', 'delete']
     parser_classes = [JSONParser,FormParser, MultiPartParser]
+
+    def get_permissions(self):
+        """
+        'GET' 요청에 대해서는 모든 사용자가 접근할 수 있도록 권한 설정을 변경합니다.
+        """
+        if self.request.method == 'GET':
+            return [AllowAny()]
+        return super().get_permissions()
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
