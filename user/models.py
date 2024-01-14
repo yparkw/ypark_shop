@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.base_user import BaseUserManager
 from common.models import TimestampBaseModel
+from cart.models.cart import Cart
 from django.utils import timezone
 from datetime import timedelta
 import uuid
@@ -42,7 +43,7 @@ class User(TimestampBaseModel, AbstractBaseUser):
     phone = models.CharField(max_length = 20, help_text = '연락가능한 번호')
     address = models.CharField(max_length = 100)
     postCode = models.CharField(max_length = 100)
-
+    # cart = models.OneToOneField('Cart', on_delete=models.CASCADE, null=True, blank=True, related_name='owner')
     
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

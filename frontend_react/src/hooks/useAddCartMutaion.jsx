@@ -5,17 +5,18 @@ import { axiosInstance } from "../api/axiosInstance";
 import { queryClient } from "../utils/queryClient";
 
 const addCartItem = async (body) => {
-  const token = Cookies.get("authorization");
+  const token = Cookies.get("access");
   const res = await axiosInstance.post("/api/cart/", body, {
     headers: {
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
   });
-
+  console.log("addcart", res)
   return res;
 };
 
 export default function useAddCartMutaion(body) {
+  
   const { mutate, isLoading } = useMutation(() => addCartItem(body), {
     retry: false,
     onSuccess: () => {

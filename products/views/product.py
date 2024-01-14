@@ -24,7 +24,7 @@ from rest_framework.permissions import AllowAny
 import logging
 logger = logging.getLogger(__name__)
 
-@permission_classes([AllowAny, ]) # 디버깅용 AllowAny
+# @permission_classes([AllowAny, ]) # 디버깅용 AllowAny
 # Create your views here.
 class ProductListCreateAV(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]

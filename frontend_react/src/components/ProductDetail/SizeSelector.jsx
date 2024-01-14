@@ -14,11 +14,15 @@ export default memo(function SizeSelector(props) {
   
   useEffect(() => {
     if (selectItem !== null) {
-      props.setSize(selectItem);
+      
       const maxQuantity = sizeArray.find(sizeObj => sizeObj.size === selectItem).quantity;
-      props.setMaxQuantity(maxQuantity);
+      if(maxQuantity !== undefined){
+        props.setSize(selectItem);
+        props.setMaxQuantity(maxQuantity);
+      }
+      
     }
-  }, [selectItem, props, sizeArray]);
+  }, [selectItem, props]);
 
 
   const settings = {
@@ -31,11 +35,10 @@ export default memo(function SizeSelector(props) {
   };
 
   const slideItemClickHandler = (value) => {
-    setSelectItem(value);
-    const maxQuantity = sizeArray.find(sizeObj => sizeObj.size === selectItem).quantity;
-    if (maxQuantity > 0) {
-      setSelectItem(value);
-      props.setMaxQuantity(maxQuantity);
+    const selectedSize = sizeArray.find(sizeObj => sizeObj.size === value);
+    if (selectedSize && selectedSize.quantity > 0) {
+        setSelectItem(value);
+        props.setMaxQuantity(selectedSize.quantity);
     }
     
   };

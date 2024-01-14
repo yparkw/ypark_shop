@@ -6,12 +6,14 @@ import { addCartData } from "../redux/reducer/cartSlice";
 
 export default function useGetCartDataQuery(setFunction) {
   const dispatch = useDispatch();
+  
   const { data, isLoading, isError, refetch, isSuccess } = useQuery(
     ["getCartData"],
     getCartData,
     {
       retry: 2,
       onSuccess: (response) => {
+        console.log("get_cart", response);
         dispatch(addCartData(response.length));
         setFunction(true);
         setTimeout(() => {

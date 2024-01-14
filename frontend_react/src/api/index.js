@@ -35,13 +35,13 @@ export const productRegisterFn = async (formData) => {
 };
 
 export const getCartData = async () => {
-  const token = Cookie.get("authorization");
-  const res = await axiosInstance.get("/api/carts/", {
+  const token = Cookie.get("access");
+  const res = await axiosInstance.get("/api/cart/", {
     headers: {
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
   });
-
+  console.log("getCart_res", res.data)
   return res.data.data;
 };
 
