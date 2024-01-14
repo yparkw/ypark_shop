@@ -3,9 +3,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-
 from cart.models.cart import Cart, CartItem
 from cart.serializers.cart import CartSerializer, CartItemSerializer
+
+import logging
+logger = logging.getLogger(__name__)
 
 class CartView(APIView):
     authentication_classes = [JWTAuthentication]
@@ -15,6 +17,7 @@ class CartView(APIView):
     def get(self, request):
         cart, _ = Cart.objects.get_or_create(user=request.user)
         serializer = CartSerializer(cart)
+        logging.debug(f"cart serializer: {serializer}")
         return Response(serializer.data)
 
     # 장바구니에 아이템 추가

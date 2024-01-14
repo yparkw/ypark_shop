@@ -41,7 +41,6 @@ export const getCartData = async () => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log("getCart_res", res.data)
   return res.data.data;
 };
 
