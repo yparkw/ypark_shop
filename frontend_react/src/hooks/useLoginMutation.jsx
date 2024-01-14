@@ -10,8 +10,9 @@ import { setUser } from "../redux/reducer/userSlice";
 const loginFn = async (payload) => {
   const res = await axiosInstance.post("api/user/login/", payload, {withCredentials: false});
   if (res?.headers) {
-    Cookies.set("authorization", res.data.access);
+    Cookies.set("access", res.data.access);
   }
+  console.log("access", res.data)
 
   return res;
 };

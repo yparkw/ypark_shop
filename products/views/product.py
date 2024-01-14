@@ -6,6 +6,7 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import status
 from drf_spectacular.utils import extend_schema
 
@@ -26,7 +27,7 @@ logger = logging.getLogger(__name__)
 @permission_classes([AllowAny, ]) # 디버깅용 AllowAny
 # Create your views here.
 class ProductListCreateAV(ListCreateAPIView):
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     pagination_class = CustomPagination
     queryset = Product.objects.all()
@@ -59,13 +60,12 @@ class ProductListCreateAV(ListCreateAPIView):
         
 
 class ProductImageUploadAV(APIView):
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request, *args, **kwargs):
         serializer = ProductImageUploadSerializer(data=request.data)
-
         if serializer.is_valid():
             data = serializer.save()  # 이미지 저장 및 URL 반환
             logger.debug(f"Image Upload Successful: {data}")
@@ -76,7 +76,7 @@ class ProductImageUploadAV(APIView):
 
 # @permission_classes([AllowAny, ]) # 디버깅용 AllowAny
 class ProductRetrieveUpdateDestroyAV(RetrieveUpdateDestroyAPIView):
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = ProductUpdateRequestSZ
     queryset = Product.objects.all()

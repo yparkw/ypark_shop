@@ -2,7 +2,7 @@ import Cookie from "js-cookie";
 import { axiosInstance } from "./axiosInstance";
 
 export const authorizeToken = async () => {
-  const token = Cookie.get("access"); // JWT 토큰을 쿠키에서 가져옵니다.
+  const token = Cookie.get("authoization"); // JWT 토큰을 쿠키에서 가져옵니다.
   const res = await axiosInstance.get("/api/user/", {
     headers: {
       Authorization: `Bearer ${token}`,

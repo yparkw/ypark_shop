@@ -10,23 +10,15 @@ class SizeSerializer(serializers.ModelSerializer):
         model = Size
         fields = ['size']
         
-        
 class ProductSizeSerializer(serializers.ModelSerializer):
     size = serializers.ChoiceField(choices=Size.SIZE_CHOICES)
 
     class Meta:
         model = ProductSize
         fields = ('size', 'count',)
-
-        
-    
-    
-    
         
 class ProductCreateSZ(serializers.ModelSerializer):
     sizes = ProductSizeSerializer(many=True)
-
-
     image_url = serializers.URLField(required=False)
     
     class Meta:
