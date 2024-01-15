@@ -111,7 +111,7 @@ export default memo(function CartForm() {
           </span>
         </SubTotal>
       </FormFooter>
-      <Button disable={getCartData?.data?.length} onClick={clickHander}>
+      <Button disable={!getCartData?.data?.length} onClick={clickHander}>
         ORDER NOW
       </Button>
     </Container>
