@@ -7,9 +7,9 @@ export default function ProfileCard(props) {
   return (
     <Container>
       <div>
-        <ImageWrapper>
+        {/* <ImageWrapper>
           <img src={props.info.profileImg} alt="profileImg" />
-        </ImageWrapper>
+        </ImageWrapper> */}
         <ProfileInfo>
           <span>{props.info.name}</span>
           <Link to="edit">프로필 수정</Link>
@@ -41,18 +41,7 @@ const Container = styled.section`
   }
 `;
 
-const ImageWrapper = styled.div`
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  overflow: hidden;
 
-  img {
-    width: inherit;
-    height: inherit;
-    object-fit: cover;
-  }
-`;
 
 const ProfileInfo = styled.div`
   display: flex;
@@ -72,3 +61,17 @@ const ProfileInfo = styled.div`
     color: black;
   }
 `;
+
+
+// const ImageWrapper = styled.div`
+  // width: 80px;
+  // height: 80px;
+  // border-radius: 50%;
+  // overflow: hidden;
+
+  // img {
+  //   width: inherit;
+  //   height: inherit;
+  //   object-fit: cover;
+  // }
+// `;

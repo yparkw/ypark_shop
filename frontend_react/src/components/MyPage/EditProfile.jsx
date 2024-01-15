@@ -10,7 +10,7 @@ import Loading from "../Commons/Loading";
 import useGetUserInfo from "../../hooks/useGetUserInfo";
 
 export default function EditProfile() {
-  const [profileImg, setProfileImg] = useState([]);
+  // const [profileImg, setProfileImg] = useState([]);
   const [inputs, setInputs] = useState({
     name: "",
     phone: "",
@@ -26,7 +26,7 @@ export default function EditProfile() {
       ...inputs,
       homeAddress: address,
       zipcode: postCode,
-      profileImage: profileImg[0],
+      // profileImage: profileImg[0],
     },
     userInfo.id
   );
@@ -56,7 +56,7 @@ export default function EditProfile() {
       name: userInfo.name,
       phone: userInfo.phone,
     });
-    setProfileImg([userInfo.profileImg]);
+    // setProfileImg([userInfo.profileImg]);
     setAddress(userInfo.address);
     setPostCode(userInfo.postcode);
   }, [userInfo]);
@@ -96,11 +96,11 @@ export default function EditProfile() {
 
   return (
     <Container>
-      <ImageSelector
+      {/* <ImageSelector
         name="profile_image"
         label={"profile Image"}
         changeHandler={setProfileImg}
-      />
+      /> */}
       <InputWrapper>
         <InputText
           name={"name"}
