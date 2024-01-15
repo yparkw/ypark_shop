@@ -27,15 +27,17 @@ export default memo(function CartForm() {
   );
 
   useEffect(() => {
-    if (getCartData?.data?.length === 0) {
+    if (getCartData?.data?.items?.length === 0) {
       setCalcPrice(0);
       return;
     }
-
-    setCalcPrice(
-      Number(Object.values(totalPrice).reduce((a, c) => (a += c), 0))
+    const totalPriceCalc = getCartData.data.items.reduce(
+      (acc, item) => acc + parseFloat(item.productItemId.price) * item.quantity,
+      0
     );
-  }, [totalPrice, getCartData.data]);
+
+    setCalcPrice(totalPriceCalc);
+  }, [getCartData.data]);
 
   useEffect(() => {
     setPaymentData({
@@ -69,6 +71,26 @@ export default memo(function CartForm() {
     return <NoItems shopLink={true} />;
   }
 
+  const renderCartItems = () => {
+    if (getCartData.isLoading || onLoading) {
+      return <CartItemSkeleton size={3} />;
+    } else {
+      return getCartData.data.items.map((v) => (
+        <CartItem
+          key={v.cart}
+          id={v.cart}
+          itemImg={v.productItemId.image_url}
+          price={v.productItemId.price}
+          maxQuantity={v.quantity}
+          itemTitle={v.productItemId.name}
+          size={v.size}
+          setTotalPrice={setTotalPrice}
+          cartId={v.cart}
+        />
+      ));
+    }
+  };
+
   return (
     <Container>
       <FormHeader>
@@ -77,26 +99,7 @@ export default memo(function CartForm() {
         <MenuBox>TOTAL</MenuBox>
       </FormHeader>
       <FormBody>
-        {getCartData.isLoading || onLoading ? (
-          <CartItemSkeleton size={3} />
-        ) : (
-          getCartData?.data((v) => {
-            return (
-              <CartItem
-                key={v.cartId}
-                id={v.productItemId}
-                // itemImg={v.thumbImages[0]}
-                // price={v.price}
-                maxQuantity={v.stock}
-                // brandName={v.brandName}
-                // itemTitle={v.name}
-                size={v.size}
-                setTotalPrice={setTotalPrice}
-                cartId={v.cartId}
-              />
-            );
-          })
-        )}
+        {renderCartItems()}
       </FormBody>
       <FormFooter>
         <SubTotal>
