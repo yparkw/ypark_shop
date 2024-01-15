@@ -3,10 +3,10 @@ import { useMutation, useQueryClient } from "react-query";
 import { axiosInstance } from "../api/axiosInstance";
 
 const deleteCartItem = async (id) => {
-  const token = Cookies.get("authorization");
-  const res = await axiosInstance.delete(`/api/v1/carts/${id}`, {
+  const token = Cookies.get("access");
+  const res = await axiosInstance.delete(`/api/cart/delete/${id}`, {
     headers: {
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
   });
   return res;
