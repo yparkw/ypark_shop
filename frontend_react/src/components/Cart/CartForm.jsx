@@ -80,16 +80,16 @@ export default memo(function CartForm() {
         {getCartData.isLoading || onLoading ? (
           <CartItemSkeleton size={3} />
         ) : (
-          getCartData?.data.map((v) => {
+          getCartData?.data((v) => {
             return (
               <CartItem
                 key={v.cartId}
                 id={v.productItemId}
-                itemImg={v.thumbImages[0]}
-                price={v.price}
+                // itemImg={v.thumbImages[0]}
+                // price={v.price}
                 maxQuantity={v.stock}
-                brandName={v.brandName}
-                itemTitle={v.name}
+                // brandName={v.brandName}
+                // itemTitle={v.name}
                 size={v.size}
                 setTotalPrice={setTotalPrice}
                 cartId={v.cartId}

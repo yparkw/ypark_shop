@@ -41,7 +41,8 @@ export const getCartData = async () => {
       Authorization: `Bearer ${token}`,
     },
   });
-  return res.data.data;
+  console.log("getCartData: ", res.data)
+  return res.data;
 };
 
 export const deleteFavoriteItem = async (id) => {

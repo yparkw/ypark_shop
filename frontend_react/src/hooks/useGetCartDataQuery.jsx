@@ -13,8 +13,8 @@ export default function useGetCartDataQuery(setFunction) {
     {
       retry: 2,
       onSuccess: (response) => {
-        console.log("get_cart", response);
-        dispatch(addCartData(response.length));
+        console.log("getCartData_response: ", response)
+        dispatch(addCartData(response.items));
         setFunction(true);
         setTimeout(() => {
           setFunction(false);

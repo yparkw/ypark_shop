@@ -17,7 +17,7 @@ class CartView(APIView):
     def get(self, request):
         cart, _ = Cart.objects.get_or_create(user=request.user)
         serializer = CartSerializer(cart)
-        logging.debug(f"cart serializer: {serializer}")
+        
         return Response(serializer.data)
 
     # 장바구니에 아이템 추가

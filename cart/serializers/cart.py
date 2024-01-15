@@ -3,9 +3,12 @@ from products.models.product import Product
 from cart.models.cart import Cart, CartItem
 
 class CartItemSerializer(serializers.ModelSerializer):
-    # product = ProductSerializer(read_only=True)
     productItemId = serializers.IntegerField(write_only=True)
-    
+    price = serializers.IntegerField(source='product.price')
+    stock = serializers.IntegerField(source='product.stock')
+    name = serializers.CharField(source='product.name')
+    thumbImages = serializers.ImageField(source='product.thumbImages')
+
     
     class Meta:
         model = CartItem
