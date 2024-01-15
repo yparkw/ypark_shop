@@ -27,16 +27,15 @@ export default memo(function CartForm() {
   );
 
   useEffect(() => {
-    if (getCartData?.data?.items?.length === 0) {
+    if (getCartData?.data?.items) {
+      const totalPriceCalc = getCartData.data.items.reduce(
+        (acc, item) => acc + parseFloat(item.productItemId.price) * item.quantity,
+        0
+      );
+      setCalcPrice(totalPriceCalc);
+    } else {
       setCalcPrice(0);
-      return;
     }
-    const totalPriceCalc = getCartData.data.items.reduce(
-      (acc, item) => acc + parseFloat(item.productItemId.price) * item.quantity,
-      0
-    );
-
-    setCalcPrice(totalPriceCalc);
   }, [getCartData.data]);
 
   useEffect(() => {
@@ -74,7 +73,7 @@ export default memo(function CartForm() {
   const renderCartItems = () => {
     if (getCartData.isLoading || onLoading) {
       return <CartItemSkeleton size={3} />;
-    } else {
+    } else if (getCartData?.data?.items) {
       return getCartData.data.items.map((v) => (
         <CartItem
           key={v.cart}
@@ -88,6 +87,8 @@ export default memo(function CartForm() {
           cartId={v.cart}
         />
       ));
+    } else{
+      return null;
     }
   };
 
