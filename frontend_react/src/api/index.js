@@ -46,7 +46,7 @@ export const getCartData = async () => {
 };
 
 export const deleteFavoriteItem = async (id) => {
-  const token = Cookie.get("authorization");
+  const token = Cookie.get("access");
   const res = await axiosInstance.delete(`/api/v1/bookmarks/${id}`, {
     headers: {
       Authorization: token,
@@ -56,7 +56,7 @@ export const deleteFavoriteItem = async (id) => {
 };
 
 export const getOrderList = async () => {
-  const token = Cookie.get("authorization");
+  const token = Cookie.get("access");
   const res = await axiosInstance.get("/api/v2/orders/info", {
     headers: {
       Authorization: token,
@@ -66,7 +66,7 @@ export const getOrderList = async () => {
 };
 
 export const patchUserInfo = async (body, id) => {
-  const token = Cookie.get("authorization");
+  const token = Cookie.get("access");
   const res = await axiosInstance.patch(`/api/v1/members/${id}`, body, {
     headers: {
       Authorization: token,
@@ -76,7 +76,7 @@ export const patchUserInfo = async (body, id) => {
 };
 
 export const getUserData = async (id) => {
-  const token = Cookie.get("authorization");
+  const token = Cookie.get("access");
   const res = await axiosInstance.get(`/api/v1/members/${id}`, {
     headers: {
       Authorization: token,

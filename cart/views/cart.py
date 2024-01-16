@@ -21,6 +21,7 @@ class CartView(APIView):
 
     # 장바구니에 아이템 추가
     def post(self, request):
+        logger.debug(f"request_data: {request.data}")
         serializer = CartItemSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
