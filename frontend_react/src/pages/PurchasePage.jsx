@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import styled from "styled-components";
 import PurchaseForm from "../components/Purchase/PurchaseForm";
 
