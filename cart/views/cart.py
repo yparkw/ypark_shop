@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from cart.models.cart import Cart, CartItem
-from cart.serializers.cart import CartSerializer, CartItemSerializer
+from cart.serializers.cart import CartSerializer, CartItemSerializer, CartItemResponseSerializer
 
 import logging
 logger = logging.getLogger(__name__)
