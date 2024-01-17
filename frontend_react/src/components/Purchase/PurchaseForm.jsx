@@ -31,7 +31,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
     // 예를 들어, 결제 게이트웨이 API를 호출하거나, 
     // 결제 페이지로 리디렉션하는 로직 등이 이곳에 들어갈 수 있습니다.
   };
-  
+
   const calculateTotalPrice = (item) => item.quantity * item.price;
   const totalAmount = orderInfo.reduce((total, item) => total + calculateTotalPrice(item), 0);
 
@@ -89,14 +89,6 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
             onChange={handleInputChange} 
             placeholder="Address" 
         />
-    <Label>Detail Address</Label>
-        <Input 
-            type="text" 
-            name="detailAddress" 
-            value={orderDetails.detailAddress} 
-            onChange={handleInputChange} 
-            placeholder="Detail Address" 
-        />
     <Label>Postcode</Label>
         <Input 
             type="text" 
@@ -105,6 +97,15 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
             onChange={handleInputChange} 
             placeholder="Postcode" 
         />
+    <Label>Detail Address</Label>
+        <Input 
+            type="text" 
+            name="detailAddress" 
+            value={orderDetails.detailAddress} 
+            onChange={handleInputChange} 
+            placeholder="Detail Address" 
+        />
+    
         <PaymentButtonsContainer>
         <PaymentButton onClick={() => handlePayment('kakao')}>
           Kakao Payment
