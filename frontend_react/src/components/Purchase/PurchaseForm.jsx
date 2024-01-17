@@ -24,6 +24,14 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
     // Submit the order details
     console.log(orderDetails);
   };
+
+  const handlePayment = (paymentType) => {
+    console.log(`Initiating ${paymentType} payment process...`);
+    // 여기에 각 결제 타입에 맞는 로직을 추가합니다. 
+    // 예를 들어, 결제 게이트웨이 API를 호출하거나, 
+    // 결제 페이지로 리디렉션하는 로직 등이 이곳에 들어갈 수 있습니다.
+  };
+  
   const calculateTotalPrice = (item) => item.quantity * item.price;
   const totalAmount = orderInfo.reduce((total, item) => total + calculateTotalPrice(item), 0);
 
@@ -36,8 +44,8 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
                     <th>상품명</th>
                     <th>수량</th>
                     <th>사이즈</th>
-                    <th>가격</th>
-                    <th>합가격</th>
+                    <th>상품 가격</th>
+                    <th>전체 가격</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,7 +60,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
                 ))}
             </tbody>
         </Table>
-        <TotalAmount>총합 가격: {totalAmount} 원</TotalAmount>
+        <TotalAmount>결제 금액: {totalAmount} 원</TotalAmount>
 
     <SectionTitle>개인 정보</SectionTitle>
       <Form onSubmit={handleSubmit}>
@@ -97,16 +105,17 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
             onChange={handleInputChange} 
             placeholder="Postcode" 
         />
-        <PaymentMethodSelect 
-        name="paymentMethod" 
-        value={orderDetails.paymentMethod} 
-        onChange={handleInputChange}
-        >
-        <option value="card">Card Payment</option>
-        <option value="naver">Naver Payment</option>
-        <option value="kakao">Kakao Payment</option>
-        </PaymentMethodSelect>
-        <SubmitButton type="submit">Place Order</SubmitButton>
+        <PaymentButtonsContainer>
+        <PaymentButton onClick={() => handlePayment('kakao')}>
+          Kakao Payment
+        </PaymentButton>
+        <PaymentButton onClick={() => handlePayment('naver')}>
+          Naver Payment
+        </PaymentButton>
+        <PaymentButton onClick={() => handlePayment('card')}>
+          Card Payment
+        </PaymentButton>
+      </PaymentButtonsContainer>
     </Form>
     </Container>
     );
@@ -151,34 +160,25 @@ const Input = styled.input`
   }
 `;
 
-const PaymentMethodSelect = styled.select`
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
 
-  @media (max-width: 768px) {
-    font-size: 14px;
-  }
+const PaymentButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 `;
 
-const SubmitButton = styled.button`
-  padding: 12px 15px;
-  background-color: #007bff;
-  color: white;
+const PaymentButton = styled.button`
+  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.2s;
-
+  transition: 0.3s ease;
   &:hover {
-    background-color: #0056b3;
+    opacity: 0.8;
   }
 
-  @media (max-width: 768px) {
-    font-size: 14px;
-  }
+  // 여기에 각 버튼별 색상 등 추가 스타일을 적용할 수 있습니다.
 `;
 
 const Table = styled.table`
