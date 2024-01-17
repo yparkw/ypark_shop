@@ -82,14 +82,14 @@ export default memo(function ProductDetailOrder({ sizes }) {
 
   const orderProductHandler = (e) => {
     e.preventDefault();
-    openModal({
-      type: "orderModal",
-      props: {
-        text: "상품을 주문하시겠습니까?",
-        img: getItem.data.image_url,
-        action: orderProductAction,
-        setState: setToLogin,
-      },
+    navigate("/purchase", { state: 
+      { orderInfo: 
+        [{ name: getItem.data.name,
+          quantity, 
+          size, 
+          price: getItem.data.price, 
+        } 
+      ]} 
     });
   };
 

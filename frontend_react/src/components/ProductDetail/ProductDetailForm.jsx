@@ -9,7 +9,6 @@ import Comments from "../Comment/Comments";
 import ProductDetailOrder from "./ProductDetailOrder";
 
 export default memo(function ProductDetailForm(props) {
-  console.log("props", props)
   return (
     <Container>
       <OrderWrapper>
