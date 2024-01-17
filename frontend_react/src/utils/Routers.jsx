@@ -6,6 +6,7 @@ import MyPage from "../pages/MyPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 import ProductRegisterPage from "../pages/ProductRegisterPage";
+import PurchasePage from "../pages/PurchasePage";
 import ShopPage from "../pages/ShopPage";
 import SignUpPage from "../pages/SignUpPage";
 
@@ -63,5 +64,11 @@ export const routerList = [
     path: "*",
     isPrivate: false,
     element: <NotFoundPage />,
+  },
+  {
+    id: 10,
+    path: "/purchase",
+    isPrivate: true,
+    element: <PurchasePage/>,
   },
 ];

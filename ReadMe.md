@@ -11,6 +11,8 @@
 "SerializerMethodField()를 사용하여 두개의 테이블에서 데이터 파싱하기"
 "Redux 상태관리시스템을 통한 상태 관리"
 "foreignkey error 무결성에 문제가 없더라도 migrations 폴더와 pycache에 문제가 없는지 살펴보기"
+"serializer 분리를 통한 get, post 요청 다르기 받기"
+
 
 # 진행순서
 ## 순서대로 진행합시다 frontend/
