@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useAddPurchaseInfo } from "../hooks/useAddPurchaseInfo"
+// import { useAddPurchaseInfo } from "../hooks/useAddPurchaseInfo"
 
 export default function PurchaseForm({ orderInfo, userInfo }) {
   const [orderDetails, setOrderDetails] = useState({
@@ -13,7 +13,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
     paymentMethod: 'card', // default payment method
   });
 
-  const addPurchase = useAddPurchaseInfo();
+  // const addPurchase = useAddPurchaseInfo();
 
   const handleInputChange = (e) => {
     setOrderDetails({
@@ -28,42 +28,8 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
     console.log(orderDetails);
   };
 
-  const handlePayment = async (paymentType) => {
-    console.log(`Initiating ${paymentType} payment process...`);
-    
-    try {
-        let paymentResponse;
-    
-        switch (paymentType) {
-          case 'kakao':
-            // 카카오 결제 API 호출
-            paymentResponse = await callKakaoPaymentAPI();
-            break;
-          case 'naver':
-            // 네이버 결제 API 호출
-            paymentResponse = await callNaverPaymentAPI();
-            break;
-          case 'card':
-            // 카드 결제 API 호출
-            paymentResponse = await callCardPaymentAPI();
-            break;
-          default:
-            console.log('Unsupported payment type');
-            return;
-        }
-    
-        if (paymentResponse.success) {
-          // 결제 성공 시
-          console.log('Payment successful');
-          addPurchase();
-        } else {
-          // 결제 실패 시
-          console.log('Payment failed');
-        }
-      } catch (error) {
-        console.error(`Error during ${paymentType} payment: `, error);
-        // 예외 처리 로직
-      }
+  const handlePayment = async () => {
+    //kg이니시스 연동
   };
 
   const calculateTotalPrice = (item) => item.quantity * item.price;
@@ -141,15 +107,9 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
         />
     
         <PaymentButtonsContainer>
-        <PaymentButton onClick={() => handlePayment('kakao')}>
-          Kakao Payment
-        </PaymentButton>
-        <PaymentButton onClick={() => handlePayment('naver')}>
-          Naver Payment
-        </PaymentButton>
-        <PaymentButton onClick={() => handlePayment('card')}>
-          Card Payment
-        </PaymentButton>
+          <PaymentButton onClick={() => handlePayment()}>
+            결제하기
+          </PaymentButton>
       </PaymentButtonsContainer>
     </Form>
     </Container>
