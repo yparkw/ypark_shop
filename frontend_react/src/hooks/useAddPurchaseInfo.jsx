@@ -1,7 +1,7 @@
 import Cookie from "js-cookie";
 // import { useMutation } from "react-query";
 import { axiosInstance } from "../api/axiosInstance";
-
+import { paymentClickHandler } from "../api/payment";
 
 export const useAddPurchaseInfo = async (formData) => {
     const token = Cookie.get("access"); // 토큰 가져오기

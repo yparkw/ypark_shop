@@ -11,11 +11,11 @@ export default function useOrderCartItems(payment, productData, mode) {
   const { openModal } = useModal();
 
   const orderCartItems = async (body) => {
-    const token = Cookies.get("authorization");
+    const token = Cookies.get("access");
     const res = await axiosInstance
-      .post("/api/v2/orders/cart", body, {
+      .post("/api/cart/purchase/", body, {
         headers: {
-          Authorization: token,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then(() => {

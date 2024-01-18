@@ -35,7 +35,6 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
   const calculateTotalPrice = (item) => item.quantity * item.price;
   const totalAmount = orderInfo.reduce((total, item) => total + calculateTotalPrice(item), 0);
 
-
   return (
     <Container>
         <Table>

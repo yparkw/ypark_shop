@@ -9,9 +9,9 @@ export default function useOrderProductItem(payment, productData, mode) {
   const orderProductItem = async (body) => {
     const token = Cookies.get("authorization");
     const res = await axiosInstance
-      .post("/api/v2/orders/product", body, {
+      .post("/api/purchase/", body, {
         headers: {
-          Authorization: token,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then(() => {
