@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useAddPurchaseInfo } from "../hooks/useAddPurchaseInfo"
 
 export default function PurchaseForm({ orderInfo, userInfo }) {
   const [orderDetails, setOrderDetails] = useState({
@@ -11,6 +12,8 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
     postcode: userInfo.postcode || '',
     paymentMethod: 'card', // default payment method
   });
+
+  const addPurchase = useAddPurchaseInfo();
 
   const handleInputChange = (e) => {
     setOrderDetails({
@@ -25,11 +28,42 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
     console.log(orderDetails);
   };
 
-  const handlePayment = (paymentType) => {
+  const handlePayment = async (paymentType) => {
     console.log(`Initiating ${paymentType} payment process...`);
-    // 여기에 각 결제 타입에 맞는 로직을 추가합니다. 
-    // 예를 들어, 결제 게이트웨이 API를 호출하거나, 
-    // 결제 페이지로 리디렉션하는 로직 등이 이곳에 들어갈 수 있습니다.
+    
+    try {
+        let paymentResponse;
+    
+        switch (paymentType) {
+          case 'kakao':
+            // 카카오 결제 API 호출
+            paymentResponse = await callKakaoPaymentAPI();
+            break;
+          case 'naver':
+            // 네이버 결제 API 호출
+            paymentResponse = await callNaverPaymentAPI();
+            break;
+          case 'card':
+            // 카드 결제 API 호출
+            paymentResponse = await callCardPaymentAPI();
+            break;
+          default:
+            console.log('Unsupported payment type');
+            return;
+        }
+    
+        if (paymentResponse.success) {
+          // 결제 성공 시
+          console.log('Payment successful');
+          addPurchase();
+        } else {
+          // 결제 실패 시
+          console.log('Payment failed');
+        }
+      } catch (error) {
+        console.error(`Error during ${paymentType} payment: `, error);
+        // 예외 처리 로직
+      }
   };
 
   const calculateTotalPrice = (item) => item.quantity * item.price;
