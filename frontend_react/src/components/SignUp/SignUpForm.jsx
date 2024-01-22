@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SignInput from "../Commons/SignInput";
 import SignButton from "../Commons/SignButton";
-import { Link, Navigate } from "react-router-dom";
+import SignUpAlert from "./SignUpAlert";
+import { Link, useNavigate } from "react-router-dom";
 import useSignUpMutation from "../../hooks/useSignUpMutation";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import {
@@ -16,6 +17,7 @@ import {
 export default function SignUpForm() {
   const [isValid, setIsValid] = useState(false);
   const [inputValid, setInputValid] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const [address, setAddress] = useState("");
   const [postCode, setPostCode] = useState("");
   const [signUpValue, setSignUpValue] = useState({
@@ -103,9 +105,22 @@ export default function SignUpForm() {
     signUpAction.mutate();
   };
 
-  if (signUpAction.isSuccess) {
-    return <Navigate to={"/login"} replace />;
-  }
+  useEffect(() => {
+    if(signUpAction.isSuccess){
+      setShowAlert(true);
+    }
+  }, [signUpAction.isSuccess]);
+
+  const navigate = useNavigate();
+
+  const handleAlertClose = () => {
+    setShowAlert(false);
+    navigate('/login');
+  };
+  
+  // if (signUpAction.isSuccess) {
+  //   return <Navigate to={"/login"} replace />;
+  // };
 
   return (
     <Container>
@@ -197,7 +212,9 @@ export default function SignUpForm() {
           이미 계정이 있으십니까? <Link to={"/login"}>Login</Link>
         </div>
       </MiddleWrapper>
+      <SignUpAlert isVisible={showAlert} onClose={handleAlertClose} />
     </Container>
+    
   );
 }
 
