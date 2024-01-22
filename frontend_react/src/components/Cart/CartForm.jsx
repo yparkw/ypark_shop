@@ -8,6 +8,7 @@ import Price from "../Commons/Price";
 import useGetCartDataQuery from "../../hooks/useGetCartDataQuery";
 import { memo } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import useOrderCartItems from "../../hooks/useOrderCartItems";
 import ErrorPage from "../Commons/ErrorPage";
 import CartItemSkeleton from "./CartItemSkeleton";
@@ -53,8 +54,25 @@ export default memo(function CartForm() {
     });
   }, [totalPrice, calcPrice, userInfo]);
 
+  const navigate = useNavigate();
+
   const clickHander = () => {
-    orderCartAction.mutate();
+    const cartItems = getCartData.data.items.map(item => ({
+      name: item.productItemId.name,
+      price: item.productItemId.price,
+      quantity: item.quantity,
+      size: item.size,
+    }));
+
+    // orderInfo: 
+    //     [{ name: getItem.data.name,
+    //       quantity, 
+    //       size, 
+    //       price: getItem.data.price, 
+    //     } 
+    //   ]} 
+
+    navigate("/purchase", { state: { orderInfo: cartItems }})
   };
 
   if (getCartData.isError) {
