@@ -13,7 +13,9 @@ export default function MainPage() {
   return (
     <Container>
             <VideoContainer>
-                    <source src={`${process.env.PUBLIC_URL}/assets/door_proto.mp4`} type="video/mp4" />
+              <Video autoPlay loop muted>
+                    <source src={`${process.env.PUBLIC_URL}/assets/videos/door_proto.mp4`} type="video/mp4" />
+                </Video>
                 <EnterButton onClick={handleEnterClick}>입장</EnterButton>
             </VideoContainer>
     </Container>
@@ -33,7 +35,16 @@ const Container = styled.div`
 const VideoContainer = styled.div`
   position: relative;
   text-align: center;
+  width: 100%; /* 너비를 지정합니다. */
+  max-width: 640px; /* 최대 너비를 지정할 수 있습니다. */
+  height: auto; /* 비디오의 비율에 맞게 높이를 자동 조정합니다. */
 `;
+
+const Video = styled.video`
+  width: 100%;
+  height: auto;
+`;
+
 
 const EnterButton = styled.button`
   position: absolute;
