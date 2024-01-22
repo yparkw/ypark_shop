@@ -1,40 +1,43 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import styled from "styled-components";
-import Category from "../components/Category/Category";
-import MainBanner from "../components/Main/MainBanner";
-import MainTextBanner from "../components/Main/MainTextBanner";
-import MainItems from "../components/MainItems/MainItems";
+import { useNavigate } from 'react-router-dom';
 
 export default function MainPage() {
-  const urlParams = {
-    page: 1,
-    pageSize: 9,
-  };
+    const navigate = useNavigate();
+
+    const handleEnterClick = () => {
+        navigate('/shop');
+    };
 
   return (
     <Container>
-      <MainBanner />
-      <MainTextBanner />
-      <Category />
-      <ListTitle>ITEMS</ListTitle>
-      <MainItems params={urlParams} mode={"main"} />
+            <VideoContainer>
+                    <source src={`${process.env.PUBLIC_URL}/assets/door_proto.mp4`} type="video/mp4" />
+                <EnterButton onClick={handleEnterClick}>입장</EnterButton>
+            </VideoContainer>
     </Container>
   );
 }
 
-const Container = styled.article`
-  width: 100%;
+const Container = styled.div`
+  /* Your container styles */
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: 100vh; /* Adjust to your preferred height */
 `;
 
-const ListTitle = styled.span`
-  font-size: 30px;
-  font-weight: bold;
-  letter-spacing: 4px;
-  word-spacing: 4px;
-  margin-bottom: 24px;
+
+const VideoContainer = styled.div`
+  position: relative;
+  text-align: center;
+`;
+
+const EnterButton = styled.button`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
