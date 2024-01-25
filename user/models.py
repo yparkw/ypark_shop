@@ -9,11 +9,12 @@ import uuid
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, username, email, password, phone, address, postCode):
+    def create_user(self, username, email, password, phone, address, detailAddress, postCode):
         user = self.model(
             username=username,
             email=self.normalize_email(email),
             address = address,
+            detailAddress = detailAddress,
             phone = phone,
             postCode = postCode,
         )
@@ -21,13 +22,14 @@ class CustomUserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, username, email, password, phone, address, postCode):
+    def create_superuser(self, username, email, password, phone, address, detailAddress, postCode):
         user = self.create_user(
             username=username,
             email=self.normalize_email(email),
             password=password,
             phone = phone,
             address = address,
+            detailAddress = detailAddress,
             postCode = postCode,
         )
         user.is_staff = True
@@ -41,9 +43,9 @@ class User(TimestampBaseModel, AbstractBaseUser):
     username = models.CharField(max_length=20, null=True, blank=True, help_text='유저 이름')
     email = models.EmailField(max_length = 50, unique=True, help_text='유저 이메일')
     phone = models.CharField(max_length = 20, help_text = '연락가능한 번호')
-    address = models.CharField(max_length = 100)
-    postCode = models.CharField(max_length = 100)
-    # cart = models.OneToOneField('Cart', on_delete=models.CASCADE, null=True, blank=True, related_name='owner')
+    address = models.CharField(max_length = 100, default = "도로명주소")
+    detailAddress = models.CharField(max_length = 100, default = "상세주소", help_text='상세주소')
+    postCode = models.CharField(max_length = 100, default = "우편번호")
     
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

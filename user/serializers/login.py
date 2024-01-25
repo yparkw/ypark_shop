@@ -12,6 +12,7 @@ class LoginSerializer(TokenObtainPairSerializer):
         token['name'] = user.name
         token['phone'] = user.phone
         token['address'] = user.address
+        token['detailAddress'] = user.detailAddress
         token['postcode'] = user.postcode
         token['role'] = user.role
         

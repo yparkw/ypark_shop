@@ -1,10 +1,8 @@
 /* eslint-disable no-unused-vars */
 import Cookies from "js-cookie";
-import React from "react";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
 import { axiosInstance } from "../api/axiosInstance";
-import { defaultUser } from "../constance/bannerImage";
 import { setUser } from "../redux/reducer/userSlice";
 
 const loginFn = async (payload) => {
@@ -33,7 +31,8 @@ export default function useLoginMutation(value) {
             email: res.data.email,
             phone: res.data.phone,
             address: res.data.address,
-            postcode: res.data.postcode,
+            detailAddress: res.data.detailAddress,
+            postCode: res.data.postCode,
             is_active: res.data.is_active,
             is_admin: res.data.is_admin,
             is_staff: res.data.is_staff,

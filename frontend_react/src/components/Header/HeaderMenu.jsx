@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { Link, useLocation } from "react-router-dom";
-import { persistor } from "../../redux/store";
 import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { Link, useLocation } from "react-router-dom";
+import styled, { css } from "styled-components";
+import { persistor } from "../../redux/store";
 import { tablet } from "../../utils/styleTheme";
-import { useSelector } from "react-redux";
 
 const HeaderMenu = (props) => {
   const [isClick, setIsClick] = useState(false);

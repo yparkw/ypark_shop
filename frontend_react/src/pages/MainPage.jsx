@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
+import styled from "styled-components";
 
 export default function MainPage() {
     const navigate = useNavigate();
@@ -13,7 +13,7 @@ export default function MainPage() {
   return (
     <Container>
             <VideoContainer>
-              <Video autoPlay loop muted>
+                <Video autoPlay loop muted>
                     <source src={`${process.env.PUBLIC_URL}/assets/videos/door_proto.mp4`} type="video/mp4" />
                 </Video>
                 <EnterButton onClick={handleEnterClick}>입장</EnterButton>

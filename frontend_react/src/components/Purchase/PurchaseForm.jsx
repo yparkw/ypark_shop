@@ -6,10 +6,10 @@ import styled from 'styled-components';
 export default function PurchaseForm({ orderInfo, userInfo }) {
   const [orderDetails, setOrderDetails] = useState({
     address: userInfo.address || '',
-    detailAddress: '',
+    detailAddress: userInfo.detailAddress || '',
     phone: userInfo.phone || '',
     email: userInfo.email || '',
-    postcode: userInfo.postcode || '',
+    postCode: userInfo.postCode || '',
     paymentMethod: 'card', // default payment method
   });
 
@@ -91,8 +91,8 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
     <Label>Postcode</Label>
         <Input 
             type="text" 
-            name="postcode" 
-            value={orderDetails.postcode} 
+            name="postCode" 
+            value={orderDetails.postCode} 
             onChange={handleInputChange} 
             placeholder="Postcode" 
         />
