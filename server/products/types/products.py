@@ -1,22 +1,22 @@
-import decimal
-import typing
-import strawberry
+# import decimal
+# import typing
+# import strawberry
 
-from products.models.product import Product
-
-
-# GraphQL 타입으로 정의
-@strawberry.django.type(Product)
-class Product:
-    id: str
-    title: str
-    price: decimal.Decimal
-    category: str
-    size: str
-    stock: int
-    image: str
+# from products.models.product import Product
 
 
-@strawberry.type
-class Query:
-    products: typing.List[Product] = strawberry.django.field()
+# # GraphQL 타입으로 정의
+# @strawberry.django.type(Product)
+# class Product:
+#     id: str
+#     title: str
+#     price: decimal.Decimal
+#     category: str
+#     size: str
+#     stock: int
+#     image: str
+
+
+# @strawberry.type
+# class Query:
+#     products: typing.List[Product] = strawberry.django.field()

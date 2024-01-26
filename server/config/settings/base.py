@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-b*clcs12p*h9du7=pawx9na)p4v%!^h%lu#qxt^-vo0av!y=_o
 DEBUG = True
 
 DEV_APPS = [
-    'django_seed',
+    # 'django_seed',
 ]
 
 # Application definition
@@ -44,9 +44,9 @@ THIRD_PARTY_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'strawberry.django',
-    'strawberry_django_jwt.refresh_token',
-    'django_celery_results',
+    # 'strawberry.django',
+    # 'strawberry_django_jwt.refresh_token',
+    # 'django_celery_results',
     'corsheaders',
     'django_prometheus',
 ]
@@ -82,6 +82,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -222,7 +223,7 @@ SIMPLE_JWT = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    'strawberry_django_jwt.backends.JSONWebTokenBackend',
+    # 'strawberry_django_jwt.backends.JSONWebTokenBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 

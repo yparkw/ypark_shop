@@ -1,24 +1,24 @@
-import strawberry
-from strawberry.tools import merge_types
-from strawberry_django_jwt.middleware import JSONWebTokenMiddleware
+# import strawberry
+# from strawberry.tools import merge_types
+# from strawberry_django_jwt.middleware import JSONWebTokenMiddleware
 
-from user.schema import Query as UserQuery
-from user.schema import Mutation as UserMutation
-from products.types.products import Query as ProductQuery
+# from user.schema import Query as UserQuery
+# from user.schema import Mutation as UserMutation
+# from products.types.products import Query as ProductQuery
 
 
-ComboQuery = merge_types(
-    "ComboQuery",
-    (
-        UserQuery,
-        ProductQuery,
-    )
-)
+# ComboQuery = merge_types(
+#     "ComboQuery",
+#     (
+#         UserQuery,
+#         ProductQuery,
+#     )
+# )
 
-schema = strawberry.Schema(
-    query=ComboQuery,
-    mutation=UserMutation,
-    extensions=[
-        JSONWebTokenMiddleware,
-    ]
-)
+# schema = strawberry.Schema(
+#     query=ComboQuery,
+#     mutation=UserMutation,
+#     extensions=[
+#         JSONWebTokenMiddleware,
+#     ]
+# )
