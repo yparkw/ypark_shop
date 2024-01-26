@@ -13,6 +13,7 @@
 "foreignkey error 무결성에 문제가 없더라도 migrations 폴더와 pycache에 문제가 없는지 살펴보기"
 "serializer 분리를 통한 get, post 요청 다르기 받기",
 "구매사이클 테스트 하는법"
+"react package.json package-lock.json 차이"
 
 
 # 진행순서
@@ -31,6 +32,6 @@
 
 # 요구사항
 1. 회원가입이 완료되면 완료창이떳으면함 O
-2. 상세주소 가입할때 넣을수있게 했음함
+2. 상세주소 가입할때 넣을수있게 했음함 O
 3. 출력되는 가격 원화로 변환
 4. "오스하이" 처럼 만들기
