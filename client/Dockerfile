@@ -1,5 +1,6 @@
 # 가져올 이미지를 정의
-FROM node:14 AS build-stage
+FROM node:14
+
 # 경로 설정하기
 WORKDIR /client
 # package.json 워킹 디렉토리에 복사 (.은 설정한 워킹 디렉토리를 뜻함)

@@ -1,8 +1,7 @@
-FROM nginx:1.18.0 AS production-stage
-
+FROM nginx:1.18.0
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=build-stage /client/build /usr/share/nginx/html
+COPY /client/build /usr/share/nginx/html
 
 EXPOSE 80
 
