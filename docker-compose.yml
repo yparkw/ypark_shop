@@ -28,6 +28,7 @@ services:
     restart: always
     image: nginx:1.18.0
     volumes:
+      - ./client/build:/client/build
       - ./server/static:/server/static
       - ./server/media:/server/media
     ports:
