@@ -1,6 +1,14 @@
 version: '3.3'
 
 services:
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=yparkw
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD="qkr102998!!"
   client:
       build: 
         context: ./client
@@ -21,6 +29,8 @@ services:
       - ./client/build:/usr/share/nginx/html
     ports:
       - "8000:8000"
+    depends_on:
+      - db
     expose:
       - "8000"
     environment:

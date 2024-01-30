@@ -16,3 +16,13 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CORS_ALLOW_CREDENTIALS = True # 쿠키와 함꼐 요청을 보낼 수있도록
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'yparkw',
+        'USER': 'admin',
+        'PASSWORD': 'qkr102998!!',
+        'HOST': 'yparkw_postgres',  # 혹은 도커 서비스 이름
+        'PORT': '5432',
+    }
+}
