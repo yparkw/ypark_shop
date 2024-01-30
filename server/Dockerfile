@@ -6,14 +6,13 @@ ENV PYTHONUNBUFFRED 1
 RUN apt-get update
 
 # 작업 디렉토리 설정
-WORKDIR /server
-
+WORKDIR /app
 RUN pip install --upgrade pip
-COPY ./requirements.txt  /server/
+COPY ./requirements.txt  /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /server/
-RUN mkdir -p /server/logs
+COPY . /app/
+RUN mkdir -p /app/logs
 
 
 EXPOSE 8000
