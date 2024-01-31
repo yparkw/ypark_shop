@@ -2,7 +2,8 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000/", //개발용 https, 보안을 위해 https로 변경해야함
+  // baseURL: "http://localhost:8000/"
+  baseURL: "http://211.45.167.63:8000/", //개발용 https, 보안을 위해 https로 변경해야함
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
