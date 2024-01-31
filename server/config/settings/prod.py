@@ -23,7 +23,7 @@ DATABASES = {
         'NAME': 'yparkw',
         'USER': 'admin',
         'PASSWORD': 'qkr102998!!',
-        'HOST': '211.45.167.62',  # 혹은 도커 서비스 이름
-        'PORT': '5432',
+        'HOST': 'yparkw-postgres',  # 혹은 도커 서비스 이름
+        'PORT': 5432,
     }
 }
