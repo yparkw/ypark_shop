@@ -34,14 +34,6 @@ services:
       - "8000"
     environment:
       - DJANGO_SETTINGS_MODULE=config.settings.prod
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    depends_on:
-      - nginx
-    command: certonly --webroot --webroot-path=/var/www/certbot --email ehgus.dev.8621@gmail.com --agree-tos --no-eff-email --force-renewal -d yparkw.com -d www.yparkw.com
 
   nginx:
     image: nginx:stable-alpine
@@ -54,4 +46,15 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      - client
+      - server
+      
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - nginx
+    command: certonly --webroot --webroot-path=/var/www/certbot --email ehgus.dev.8621@gmail.com --agree-tos --no-eff-email --force-renewal -d yparkw.com -d www.yparkw.com
+
+  
