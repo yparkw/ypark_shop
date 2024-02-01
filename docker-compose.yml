@@ -42,6 +42,8 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
       - ./client/build:/usr/share/nginx/html
+      - /etc/letsencrypt/live/yparkw.com/fullchain.pem:/etc/letsencrypt/live/yparkw.com/fullchain.pem
+      - /etc/letsencrypt/live/www.yparkw.com/privkey.pem:/etc/letsencrypt/live/www.yparkw.com/privkey.pem
     ports:
       - "80:80"
       - "443:443"
