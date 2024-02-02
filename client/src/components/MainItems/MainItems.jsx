@@ -53,8 +53,8 @@ function MainItems(props) {
   return (
     <>
       <Container mode={props.mode}>
-        {getDataList.isSuccess &&
-          getDataList?.data?.data.map((datas) => {
+        {getDataList.isSuccess && Array.isArray(getDataList.data?.data) &&
+          getDataList.data.data.map((datas) => {
             // let favorite = false;
             // const fa = getFavoriteData?.data?.map((v) => v.product.product_id);
             // if (fa?.includes(datas.product_id)) {
