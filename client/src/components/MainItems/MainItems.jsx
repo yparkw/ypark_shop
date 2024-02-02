@@ -84,7 +84,7 @@ function MainItems(props) {
           )}
         </div>
         <div>
-          {getDataList.data.data.length === props.params.pageSize && Array.isArray(getDataList.data.data) &&
+          {Array.isArray(getDataList.data?.data) && getDataList.data.data.length === props.params.pageSize &&
             props.mode === "shop" && (
               <button className="button__next" onClick={nextButtonClickHandler}>
                 <span>Next</span>
