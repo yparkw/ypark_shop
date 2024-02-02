@@ -13,7 +13,7 @@ services:
   server:
     build: ./server
     restart: always
-    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - ./server:/app
       - ./server/logs:/app/logs
@@ -48,4 +48,6 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./client/build:/usr/share/nginx/html
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    depends_on:
+      - client
 
