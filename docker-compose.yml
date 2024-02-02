@@ -10,14 +10,6 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: qkr102998!!
 
-  client:
-      build: 
-        context: ./client
-        dockerfile: Dockerfile
-      restart: always
-      depends_on:
-        - server
-
   server:
     build: ./server
     restart: always
@@ -34,3 +26,39 @@ services:
       - "8000"
     environment:
       - DJANGO_SETTINGS_MODULE=config.settings.prod
+
+  client:
+      build: 
+        context: ./client
+        dockerfile: Dockerfile
+      restart: always
+      ports:
+        - "3000:80"
+      depends_on:
+        - server
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - web_static:/usr/share/nginx/html
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - client
+      - server
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - web_static:/usr/share/nginx/html
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    depends_on:
+      - nginx
+
+volumes:
+  web_static:
