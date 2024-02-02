@@ -33,23 +33,15 @@ services:
         dockerfile: Dockerfile
       restart: always
       ports:
-        - "3000:80"
-      depends_on:
-        - server
-
-  nginx:
-    image: nginx:stable-alpine
-    ports:
       - "80:80"
       - "443:443"
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - ./client/build:/usr/share/nginx/html
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    depends_on:
-      - client
-      - server
+      volumes:
+        - ./nginx:/etc/nginx/conf.d
+        - ./client/build:/usr/share/nginx/html
+        - ./certbot/conf:/etc/letsencrypt
+        - ./certbot/www:/var/www/certbot
+      depends_on:
+        - server
 
   certbot:
     image: certbot/certbot
@@ -57,6 +49,4 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./client/build:/usr/share/nginx/html
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-    depends_on:
-      - nginx
 
