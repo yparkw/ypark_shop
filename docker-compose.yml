@@ -15,7 +15,7 @@ services:
         context: ./client
         dockerfile: Dockerfile
       restart: always
-      ports: "80:80"
+      exponse: "80"
       depends_on:
         - server
 
