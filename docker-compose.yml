@@ -15,6 +15,7 @@ services:
         context: ./client
         dockerfile: Dockerfile
       restart: always
+      port: "80:80"
       depends_on:
         - server
 
@@ -34,28 +35,3 @@ services:
       - "8000"
     environment:
       - DJANGO_SETTINGS_MODULE=config.settings.prod
-
-  nginx:
-    image: nginx:stable-alpine
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-      - ./client/build:/usr/share/nginx/html
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - client
-
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-      - ./client/build:/usr/share/nginx/html
-    depends_on:
-      - nginx
-    command: certonly --webroot --webroot-path=/var/www/certbot --email ehgus.dev.8621@gmail.com --agree-tos --no-eff-email --force-renewal -d yparkw.com -d www.yparkw.com
-
-  
