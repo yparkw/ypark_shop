@@ -37,7 +37,7 @@ function MainItems(props) {
     );
   }
 
-  if (getDataList.isSuccess && getDataList.data && getDataList.data.data && getDataList.data.data.length === 0) {
+  if (getDataList.isSuccess && Array.isArray(getDataList.data.data) && !getDataList.data.data.length) {
     return <NoItems />;
   }
 
