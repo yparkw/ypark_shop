@@ -1,16 +1,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
+import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import useGetFavoriteItem from "../../hooks/useGetFavoriteItem";
 import useGetProductItems from "../../hooks/useGetProductItems";
 import { desktop, mobile, tablet } from "../../utils/styleTheme";
+import ErrorPage from "../Commons/ErrorPage";
 import ItemCard from "../Commons/ItemCard";
 import NoItems from "../Commons/NoItems";
 import Skeleton from "../Commons/Skeleton";
-import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
-import ErrorPage from "../Commons/ErrorPage";
 
 function MainItems(props) {
   const [onLoading, setOnLoading] = useState(false);
@@ -38,7 +37,7 @@ function MainItems(props) {
     );
   }
 
-  if (getDataList.isSuccess && getDataList.data.data.length === 0) {
+  if (getDataList.isSuccess && getDataList.data && getDataList.data.data && getDataList.data.data.length === 0) {
     return <NoItems />;
   }
 
