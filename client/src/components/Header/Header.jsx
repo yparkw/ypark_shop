@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { tablet } from "../../utils/styleTheme";
 import HeaderMenu from "./HeaderMenu";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
 
 const Header = () => {
   const userInfo = useSelector((state) => state.user);
   return (
     <Container>
-      <SearchBar />
+      
+      
       <LogoBox>
         <Link to="/">
           <img
@@ -47,7 +48,8 @@ const Container = styled.header`
 `;
 
 const LogoBox = styled.div`
-  flex: 1;
+  flex: 0.5;
+  margin-top: 5px;
   display: flex;
   justify-content: center;
 

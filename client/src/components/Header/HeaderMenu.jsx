@@ -32,30 +32,27 @@ const HeaderMenu = (props) => {
           <>
             {props.info.is_staff === true && (
               <Link to="/product-register" className="header__register--items">
-              <HideText>Register</HideText>
+              <HideText>상품등록</HideText>
               </Link>
             )}
             <Link to="/cart" className="header__cart--items">
-              <HideText>Cart</HideText>
+              <HideText>장바구니</HideText>
             </Link>
+            <ProfileImage to="/mypage">
+              {/* <img src={props.info.profileImg} alt="profileImg" /> */}
+              <HideText>나의 페이지</HideText>
+            </ProfileImage>
             <button
               className="header__link-login"
               onClick={async () => await logoutHandler()}
             >
-              <HideText>Logout</HideText>
+              <HideText>로그아웃</HideText>
             </button>
-            <ProfileImage to="/mypage">
-              <img src={props.info.profileImg} alt="profileImg" />
-              <HideText>Profile</HideText>
-            </ProfileImage>
           </>
         ) : (
           <>
-            <Link to="/cart" className="header__cart--items">
-              <HideText>Cart</HideText>
-            </Link>
             <Link to="/login" className="header__link-login">
-              <HideText>Login</HideText>
+              <HideText>로그인</HideText>
             </Link>
           </>
         )}
@@ -203,11 +200,11 @@ const Wrapper = styled.div`
 const ProfileImage = styled(Link)`
   width: 34px;
   height: 34px;
-  overflow: hidden;
+  //overflow: hidden;
   padding: 0 !important;
   margin-left: 8px;
 
-  img {
+  //img {
     border-radius: 50%;
     width: inherit;
     height: inherit;

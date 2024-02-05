@@ -91,7 +91,7 @@ export default function ProductRegisterForm() {
       <InputWrapper>
         <InputText
           name={"name"}
-          label={"Product Name"}
+          label={"상품명"}
           text={"Input Product Name"}
           require={true}
           mode={"title"}
@@ -101,7 +101,7 @@ export default function ProductRegisterForm() {
 
         <InputText
           name={"price"}
-          label={"Price"}
+          label={"가격"}
           text={"Input Price"}
           require={true}
           mode={"price"}
@@ -120,7 +120,7 @@ export default function ProductRegisterForm() {
         <CategoryBox>
           <InputSelect
             name="category"
-            label={"Category"}
+            label={"카테고리"}
             text={"Category"}
             require={true}
             changeHandler={inputChangeHandler}
@@ -148,7 +148,7 @@ export default function ProductRegisterForm() {
         </SizeQuantityInputWrapper>
         <ImageSelector
           buttonText={"Select Thumbnail"}
-          label={"Thumbnail"}
+          label={"메인 이미지"}
           name="thumb_images"
           changeHandler={setThumbImage}
         />
