@@ -29,3 +29,8 @@ DATABASES = {
         'PORT': 5432,
     }
 }
+
+IAMPORT = {
+    'IMP_KEY': 'your_imp_key',
+    'IMPO_SECRET': 'your_imp_secret',
+}

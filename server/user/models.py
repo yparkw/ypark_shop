@@ -9,34 +9,20 @@ import uuid
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, username, email, password, phone, address, detailAddress, postCode):
-        user = self.model(
-            username=username,
-            email=self.normalize_email(email),
-            address = address,
-            detailAddress = detailAddress,
-            phone = phone,
-            postCode = postCode,
-        )
+    def create_user(self, username, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_fields)
         user.set_password(password)
-        user.save()
+        user.save(using=self.db)
         return user
 
-    def create_superuser(self, username, email, password, phone, address, detailAddress, postCode):
-        user = self.create_user(
-            username=username,
-            email=self.normalize_email(email),
-            password=password,
-            phone = phone,
-            address = address,
-            detailAddress = detailAddress,
-            postCode = postCode,
-        )
-        user.is_staff = True
-        user.is_superuser = True
-        user.is_admin = True
-        user.save()
-        return user
+    def create_superuser(self, username, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_admin', True)
+
+        return self.create_user(username, email, password, **extra_fields)
 
 
 class User(TimestampBaseModel, AbstractBaseUser):
@@ -54,6 +40,7 @@ class User(TimestampBaseModel, AbstractBaseUser):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'phone', 'address', 'detailAddress', 'postCode']
 
     def __str__(self):
         return self.username
