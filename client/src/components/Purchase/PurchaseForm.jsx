@@ -31,7 +31,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
 
   const handlePayment = async () => {
     const { IMP } = window;
-    IMP.init('imp77252484');
+    IMP.init('imp77252484'); // 가맹점 번호
     IMP.request_pay({
       pg: 'html5_inicis',
       paymentMethod: 'card', // default payment method

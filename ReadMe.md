@@ -1,20 +1,21 @@
 # 나중에 정리해야할 것
-"요소에 따른 배치 CSS 사용법"
-"다량의 데이터를 불러올 떄 페이징 네이션 하는 이유?"
-"토큰의 발급 되면 어디에 존재하는가?"
-"토큰은 어떻게 관리되는 가?"
-"access, resfresh 토큰의 차이와 access토큰을 확인하는 JWTAthentication"
-"formData를 전송할 때 왜 파일과 json을 분리하여 전송해야 하는가?"
-"상품등록을 위한 데이터 형식 분리와 비동기 처리"
-"axios 버전문제로 인한 formData 인식실패"
-"쿠키와 CORS 정책의 관계"
-"SerializerMethodField()를 사용하여 두개의 테이블에서 데이터 파싱하기"
-"Redux 상태관리시스템을 통한 상태 관리"
-"foreignkey error 무결성에 문제가 없더라도 migrations 폴더와 pycache에 문제가 없는지 살펴보기"
-"serializer 분리를 통한 get, post 요청 다르기 받기",
-"구매사이클 테스트 하는법"
-"react package.json package-lock.json 차이"
-" DB 서버에 직접 설치하여 블록스토리지연동 vs DB 인스턴스 사용"
+1. "요소에 따른 배치 CSS 사용법"
+2. "다량의 데이터를 불러올 떄 페이징 네이션 하는 이유?"
+3. "토큰의 발급 되면 어디에 존재하는가?"
+4. "토큰은 어떻게 관리되는 가?"
+5. "access, resfresh 토큰의 차이와 access토큰을 확인하는 JWTAthentication"
+6. "formData를 전송할 때 왜 파일과 json을 분리하여 전송해야 하는가?"
+7. "상품등록을 위한 데이터 형식 분리와 비동기 처리"
+8. "axios 버전문제로 인한 formData 인식실패"
+9. "쿠키와 CORS 정책의 관계"
+10. "SerializerMethodField()를 사용하여 두개의 테이블에서 데이터 파싱하기"
+11. "Redux 상태관리시스템을 통한 상태 관리"
+12. "foreignkey error 무결성에 문제가 없더라도 migrations 폴더와 pycache에 문제가 없는지 살펴보기"
+13. "serializer 분리를 통한 get, post 요청 다르기 받기",
+14. "구매사이클 테스트 하는법"
+15. "react package.json package-lock.json 차이"
+16. " DB 서버에 직접 설치하여 블록스토리지연동 vs DB 인스턴스 사용"
+17. "결제테스트를 위한 단위테스트, 통합테스트(postman), E2E테스트(selenium)
 
 
 # 진행순서
