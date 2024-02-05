@@ -1,16 +1,17 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-// import { useAddPurchaseInfo } from "../hooks/useAddPurchaseInfo"
+import { useAddPurchaseInfo } from "../../hooks/useAddPurchaseInfo";
 
 export default function PurchaseForm({ orderInfo, userInfo }) {
   const [orderDetails, setOrderDetails] = useState({
+    merchant_uid: 'merchant_uid',
+    amount: 100000,
     address: userInfo.address || '',
     detailAddress: userInfo.detailAddress || '',
     phone: userInfo.phone || '',
     email: userInfo.email || '',
-    postCode: userInfo.postCode || '',
-    paymentMethod: 'card', // default payment method
+    postCode: userInfo.postCode || '',   
   });
 
   // const addPurchase = useAddPurchaseInfo();
@@ -29,7 +30,38 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
   };
 
   const handlePayment = async () => {
-    //kg이니시스 연동
+    const { IMP } = window;
+    IMP.init('imp77252484');
+    IMP.request_pay({
+      pg: 'html5_inicis',
+      paymentMethod: 'card', // default payment method
+      merchant_uid : orderDetails.merchant_uid,
+      name: '주문명:결제테스트',
+      amount: orderDetails.amount,
+      buyer_email: orderDetails.email,
+      buyer_name: userInfo.name || '',
+      buyer_tel: orderDetails.phone,
+      buyer_addr: orderDetails.address,
+      buyer_postcode: orderDetails.postCode,    
+    }, async function (rsp) {
+      if(rsp.success){
+        try {
+          const formData = { // 서버로 전송할 폼데이터
+            imp_uid: rsp.imp_uid, // 아임포터 결제번호
+            merchant_uid: rsp.merchant_uid, // 가맹점 주문 번호
+          }
+          const addPurchaseInfo = useAddPurchaseInfo(formData);
+          const response = await addPurchaseInfo();
+          console.log("결제 검증 결과: ", response);
+        } catch(error) {
+          console.error('결제 검증 에러: ', error);
+        }
+      
+      } else {
+        alert(`결제 실패: ${rsp.error_msg}`);
+      }
+    }
+    )
   };
 
   const calculateTotalPrice = (item) => item.quantity * item.price;
