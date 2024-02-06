@@ -5,7 +5,7 @@ import { useAddPurchaseInfo } from "../../hooks/useAddPurchaseInfo";
 
 export default function PurchaseForm({ orderInfo, userInfo }) {
   const [orderDetails, setOrderDetails] = useState({
-    merchant_uid: 'merchant_uid',
+    merchant_uid: '',
     amount: 100000,
     address: userInfo.address || '',
     detailAddress: userInfo.detailAddress || '',
@@ -35,7 +35,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
     IMP.request_pay({
       pg: 'html5_inicis',
       paymentMethod: 'card', // default payment method
-      merchant_uid : orderDetails.merchant_uid,
+      merchant_uid : `mid_${new Date().getTime()}`,
       name: '주문명:결제테스트',
       amount: orderDetails.amount,
       buyer_email: orderDetails.email,
@@ -49,6 +49,16 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
           const formData = { // 서버로 전송할 폼데이터
             imp_uid: rsp.imp_uid, // 아임포터 결제번호
             merchant_uid: rsp.merchant_uid, // 가맹점 주문 번호
+            products: orderInfo.map(item => ({
+              productId: item.id,
+              quantity: item.quantity,
+              size: item.size,
+            })),
+            buyer_name: userInfo.name,
+            buyer_email: userInfo.email,
+            buyer_tel: userInfo.phone,
+            buyer_address: userInfo.address,
+            buyer_postcode: userInfo.postCode,
           }
           const addPurchaseInfo = useAddPurchaseInfo(formData);
           const response = await addPurchaseInfo();
