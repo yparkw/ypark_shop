@@ -2,10 +2,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useAddPurchaseInfo } from "../../hooks/useAddPurchaseInfo";
+import { paymentClickHandler } from '../../api/payment';
 
 export default function PurchaseForm({ orderInfo, userInfo }) {
   const [orderDetails, setOrderDetails] = useState({
-    merchant_uid: '',
+    merchant_uid: `mid_${new Date().getTime()}`,
     amount: 100000,
     address: userInfo.address || '',
     detailAddress: userInfo.detailAddress || '',
@@ -14,7 +15,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
     postCode: userInfo.postCode || '',   
   });
 
-  // const addPurchase = useAddPurchaseInfo();
+  const addPurchaseInfo = useAddPurchaseInfo();
 
   const handleInputChange = (e) => {
     setOrderDetails({
@@ -23,19 +24,13 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Submit the order details
-    console.log(orderDetails);
-  };
+  
 
-  const handlePayment = async () => {
-    const { IMP } = window;
-    IMP.init('imp77252484'); // 가맹점 번호
-    IMP.request_pay({
+  const handlePayment = () => {
+    const paymentData = {
       pg: 'html5_inicis',
       paymentMethod: 'card', // default payment method
-      merchant_uid : `mid_${new Date().getTime()}`,
+      merchant_uid : orderDetails.merchant_uid,
       name: '주문명:결제테스트',
       amount: orderDetails.amount,
       buyer_email: orderDetails.email,
@@ -43,36 +38,47 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
       buyer_tel: orderDetails.phone,
       buyer_addr: orderDetails.address,
       buyer_postcode: orderDetails.postCode,    
-    }, async function (rsp) {
-      if(rsp.success){
-        try {
-          const formData = { // 서버로 전송할 폼데이터
-            imp_uid: rsp.imp_uid, // 아임포터 결제번호
-            merchant_uid: rsp.merchant_uid, // 가맹점 주문 번호
-            products: orderInfo.map(item => ({
-              productId: item.id,
-              quantity: item.quantity,
-              size: item.size,
-            })),
-            buyer_name: userInfo.name,
-            buyer_email: userInfo.email,
-            buyer_tel: userInfo.phone,
-            buyer_address: userInfo.address,
-            buyer_postcode: userInfo.postCode,
-          }
-          const addPurchaseInfo = useAddPurchaseInfo(formData);
-          const response = await addPurchaseInfo();
-          console.log("결제 검증 결과: ", response);
-        } catch(error) {
-          console.error('결제 검증 에러: ', error);
-        }
-      
-      } else {
-        alert(`결제 실패: ${rsp.error_msg}`);
+    };
+    
+    const onScuccess = async (rsp) => {
+      const formData = {
+        imp_uid: res.imp_uid,
+        merchant_uid: res.merchant_uid,
+        products: orderInfo.map(item => ({
+          productId: item.id,
+          quantity: item.quantity,
+          size: item.size,
+        })),
+        buyer_name: userInfo.name,
+        buyer_email: userInfo.email,
+        buyer_tel: userInfo.phone,
+        buyer_address: userInfo.address,
+        buyer_postcode: userInfo.postCode,
+      };
+      try {
+        const response = await addPurchaseInfo(formData);
+        console.log("결제 검증 결과: ", response);          
+      } catch(error) {
+        console.error('결제 검증 에러: ', error);
       }
-    }
-    )
+    };
+
+    const onFauilure = (err) => {
+      console.error('결제 실패: ', err);
+    };
+
+    paymentClickHandler(paymentData, orderInfo, 'direct', onScuccess, onFauilure);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Submit the order details
+    console.log(orderDetails);
+  };
+
+
+
+
 
   const calculateTotalPrice = (item) => item.quantity * item.price;
   const totalAmount = orderInfo.reduce((total, item) => total + calculateTotalPrice(item), 0);
