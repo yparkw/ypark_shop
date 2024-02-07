@@ -27,16 +27,16 @@ export default memo(function ShopFilter(props) {
   return (
     <Container>
       <CategorySelector changeHandler={setParamsHandler} />
-      <ColorSelector
+      {/* <ColorSelector
         colorList={props.dummyColor}
         fontSize={"22px"}
         changeHandler={setParamsHandler}
         name={"color"}
-      />
-      <PriceSelector>
+      /> */}
+      {/* <PriceSelector>
         <p>Price</p>
         <PriceRange changeHander={setParamsHandler} />
-      </PriceSelector>
+      </PriceSelector> */}
     </Container>
   );
 });

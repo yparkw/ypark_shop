@@ -17,7 +17,9 @@ function MainItems(props) {
   // const getFavoriteData = useGetFavoriteItem(userInfo);
   const getDataList = useGetProductItems(props.params, setOnLoading);
 
-  console.log("datalist", getDataList)
+  // const formatPrice = (price) => {
+  //   return new Intl.NumberFormat('ko-KR').format(price);
+  // }
   const nextButtonClickHandler = () => {
     props.setPage((prev) => prev + 1);
   };
@@ -67,7 +69,7 @@ function MainItems(props) {
                 productImg={datas.image_url}
                 // brand={datas.brand_name}
                 title={datas.name}
-                price={datas.price}
+                price={datas.price} 
                 // favorite={favorite}
                 // isLogin={userInfo.isLogin}
               />

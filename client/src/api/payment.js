@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-export const paymentClickHandler = (data, productInfo, mode, orderMethod) => {
+export const paymentClickHandler = (data, productInfo, mode, onSuccess, onFailure) => {
   const IMP = window.IMP;
   IMP.init("imp77252484");
   

@@ -40,7 +40,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
       buyer_postcode: orderDetails.postCode,    
     };
     
-    const onScuccess = async (rsp) => {
+    const onScuccess = async (res) => {
       const formData = {
         imp_uid: res.imp_uid,
         merchant_uid: res.merchant_uid,
@@ -76,12 +76,14 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
     console.log(orderDetails);
   };
 
-
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('ko-KR').format(price);
+  }
 
 
 
   const calculateTotalPrice = (item) => item.quantity * item.price;
-  const totalAmount = orderInfo.reduce((total, item) => total + calculateTotalPrice(item), 0);
+  const totalAmount = formatPrice(orderInfo.reduce((total, item) => total + calculateTotalPrice(item), 0));
 
   return (
     <Container>
@@ -101,8 +103,8 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
                         <td>{item.name}</td>
                         <td>{item.quantity}</td>
                         <td>{item.size}</td>
-                        <td>{item.price}</td>
-                        <td>{calculateTotalPrice(item)}</td>
+                        <td>{formatPrice(item.price)}</td>
+                        <td>{formatPrice(calculateTotalPrice(item))}</td>
                     </tr>
                 ))}
             </tbody>

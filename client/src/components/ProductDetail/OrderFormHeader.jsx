@@ -5,11 +5,12 @@ import { FaWonSign } from "react-icons/fa";
 import Price from "../Commons/Price";
 
 export default function OrderFormHeader(props) {
+  
   return (
     <Container>
       <TitleBox>
         <h2>{props.title}</h2>
-        <span>subTitle</span> {/*props.subTitle*/}
+        {/* <span>subTitle</span> props.subTitle */}
       </TitleBox>
       <PriceBox>
         <FaWonSign />
