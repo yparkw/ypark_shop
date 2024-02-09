@@ -6,7 +6,7 @@ export const emailValidation = (value) => {
 }
 
 export const passwordValidation = (value) => {
-    const basicRegex = /^[a-zA-Z0-9]*$/;
+    const basicRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
     const isBlank = value.trim().length >= 6;
     return basicRegex.test(value) && isBlank;
 }
