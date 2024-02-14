@@ -255,3 +255,26 @@ LOGGING = {
         },
     },
 }
+
+AUTH_PASSWORD_VALIDATORS = [
+    # 기존의 비밀번호 검증기 설정들...
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 9,  # 원하는 최소 비밀번호 길이 설정
+        }
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+    # 여기에 커스텀 비밀번호 검증기 추가
+    {
+        'NAME': 'user.validators.CustomPasswordValidator',  # 'your_app_name'을 앱의 실제 이름으로 변경
+    },
+]
