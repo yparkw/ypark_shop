@@ -230,15 +230,27 @@ AUTHENTICATION_BACKENDS = [
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
         },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/django.log'),  # BASE_DIR는 Django 설정의 기본 디렉토리 변수입니다.
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         '': {
-            'handlers': ['console'],
-            'level': 'DEBUG',  # 여기서 로그 레벨을 설정합니다.
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     },
