@@ -16,6 +16,7 @@
 15. "react package.json package-lock.json 차이"
 16. " DB 서버에 직접 설치하여 블록스토리지연동 vs DB 인스턴스 사용"
 17. "결제테스트를 위한 단위테스트, 통합테스트(postman), E2E테스트(selenium)
+18. 비밀번호 규칙 커스텀
 
 
 # 진행순서
