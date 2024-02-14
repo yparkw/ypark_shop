@@ -17,6 +17,7 @@ services:
     volumes:
       - ./server:/app
       - ./server/logs:/app/logs
+      - ./server/media:/app/media
     ports:
       - "8000:8000"
     depends_on:
@@ -37,6 +38,7 @@ services:
       volumes:
         - ./certbot/conf:/etc/letsencrypt
         - ./certbot/www:/var/www/certbot
+        - ./server/media:/app/media
       depends_on:
         - server
       command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
