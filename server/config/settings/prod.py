@@ -9,6 +9,7 @@ STATIC_ROOT = '/app/static/'
 STATICFILES_DIRS = []
 
 MEDIA_ROOT = '/app/media'
+MEDIA_URL = '211.45.167.63:8000/media/'
 
 CORS_ALLOW_ALL_ORIGINS = False # 개발용, 실제 배포시 보안을 위해 수정 필요
 CORS_ALLOWED_ORIGINS = [
