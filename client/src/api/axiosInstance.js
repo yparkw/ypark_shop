@@ -8,7 +8,7 @@ export const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-axiosInstance.defaults.timeout = 5000;
+axiosInstance.defaults.timeout = 10000;
 
 axiosInstance.interceptors.response.use(
   (config) => {
