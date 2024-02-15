@@ -19,8 +19,7 @@ export default function useProductRegister() {
       if (imageUploadResponse.status === 201) {
         // 상품 등록 로직
         console.log('url', imageUploadResponse.data.url)
-        const serverDomain = "http://localhost:8000";
-        const fullImageUrl = `${serverDomain}${imageUploadResponse.data.url}`;
+        const fullImageUrl = `${imageUploadResponse.data.url}`;
         const updatedProductInfo = {
           ...productInfo,
           image_url: fullImageUrl,
