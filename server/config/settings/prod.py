@@ -5,11 +5,12 @@ Debug = False
 ALLOWED_HOSTS = ['api.ipify.org', 'www.shadowserver.org', 'ip-api.com', 'google.com',
                  '211.45.167.63', 'yparkw.com', 'www.yparkw.com']
 
-STATIC_ROOT = '/app/static/'
-STATICFILES_DIRS = []
 
+STATIC_URL = '/static/'
+STATIC_ROOT = '/app/static/'
+
+MEDIA_URL = 'https://www.yparkw.com/media/'
 MEDIA_ROOT = '/app/media'
-MEDIA_URL = '211.45.167.63:8000/media/'
 
 CORS_ALLOW_ALL_ORIGINS = False # 개발용, 실제 배포시 보안을 위해 수정 필요
 CORS_ALLOWED_ORIGINS = [
@@ -58,3 +59,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'user.validators.CustomPasswordValidator',  # 'your_app_name'을 앱의 실제 이름으로 변경
     },
 ]
+
+# 보안 설정
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
