@@ -5,11 +5,11 @@ Debug = False
 ALLOWED_HOSTS = ['api.ipify.org', 'www.shadowserver.org', 'ip-api.com', 'google.com',
                  '211.45.167.63', 'yparkw.com', 'www.yparkw.com']
 
-STATIC_ROOT = '/home/ubuntu/app/server/static/'
+STATIC_ROOT = '/app/static/'
 STATICFILES_DIRS = []
 
 MEDIA_URL = 'https://www.yparkw.com/media/'
-MEDIA_ROOT = '/home/ubuntu/app/server/media/'
+MEDIA_ROOT = '/app/media/'
 
 
 CORS_ALLOW_ALL_ORIGINS = False # 개발용, 실제 배포시 보안을 위해 수정 필요
