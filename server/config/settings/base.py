@@ -27,6 +27,9 @@ SECRET_KEY = "django-insecure-b*clcs12p*h9du7=pawx9na)p4v%!^h%lu#qxt^-vo0av!y=_o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+SITE_ID = 1
+
 DEV_APPS = [
     # 'django_seed',
 ]
@@ -278,3 +281,4 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'user.validators.CustomPasswordValidator',  # 'your_app_name'을 앱의 실제 이름으로 변경
     },
 ]
+
