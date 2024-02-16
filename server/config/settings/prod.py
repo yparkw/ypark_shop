@@ -8,7 +8,7 @@ ALLOWED_HOSTS = ['api.ipify.org', 'www.shadowserver.org', 'ip-api.com', 'google.
 STATIC_ROOT = '/app/static/'
 STATICFILES_DIRS = []
 
-MEDIA_URL = 'https://www.yparkw.com/app/media/'
+MEDIA_URL = 'https://www.yparkw.com/media/'
 MEDIA_ROOT = '/app/media/'
 
 
