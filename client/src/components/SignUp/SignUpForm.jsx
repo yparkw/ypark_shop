@@ -25,6 +25,7 @@ export default function SignUpForm() {
     username: "",
     password: "",
     phone: "",
+    detailAddress: "",
   });
 
   useEffect(() => {
@@ -125,7 +126,7 @@ export default function SignUpForm() {
   return (
     <Container>
       <SignInput
-        label={"Email"}
+        label={"이메일"}
         text={"Input your Email"}
         type={"email"}
         name={"email"}
@@ -136,7 +137,7 @@ export default function SignUpForm() {
         setValid={setInputValid}
       />
       <SignInput
-        label={"Name"}
+        label={"이름"}
         text={"Input your Name"}
         type={"text"}
         name={"username"}
@@ -147,7 +148,7 @@ export default function SignUpForm() {
         setValid={setInputValid}
       />
       <SignInput
-        label={"Phone"}
+        label={"연락처"}
         text={"Input your PhoneNumber"}
         type={"text"}
         name={"phone"}
@@ -158,14 +159,14 @@ export default function SignUpForm() {
         setValid={setInputValid}
       />
       <SignInput
-        label={"Password"}
+        label={"비밀번호"}
         text={"Input Password for Signup"}
         type={"password"}
         name={"password"}
         changeHandler={inputChangeHandler}
         onBlur={passwordValidation}
         value={signUpValue.password}
-        errorMassage={"비밀번호는 6자리 이상을 입력해주세요."}
+        errorMassage={"비밀번호는 특수문자, 대문자, 소문자, 숫자를 모두 포함되어야합니다."}
         setValid={setInputValid}
       />
 
@@ -194,12 +195,26 @@ export default function SignUpForm() {
               />
             </div>
           </AddressInputWrapper>
+          <SignInput
+            label={"상세주소"}
+            text={"Input detailAddress for Signup"}
+            type={"text"}
+            name={"detailAddress"}
+            changeHandler={inputChangeHandler}
+            value={signUpValue.detailAddress}
+            errorMassage={"상세주소를 입력해주세요"}
+            setValid={setInputValid}
+       />
+          
         </>
       )}
+      
+      
 
       <AddressPostButton onClick={(e) => postCodeHandler(e)}>
-        Address
+        주소
       </AddressPostButton>
+      
       <MiddleWrapper>
         <SignButton
           disabled={isValid}

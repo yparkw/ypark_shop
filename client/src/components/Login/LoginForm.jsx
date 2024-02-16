@@ -68,7 +68,7 @@ export default function LoginForm() {
         changeHandler={inputChangeHandler}
         onBlur={passwordValidation}
         value={loginValue.password}
-        errorMassage={"비밀번호는 6자리 이상을 입력해주세요."}
+        errorMassage={"비밀번호는 특수문자, 대문자, 소문자, 숫자를 모두 포함되어야합니다."}
         setValid={setInputValid}
       />
       <MiddleWrapper>
