@@ -7,7 +7,7 @@ import styled from "styled-components";
 import useGetProductItems from "../../hooks/useGetProductItems";
 import { desktop, mobile, tablet } from "../../utils/styleTheme";
 import ErrorPage from "../Commons/ErrorPage";
-import ItemCard from "../Commons/ItemCard";
+import ItemCard from "./ItemCard";
 import NoItems from "../Commons/NoItems";
 import Skeleton from "../Commons/Skeleton";
 
@@ -67,10 +67,8 @@ function MainItems(props) {
                 key={datas.id}
                 id={datas.id}
                 productImg={datas.image_url}
-                // brand={datas.brand_name}
                 title={datas.name}
                 price={datas.price} 
-                // favorite={favorite}
                 // isLogin={userInfo.isLogin}
               />
             );

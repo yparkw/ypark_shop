@@ -4,6 +4,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+MEDIA_URL = 'http://localhost:8000/'
+
 CORS_ALLOW_ALL_ORIGINS = False # 개발용, 실제 배포시 보안을 위해 수정 필요
 
 

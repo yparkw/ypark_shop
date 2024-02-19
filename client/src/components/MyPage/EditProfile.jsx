@@ -16,6 +16,7 @@ export default function EditProfile() {
     phone: "",
   });
   const [address, setAddress] = useState("");
+  const [detailAddress, setDetailAddress] = useState("");
   const [postCode, setPostCode] = useState("");
 
   const userInfo = useSelector((state) => state.user);
@@ -24,8 +25,10 @@ export default function EditProfile() {
   const patchUserData = usePatchUserData(
     {
       ...inputs,
-      homeAddress: address,
-      zipcode: postCode,
+      address: address,
+      detailAddress: detailAddress,
+      postcode: postCode,
+
       // profileImage: profileImg[0],
     },
     userInfo.id
@@ -58,6 +61,7 @@ export default function EditProfile() {
     });
     // setProfileImg([userInfo.profileImg]);
     setAddress(userInfo.address);
+    setDetailAddress(userInfo.detailAddress);
     setPostCode(userInfo.postcode);
   }, [userInfo]);
 
@@ -130,6 +134,16 @@ export default function EditProfile() {
           mode={"title"}
           type={"text"}
           value={address}
+          disabled={true}
+        />
+        <InputText
+          name={"detailAddress"}
+          label={"DetailAddress"}
+          text={"Input detailAddress"}
+          require={false}
+          mode={"title"}
+          type={"text"}
+          value={detailAddress}
           disabled={true}
         />
         <InputText

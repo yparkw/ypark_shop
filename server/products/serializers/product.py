@@ -104,12 +104,23 @@ class ProductResponseSZ(serializers.ModelSerializer):
 
 
 class ProductUpdateRequestSZ(serializers.ModelSerializer):
-    title = serializers.CharField(required=False)
-    price = serializers.DecimalField(required=False, max_digits=10, decimal_places=2)
-
+    sizes = ProductSizeSerializer(many=True, required=False)
+    
     class Meta:
         model = Product
-        fields = ('id', 'title', 'price',)
+        fields = ('id', 'created_at', 'modified_at', 'name', 'price', 'category', 'image_url', 'sizes')
+        read_only_fields = ('id',)
+        
+    def update(self, instance, validated_data):
+        sizes_data = validated_data.pop('sizes', None)
+        instance = super().update(instance, validated_data)
 
-    def create(self, validated_data):
-        return Product.objects.create(**validated_data)
+        if sizes_data is not None:
+            # 기존 사이즈 정보를 삭제하고 새로운 데이터로 업데이트
+            instance.sizes.all().delete()
+            for size_data in sizes_data:
+                size_value = size_data['size']
+                size, _ = Size.objects.get_or_create(size=size_value)
+                ProductSize.objects.create(product=instance, size=size, count=size_data['count'])
+
+        return instance

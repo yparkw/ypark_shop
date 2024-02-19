@@ -5,9 +5,10 @@ import { useAddPurchaseInfo } from "../../hooks/useAddPurchaseInfo";
 import { paymentClickHandler } from '../../api/payment';
 
 export default function PurchaseForm({ orderInfo, userInfo }) {
+  console.log('orderInfo', orderInfo)
   const [orderDetails, setOrderDetails] = useState({
     merchant_uid: `mid_${new Date().getTime()}`,
-    amount: 100000,
+    amount: '',
     address: userInfo.address || '',
     detailAddress: userInfo.detailAddress || '',
     phone: userInfo.phone || '',
@@ -32,7 +33,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
       paymentMethod: 'card', // default payment method
       merchant_uid : orderDetails.merchant_uid,
       name: '주문명:결제테스트',
-      amount: orderDetails.amount,
+      amount: totalAmount,
       buyer_email: orderDetails.email,
       buyer_name: userInfo.name || '',
       buyer_tel: orderDetails.phone,
@@ -85,7 +86,9 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
   const calculateTotalPrice = (item) => item.quantity * item.price;
   const totalAmount = formatPrice(orderInfo.reduce((total, item) => total + calculateTotalPrice(item), 0));
 
+  
   return (
+    
     <Container>
         <Table>
             <thead>

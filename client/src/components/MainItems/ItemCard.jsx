@@ -1,13 +1,10 @@
 /* eslint-disable */
-
 import React, { useEffect, useState } from "react";
 // eslint-disable-next-line
 import styled, { css } from "styled-components";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import Price from "./Price";
-import useAddFavoriteItem from "../../hooks/useAddFavoriteItem";
-import useDeleteFavorite from "../../hooks/useDeleteFavorite";
+import Price from "../Commons/Price";
 
 // eslint-disable-next-line
 function ItemCard(props) {

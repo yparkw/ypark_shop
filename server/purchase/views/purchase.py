@@ -1,11 +1,20 @@
 from django.http import JsonResponse
 from purchase.models.purchase import Purchase
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from ..iamport import get_token
 import requests
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from products.models.product import Product
 
+
+@api_view(['POST'])  # API 뷰로 지정
+@authentication_classes([JWTAuthentication])  # JWT 인증 사용
+@permission_classes([IsAuthenticated])  # 인증된 사용자만 접근 가능
 def verify_purchase(request):
+    # authentication_classes = [JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
     imp_uid = request.POST.get('imp_uid')
     merchant_uid = request.POST.get('merchant_uid')
     access = get_token()
@@ -39,7 +48,6 @@ def verify_purchase(request):
                 product_id=item['productId'],
                 quantity=item['quantity'],
                 size=item['size'],
-                color=item['color']
             )
         return JsonResponse({'status': 'success', 'data': 'Purchase completed successfully.'})
     else:

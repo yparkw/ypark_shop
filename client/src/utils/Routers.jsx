@@ -9,6 +9,7 @@ import ProductRegisterPage from "../pages/ProductRegisterPage";
 import PurchasePage from "../pages/PurchasePage";
 import ShopPage from "../pages/ShopPage";
 import SignUpPage from "../pages/SignUpPage";
+import AdminPage from "../pages/AdminPage";
 
 export const routerList = [
   {
@@ -70,5 +71,11 @@ export const routerList = [
     path: "/purchase",
     isPrivate: true,
     element: <PurchasePage/>,
+  },
+  {
+    id: 11,
+    path: "/admin/*",
+    isPrivate: true,
+    element: <AdminPage/>,
   },
 ];

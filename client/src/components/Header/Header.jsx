@@ -11,8 +11,6 @@ const Header = () => {
   const userInfo = useSelector((state) => state.user);
   return (
     <Container>
-      
-      
       <LogoBox>
         <Link to="/">
           <img

@@ -3,7 +3,7 @@ import React from "react";
 import useGetFavoriteItem from "../../hooks/useGetFavoriteItem";
 import Loading from "../Commons/Loading";
 import styled from "styled-components";
-import ItemCard from "../Commons/ItemCard";
+import ItemCard from "../MainItems/ItemCard";
 import NoItems from "../Commons/NoItems";
 import { useSelector } from "react-redux";
 

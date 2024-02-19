@@ -241,3 +241,29 @@ export const mypageMenuList = [
   }
 
 ];
+
+export const adminpageMenuList = [
+  {
+    id: 1,
+    link: "/admin/product",
+    text: "상품",
+  },
+
+  {
+    id: 2,
+    link: "/admin/order",
+    text: "주문내역",
+  },
+
+  {
+    id: 3,
+    link: "/admin/sell",
+    text: "판매내역",
+  },
+
+  {
+    id: 4,
+    link: "/admin/user",
+    text: "사용자관리",
+  },
+];

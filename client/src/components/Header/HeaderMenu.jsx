@@ -31,8 +31,8 @@ const HeaderMenu = (props) => {
         {props.login ? (
           <>
             {props.info.is_staff === true && (
-              <Link to="/product-register" className="header__register--items">
-              <HideText>상품등록</HideText>
+              <Link to="/admin" className="header__admin--items">
+              <HideText>관리자</HideText>
               </Link>
             )}
             <Link to="/cart" className="header__cart--items">
