@@ -26,6 +26,7 @@ export default function ProductRegisterForm() {
   const [thumbImage, setThumbImage] = useState(productToEdit?.image || null);
   const [isValid, setIsValid] = useState(false);
 
+
   console.log('product',`${productToEdit?.sizes}`);
 
 
@@ -103,7 +104,7 @@ export default function ProductRegisterForm() {
           mode={"title"}
           type={"text"}
           changeHandler={inputChangeHandler}
-          value={inputs.title}
+          value={inputs.name}
         />
 
         <InputText
@@ -114,6 +115,7 @@ export default function ProductRegisterForm() {
           mode={"price"}
           type={"text"}
           changeHandler={inputChangeHandler}
+          value={inputs.price}
         />
         {/* <InputText
           name={"stock"}
@@ -128,10 +130,9 @@ export default function ProductRegisterForm() {
           <InputSelect
             name="category"
             label={"카테고리"}
-            text={"Category"}
+            text={inputs.category || "Category"}
             require={true}
             changeHandler={inputChangeHandler}
-            value={inputs.category}
           />
         </CategoryBox>
         <SizeQuantityInputWrapper>
@@ -140,12 +141,12 @@ export default function ProductRegisterForm() {
               <SizeLabel>{size}</SizeLabel>
               <SizeInput
                 type={"number"}
-                value={count}
+                value={count.toString()}
                 onFocus={(e) => e.target.value === 0 ? e.target.select() : null}
                 onChange={(e) => handleSizeQuantityChange(size, Number(e.target.value))}
                 onBlur = {(e) => {
                   if (e.target.value === ''){
-                    handleSizeQuantityChange(size, 0);
+                    handleSizeQuantityChange(size);
                   }
                 }
 
@@ -159,6 +160,7 @@ export default function ProductRegisterForm() {
           label={"메인 이미지"}
           name="thumb_images"
           changeHandler={setThumbImage}
+          value = {thumbImage}
         />
         
         

@@ -29,7 +29,7 @@ function AdminItems(props) {
       />
     );
   }
-  console.log("adminItem", getDataList.da/a.data )
+
   return (
     <>
       <Container>
