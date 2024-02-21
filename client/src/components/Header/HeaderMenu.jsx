@@ -24,7 +24,6 @@ const HeaderMenu = (props) => {
   const menuButtonHandler = () => {
     setIsClick((prev) => !prev);
   };
-  console.log("header_props", props)
   return (
     <Container>
       <Wrapper hide={!isClick}>

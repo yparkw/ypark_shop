@@ -10,7 +10,6 @@ export default function AdminPageMenuBox() {
   const userInfo = useSelector((state) => state.user);
   const menuList = adminpageMenuList;
 
-  console.log("user", userInfo)
   return (
     <Container>
       <IconBox>

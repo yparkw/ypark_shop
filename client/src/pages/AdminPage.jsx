@@ -11,7 +11,6 @@ import AdminPageMenuBox  from "../components/Admin/AdminPageMenuBox";
 
 
 export default function AdminPage() {
-//   const userInfo = useSelector((state) => state.user);
   return (
     <Container>
       <ContentsWrapper>

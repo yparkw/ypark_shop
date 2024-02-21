@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useSelector  } from "react-redux";
 import styled from "styled-components";
 import useGetProductItems from "../../hooks/useGetProductItems";
 import { desktop, mobile, tablet } from "../../utils/styleTheme";
@@ -16,7 +16,7 @@ function AdminItems(props) {
   const [onLoading, setOnLoading] = useState(false);
   const userInfo = useSelector((state) => state.user);
   const getDataList = useGetProductItems(props.params, setOnLoading);
-
+  const [editProduct, setEditProduct] = useState(null);
   if (getDataList.isSuccess && Array.isArray(getDataList.data.data) && !getDataList.data.data.length) {
     return <NoItems />;
   }
@@ -29,7 +29,7 @@ function AdminItems(props) {
       />
     );
   }
-
+  console.log("adminItem", getDataList.da/a.data )
   return (
     <>
       <Container>
@@ -43,7 +43,9 @@ function AdminItems(props) {
                 id={datas.id}
                 productImg={datas.image_url}
                 title={datas.name}
-                price={datas.price} 
+                category={datas.category}
+                sizes={datas.sizes}
+                price={datas.price}
               />
             );
           })}

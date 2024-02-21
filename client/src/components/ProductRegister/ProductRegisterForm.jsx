@@ -8,29 +8,37 @@ import CheckBoxSelector from "./CheckBoxSelector";
 import ImageSelector from "./ImageSelector";
 import InputSelect from "./InputSelect";
 import InputText from "./InputText";
+import { useLocation } from "react-router-dom";
+
 
 export default function ProductRegisterForm() {
-  const [inputs, setInputs] = useState({
-    name: "",
-    price: "",
-    category: "",
-    sizes: { 'S': 0, 'M': 0, 'L': 0, 'XL': 0, 'FREE': 0 },
-  });
+  const location = useLocation();
+  const productToEdit = location.state?.product;
+  console.log('registerform', location);
+  
 
-  const [thumbImage, setThumbImage] = useState(null);
-  // const [contentImg, setContentImg] = useState([]);
+  const [inputs, setInputs] = useState({
+    name: productToEdit?.title || "",
+    price: productToEdit?.price || 0,
+    category: productToEdit?.category || "",
+    sizes: productToEdit?.sizes || { 'S': 0, 'M': 0, 'L': 0, 'XL': 0, 'FREE': 0 },
+  });
+  const [thumbImage, setThumbImage] = useState(productToEdit?.image || null);
   const [isValid, setIsValid] = useState(false);
 
-  
+  console.log('product',`${productToEdit?.sizes}`);
+
 
   const inputChangeHandler = (e) => {
     const {name, value} = e.target;
     const newValue = (name === 'price') ? Number(value) : value;
-    setInputs({...inputs, [name]: newValue});
+    setInputs({
+      ...inputs, 
+      [name]: newValue
+    });
   };
 
   const handleSizeQuantityChange = (size, value) => {
-
     const count = value === '' ? 0 : Number(value);
     setInputs(prevInputs => ({
       ...prevInputs,
@@ -61,8 +69,6 @@ export default function ProductRegisterForm() {
 
   const postRegisterHandler = async(e) => {
     e.preventDefault();
-    
-
     const sizesArray = Object.entries(inputs.sizes).map(([sizeKey, count]) => {
       return { size: sizeKey, count };
     });
@@ -97,6 +103,7 @@ export default function ProductRegisterForm() {
           mode={"title"}
           type={"text"}
           changeHandler={inputChangeHandler}
+          value={inputs.title}
         />
 
         <InputText
@@ -124,6 +131,7 @@ export default function ProductRegisterForm() {
             text={"Category"}
             require={true}
             changeHandler={inputChangeHandler}
+            value={inputs.category}
           />
         </CategoryBox>
         <SizeQuantityInputWrapper>

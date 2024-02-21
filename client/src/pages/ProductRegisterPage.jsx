@@ -7,6 +7,7 @@ import ProductRegisterForm from "../components/ProductRegister/ProductRegisterFo
 export default function ProductRegisterPage() {
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.user);
+  
 
   useEffect(() => {
     if (userInfo.role !== "is_admin" || !userInfo.role) {

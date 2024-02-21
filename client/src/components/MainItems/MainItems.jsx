@@ -14,12 +14,7 @@ import Skeleton from "../Commons/Skeleton";
 function MainItems(props) {
   const [onLoading, setOnLoading] = useState(false);
   const userInfo = useSelector((state) => state.user);
-  // const getFavoriteData = useGetFavoriteItem(userInfo);
   const getDataList = useGetProductItems(props.params, setOnLoading);
-
-  // const formatPrice = (price) => {
-  //   return new Intl.NumberFormat('ko-KR').format(price);
-  // }
   const nextButtonClickHandler = () => {
     props.setPage((prev) => prev + 1);
   };

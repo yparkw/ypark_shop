@@ -3,13 +3,18 @@
 // eslint-disable-next-line
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 
-function AdminItemCard(props) {  
+function AdminItemCard(props) {
+  const navigate = useNavigate();  
+  console.log('adminitemcard_props', props )
 
-  const handleEdit = () => {
-    // 여기서 수정 로직을 구현합니다.
-  };
+  
+  const handleEditClick = () => {
+    console.log('adminitemscard_editclick', {state : {product: props}});
+    navigate("/product-register", { state : { product: props } });
+  }
 
   const handleDelete = () => {
     // 여기서 삭제 로직을 구현합니다.
@@ -25,7 +30,7 @@ function AdminItemCard(props) {
       <ItemName>{props.title}</ItemName>
       <Price>{formatPrice(props.price)}원</Price>
       <ButtonGroup>
-        <Button onClick={handleEdit}>수정</Button>
+        <Button onClick={handleEditClick}>수정</Button>
         <Button onClick={handleDelete}>삭제</Button>
       </ButtonGroup>
     </CardContainer>
