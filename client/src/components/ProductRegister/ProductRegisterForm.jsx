@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import useProductRegister from "../../hooks/useProductRegister";
+import useProductUpdater from "../../hooks/useProductUpdater";
 import Button from "../Commons/Button";
 import CheckBoxSelector from "./CheckBoxSelector";
 import ImageSelector from "./ImageSelector";
@@ -16,6 +17,7 @@ export default function ProductRegisterForm() {
   const productToEdit = location.state?.product;
   console.log('registerform', location);
   
+  const isEditMode = productToEdit !== undefined;
 
   const [inputs, setInputs] = useState({
     name: productToEdit?.title || "",
@@ -51,6 +53,7 @@ export default function ProductRegisterForm() {
   };
 
   const {postProduct} = useProductRegister();
+  const {updateProduct} = useProductUpdater();
   
   useEffect(() => {
     let valid = true;
@@ -81,6 +84,9 @@ export default function ProductRegisterForm() {
 
     console.log('Sending:', requestData, thumbImage);
     if (isValid) {
+      if (isEditMode) {
+        const result = await updateProduct(productToEdit.id, requestData, thumbImage)
+      }
       const result = await postProduct(requestData, thumbImage);
       console.log('Result:', result);
       if (result) {
