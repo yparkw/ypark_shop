@@ -7,6 +7,7 @@ from .views.login import LoginView
 from .views.signup import UserSignUpCreateAV
 from .views.profile import UserRetrieveUpdate
 from .views.test import celery_test_view
+from .views.users import UserListCreateAV
 
 app_name = 'user'
 
@@ -15,5 +16,6 @@ urlpatterns = [
     path('signup/', UserSignUpCreateAV.as_view(), name='signup'),
     path('login/', CustomTokenObtainPairView.as_view(), name = 'token_obtain_pair'),
     path('login/refresh/', CustomTokenRefreshView.as_view(), name='login_refresh'),
+    path('list/', UserListCreateAV.as_view(), name = 'user_create_list'),
     # path('test/', celery_test_view),
 ]
