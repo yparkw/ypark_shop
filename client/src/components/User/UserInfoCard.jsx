@@ -1,37 +1,52 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import EditUserModal from "../Modals/EditUserModal";
 
 
 function UserInfoCard(props) {
   const navigate = useNavigate();  
-  console.log('UsersInfo_props', props )
+  const [isEditing, setIsEditing] = useState(false);
 
   
   const handleEditClick = () => {
-    console.log('adminitemscard_editclick', {state : {user: props}});
-    navigate("/", { state : { user: props } });
+    setIsEditing(true);
   }
 
-  const handleDelete = () => {
-    // 여기서 삭제 로직을 구현합니다.
+  const handleCloseModal = () => {
+    setIsEditing(false);
   };
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('ko-KR').format(price);
+  const handleSaveChanges = () => {
+    // 저장 로직을 구현합니다.
+    setIsEditing(false);
+  };
+
+  const handleDelete = () => {
+    setIsEditing(true);
   }
 
   return (
+    <>
     <CardContainer>
-      <ItemName>{props.email}</ItemName>
+      <Item>{props.email}</Item>
+      <Item>{props.phone}</Item>
       <ButtonGroup>
         <Button onClick={handleEditClick}>수정</Button>
         <Button onClick={handleDelete}>삭제</Button>
       </ButtonGroup>
     </CardContainer>
+      {isEditing && (
+        <EditUserModal
+          user={props}
+          onClose={handleCloseModal}
+          onSave={handleSaveChanges}
+        />
+      )}
+    </>
   );
 }
 
@@ -43,7 +58,7 @@ const CardContainer = styled.div`
   border-bottom: 1px solid #eaeaea;
 `;
 
-const ItemName = styled.span`
+const Item = styled.span`
   flex-grow: 1;
   text-align: center;
   font-size: 30px; // 글자 크기를 지정합니다.
