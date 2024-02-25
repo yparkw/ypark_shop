@@ -11,9 +11,12 @@ from rest_framework import status
 from drf_spectacular.utils import extend_schema
 
 from user.models import User
-from user.serializers.user import UserListSZ
+from user.serializers.user import UserListSZ, UserUpdateRequestSZ
 
 from common.paginations import CustomPagination
+
+import logging
+logger = logging.getLogger(__name__)
 
 class UserListCreateAV(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
@@ -44,3 +47,27 @@ class UserListCreateAV(ListCreateAPIView):
     #         return Response(serializer.data, status= status.HTTP_200_OK, headers=headers)
     #     logger.error(f"Serializer errors: {serializer.errors}")    
     #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class UserRetrieveUpdateDestroyAV(RetrieveUpdateDestroyAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserUpdateRequestSZ
+    queryset = User.objects.all()
+    http_method_names = ['get', 'patch', 'delete']
+    parser_classes = [JSONParser,FormParser, MultiPartParser]
+
+
+    def get_serializer_class(self):
+        if self.request.method == 'PATCH':
+            return UserUpdateRequestSZ
+
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        logger.info(f"Received data for user update: {request.data}")
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)

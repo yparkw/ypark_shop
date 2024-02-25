@@ -3,8 +3,10 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 
+
 function EditUserModal({ user, onClose, onSave }) {
     const [editedUser, setEditedUser] = useState({
+        id: user.id,
         email: user.email,
         phone: user.phone,
         address: user.address,
@@ -96,7 +98,7 @@ function EditUserModal({ user, onClose, onSave }) {
           </FormGroup>
           <ButtonGroup>
             <Button type="button" onClick={onClose}>Cancel</Button>
-            <Button type="submit">Save</Button>
+            <Button type="submit" onClick={handleSubmit}>Save</Button>
           </ButtonGroup>
         </Form>
         </ModalContainer>
