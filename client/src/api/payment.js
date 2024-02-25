@@ -2,7 +2,7 @@
 
 export const paymentClickHandler = (data, productInfo, mode, onSuccess, onFailure) => {
   const IMP = window.IMP;
-  IMP.init("imp77252484");
+  IMP.init("imp64353736");
   
   const reqPayment = (res) => {
     if (res.success) {
