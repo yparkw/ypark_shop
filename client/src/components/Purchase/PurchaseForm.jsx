@@ -54,6 +54,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
         buyer_email: userInfo.email,
         buyer_tel: userInfo.phone,
         buyer_address: userInfo.address,
+        buyer_detailAddress: userInfo.detailAddress,
         buyer_postcode: userInfo.postCode,
       };
       try {

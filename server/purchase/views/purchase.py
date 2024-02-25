@@ -39,6 +39,7 @@ def verify_purchase(request):
             buyer_email=request.POST.get('buyer_email'),
             buyer_tel=request.POST.get('buyer_tel'),
             buyer_address=request.POST.get('buyer_address'),
+            buyer_detailAddress=request.POST.get('buyer_detailAddress'),
             buyer_postcode=request.POST.get('buyer_postcode'),
         )
         # 구매한 상품 정보 저장

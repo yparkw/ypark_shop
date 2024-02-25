@@ -16,6 +16,7 @@ class Purchase(TimestampBaseModel):
     buyer_email = models.CharField(max_length=100, null=True)
     buyer_tel = models.CharField(max_length=100, null=True)
     buyer_address = models.CharField(max_length=255, null=True)
+    buyer_detailAddress = models.CharField(default='상세주소', max_length=255, null=True)
     buyer_postcode = models.CharField(max_length=50, null=True)
     
 class PurchaseItem(models.Model):
