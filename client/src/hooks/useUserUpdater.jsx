@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import { useState } from 'react';
-import axios from 'axios';
+import { axiosInstance } from "../api/axiosInstance";
 
 const useUserUpdater = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -13,7 +13,7 @@ const useUserUpdater = () => {
 
         const token = Cookies.get("access");
         try {
-            const response = await axios.patch(`/api/user/update/`, userData, {
+            const response = await axiosInstance.patch('/api/user/update/', userData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

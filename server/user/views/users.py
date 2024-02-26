@@ -54,7 +54,7 @@ class UserRetrieveUpdateDestroyAV(RetrieveUpdateDestroyAPIView):
     serializer_class = UserUpdateRequestSZ
     queryset = User.objects.all()
     http_method_names = ['get', 'patch', 'delete']
-    parser_classes = [JSONParser,FormParser, MultiPartParser]
+    parser_classes = [JSONParser, FormParser, MultiPartParser]
 
 
     def get_serializer_class(self):
