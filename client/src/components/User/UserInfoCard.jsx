@@ -29,6 +29,7 @@ function UserInfoCard(props) {
     try {
       await updateUser(props.id, editedUserData); // 수정된 사용자 데이터로 업데이트 요청을 보냅니다.
       // 성공적으로 업데이트한 후 필요한 작업을 수행합니다. 예를 들어, 페이지를 새로 고침하거나 사용자에게 알림을 표시할 수 있습니다.
+      props.onUserUpdate();
     } catch (error) {
       // 에러 처리: 사용자에게 실패 메시지를 표시할 수 있습니다.
       console.error("사용자 정보 업데이트 중 오류 발생:", error);

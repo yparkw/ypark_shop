@@ -14,8 +14,14 @@ function Users() {
 //   const [onLoading, setOnLoading] = useState(false);
 //   const userInfo = useSelector((state) => state.user);
   const getUserList = useGetUsers();
+  const { data, refetch } = getUserList;
 //   const [editProduct, setEditProduct] = useState(null);
-  if (getUserList.isSuccess && Array.isArray(getUserList.data.data) && !getUserList.data.data.length) {
+
+const handleUserUpdate = () => {
+  refetch();
+}
+
+if (getUserList.isSuccess && Array.isArray(data?.data) && !data.data.length) {
     return <NoItems />;
   }
 
@@ -45,6 +51,7 @@ function Users() {
                 is_active = {datas.is_active}
                 is_staff = {datas.is_staff}
                 is_admin = {datas.is_admin}
+                onUserUpdate={handleUserUpdate}
               />
             );
           })}
