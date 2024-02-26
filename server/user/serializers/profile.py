@@ -24,10 +24,3 @@ class PatchProfileSZ(serializers.ModelSerializer):
         return super(PatchProfileSZ, self).update(instance, validated_data)
     
     
-class UserListSZ(serializers.ModelSerializer):
-    id = serializers.IntegerField(help_text='유저 id')
-
-    class Meta:
-        model = User
-        fields = ('id', 'email', 'username', 'phone', 'address', 'detailAddress','pastCode')
-        read_only_fields = ('id',)
