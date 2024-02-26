@@ -17,7 +17,7 @@ urlpatterns = [
     path('login/', CustomTokenObtainPairView.as_view(), name = 'token_obtain_pair'),
     path('login/refresh/', CustomTokenRefreshView.as_view(), name='login_refresh'),
     path('list/', UserListCreateAV.as_view(), name = 'user_create_list'),
-    path('update/', UserRetrieveUpdateDestroyAV.as_view(), name = 'user_update'),
+    path('update/<int:pk>/', UserRetrieveUpdateDestroyAV.as_view(), name = 'user_update_destroy'),
     
     # path('test/', celery_test_view),
 ]

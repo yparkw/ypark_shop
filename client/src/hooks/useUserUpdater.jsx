@@ -13,7 +13,7 @@ const useUserUpdater = () => {
 
         const token = Cookies.get("access");
         try {
-            const response = await axiosInstance.patch('/api/user/update/', userData, {
+            const response = await axiosInstance.patch(`/api/user/update/${userId}/`, userData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
