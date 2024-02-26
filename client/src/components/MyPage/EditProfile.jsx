@@ -5,96 +5,104 @@ import styled from "styled-components";
 import ImageSelector from "../ProductRegister/ImageSelector";
 import InputText from "../ProductRegister/InputText";
 import { useDaumPostcodePopup } from "react-daum-postcode";
-import usePatchUserData from "../../hooks/usePatchUserData";
+// import usePatchUserData from "../../hooks/usePatchUserData";
+import useUserUpdater from "../../hooks/useUserUpdater";
 import Loading from "../Commons/Loading";
 import useGetUserInfo from "../../hooks/useGetUserInfo";
 
 export default function EditProfile() {
-  // const [profileImg, setProfileImg] = useState([]);
+  const userInfo = useSelector((state) => state.user);
+  const { data: userData, refetch, isLoading: isLoadingUserInfo } = useGetUserInfo(userInfo.id);
   const [inputs, setInputs] = useState({
     name: "",
     phone: "",
+    address: "",
+    detailAddress: "",
+    postcode: "",
   });
+
   const [address, setAddress] = useState("");
   const [detailAddress, setDetailAddress] = useState("");
   const [postCode, setPostCode] = useState("");
 
-  const userInfo = useSelector((state) => state.user);
+  const { updateUser, isLoading: isLoadingUpdateUser } = useUserUpdater();
   const open = useDaumPostcodePopup();
-  const updateUser = useGetUserInfo(userInfo.id);
-  const patchUserData = usePatchUserData(
-    {
-      ...inputs,
-      address: address,
-      detailAddress: detailAddress,
-      postcode: postCode,
-
-      // profileImage: profileImg[0],
-    },
-    userInfo.id
-  );
 
   useEffect(() => {
-    if (inputs.phone.length === 10) {
-      setInputs((prev) => {
-        return {
-          ...prev,
-          phone: inputs.phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3"),
-        };
-      });
-    } else if (inputs.phone.length === 13) {
-      setInputs((prev) => {
-        return {
-          ...prev,
-          phone: inputs.phone
-            .replace(/-/g, "")
-            .replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3"),
-        };
+     if (userData) {
+      setInputs({
+        name: userData.name,
+        phone: userData.phone,
+        address: userData.address,
+        detailAddress: userData.detailAddress,
+        postcode: userData.postcode,
       });
     }
-  }, [inputs.phone]);
+  }, [userData]);
 
-  useEffect(() => {
-    setInputs({
-      name: userInfo.name,
-      phone: userInfo.phone,
-    });
-    // setProfileImg([userInfo.profileImg]);
-    setAddress(userInfo.address);
-    setDetailAddress(userInfo.detailAddress);
-    setPostCode(userInfo.postcode);
-  }, [userInfo]);
+  // useEffect(() => {
+  //   setInputs({
+  //     name: userInfo.name,
+  //     phone: userInfo.phone,
+  //   });
+  //   // setProfileImg([userInfo.profileImg]);
+  //   setAddress(userInfo.address);
+  //   setDetailAddress(userInfo.detailAddress);
+  //   setPostCode(userInfo.postcode);
+  // }, [userInfo]);
 
-  const addressPostHandler = (data) => {
-    let fullAddress = data.address;
-    let extraAddress = "";
+  // const addressPostHandler = (data) => {
+  //   let fullAddress = data.address;
+  //   let extraAddress = "";
 
-    if (data.addressType === "R") {
-      if (data.bname !== "") {
-        extraAddress += data.bname;
-      }
+  //   if (data.addressType === "R") {
+  //     if (data.bname !== "") {
+  //       extraAddress += data.bname;
+  //     }
 
-      if (data.buildingName !== "") {
-        extraAddress +=
-          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
-      }
-      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
-    }
+  //     if (data.buildingName !== "") {
+  //       extraAddress +=
+  //         extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+  //     }
+  //     fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+  //   }
 
-    setAddress(fullAddress);
+  //   setAddress(fullAddress);
+  //   setPostCode(data.zonecode);
+  // };
+
+  // const postCodeHandler = (e) => {
+  //   e.preventDefault();
+  //   open({ onComplete: addressPostHandler });
+  // };
+
+  // const inputChangeHandler = (e) => {
+  //   setInputs({ ...inputs, [e.target.name]: e.target.value });
+  // };
+
+  // if (patchUserData.isLoading || updateUser.isLoading) {
+  //   return <Loading />;
+  // }
+
+  const handleAddressSelect = (data) => {
+    setAddress(data.address);
+    setDetailAddress(data.buildingName);
     setPostCode(data.zonecode);
   };
 
-  const postCodeHandler = (e) => {
-    e.preventDefault();
-    open({ onComplete: addressPostHandler });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputs(prev => ({ ...prev, [name]: value }));
   };
 
-  const inputChangeHandler = (e) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
+  const handleSubmit = async () => {
+    await updateUser(userInfo.id, {
+      ...inputs,
+    });
+    refetch(); // 사용자 정보를 다시 가져옵니다.
   };
 
-  if (patchUserData.isLoading || updateUser.isLoading) {
+  if (isLoadingUserInfo || isLoadingUpdateUser) {
     return <Loading />;
   }
 
@@ -114,7 +122,7 @@ export default function EditProfile() {
           mode={"title"}
           type={"text"}
           value={inputs.name}
-          changeHandler={inputChangeHandler}
+          changeHandler={handleInputChange}
         />
         <InputText
           name={"phone"}
@@ -124,7 +132,7 @@ export default function EditProfile() {
           mode={"title"}
           type={"text"}
           value={inputs.phone}
-          changeHandler={inputChangeHandler}
+          changeHandler={handleInputChange}
         />
         <InputText
           name={"address"}
@@ -156,10 +164,10 @@ export default function EditProfile() {
           value={postCode}
           disabled={true}
         />
-        <AddressPostButton onClick={(e) => postCodeHandler(e)}>
+        <AddressPostButton onClick={() => open({onComplete: handleAddressSelect})}>
           Address
         </AddressPostButton>
-        <EditPostButton onClick={() => patchUserData.mutate()}>
+        <EditPostButton onClick={handleSubmit}>
           Edit
         </EditPostButton>
       </InputWrapper>
