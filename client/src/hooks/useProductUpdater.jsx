@@ -1,4 +1,4 @@
-import { productImageRegisterFn, productRegisterFn } from "../api";
+import { productImageRegisterFn, productUpdateFn } from "../api";
 
 export default function useProductUpdater() {
   const updateProduct = async (productInfo, thumbImage) => {
@@ -25,12 +25,12 @@ export default function useProductUpdater() {
           image_url: fullImageUrl,
         };
 
-        const productRegisterResponse = await productRegisterFn(updatedProductInfo);
+        const productUpdateResponse = await productUpdateFn(updatedProductInfo);
 
         console.log("Image Upload Response:", imageUploadResponse);
-        console.log("Product Register Response:", productRegisterResponse);
+        console.log("Product Register Response:", productUpdateResponse);
         
-        if (productRegisterResponse.status === 200) {
+        if (productUpdateResponse.status === 200) {
           return true;
         }
       }

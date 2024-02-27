@@ -34,6 +34,16 @@ export const productRegisterFn = async (formData) => {
   return res;
 };
 
+export const productUpdateFn = async (formData) => {
+  const token = Cookie.get("access");
+  const res = await axiosInstance.patch(`/api/products/${formData.id}`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`, // 토큰 헤더에 추가
+    }
+  });
+  return res;
+};
+
 export const getCartData = async () => {
   const token = Cookie.get("access");
   const res = await axiosInstance.get("/api/cart/", {

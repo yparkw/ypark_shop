@@ -15,7 +15,6 @@ import { useLocation } from "react-router-dom";
 export default function ProductRegisterForm() {
   const location = useLocation();
   const productToEdit = location.state?.product;
-  console.log('registerform', location);
   
   const isEditMode = productToEdit !== undefined;
 
@@ -25,11 +24,10 @@ export default function ProductRegisterForm() {
     category: productToEdit?.category || "",
     sizes: productToEdit?.sizes || { 'S': 0, 'M': 0, 'L': 0, 'XL': 0, 'FREE': 0 },
   });
-  const [thumbImage, setThumbImage] = useState(productToEdit?.image || null);
+  const [thumbImage, setThumbImage] = useState(productToEdit?.productImg || null);
   const [isValid, setIsValid] = useState(false);
 
 
-  console.log('product',`${productToEdit?.sizes}`);
 
 
   const inputChangeHandler = (e) => {
@@ -84,14 +82,16 @@ export default function ProductRegisterForm() {
 
     console.log('Sending:', requestData, thumbImage);
     if (isValid) {
+      let result;
       if (isEditMode) {
-        const result = await updateProduct(productToEdit.id, requestData, thumbImage)
+        result = await updateProduct(productToEdit.id, requestData, thumbImage)
+      } else {
+        result = await postProduct(requestData, thumbImage);
       }
-      const result = await postProduct(requestData, thumbImage);
       console.log('Result:', result);
       if (result) {
         console.log('register success');
-        navigate('/');
+        navigate('/admin/product');
       } else {
         console.log('register failed');
       }
