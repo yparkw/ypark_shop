@@ -31,11 +31,14 @@ export default function useGetUsers(params, setFunction) {
       retry: 2,
       staleTime: 1000 * 60 * 30,
       onSuccess: () => {
-        setFunction(true);
-        setTimeout(() => {
-          setFunction(false);
-        }, 1200);
+      if (typeof setFunction === 'function'){
+          setFunction(true);
+          setTimeout(() => {
+            setFunction(false);
+          }, 1200);
+        }
       },
+        
       onError: (error) => {
         console.error('Error in useQuery:', {
           message: error.message,
