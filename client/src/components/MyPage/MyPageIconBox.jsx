@@ -12,13 +12,14 @@ import { useSelector } from "react-redux";
 export default function MyPageIconBox() {
   const [isClick, setIsClick] = useState(1);
   const userInfo = useSelector((state) => state.user);
-  const icons = {
+  /*const icons = {
     1: <FaHeart fill="#ff3251" />,
     2: <FiTruck />,
     3: <MdPayment />,
     4: <FaRegCommentAlt />,
     5: <AiOutlineAppstoreAdd />,
   };
+  */
   const menuList = mypageMenuList;
   return (
     <Container>
@@ -33,10 +34,11 @@ export default function MyPageIconBox() {
               active={v.id === isClick ? true : false}
               onClick={() => setIsClick(v.id)}
             >
-              <Icons to={v.link}>
-                {icons[i + 1]}
+            <Text to={v.link}>
+                
                 <span>{v.text}</span>
-              </Icons>
+            </Text>
+
             </WrapperList>
           );
         })}
@@ -69,7 +71,7 @@ const WrapperList = styled.li`
   background-color: ${(props) => (props.active ? "#87c2f5" : "transparent")};
 `;
 
-const Icons = styled(Link)`
+const Text = styled(Link)`
   display: flex;
   flex-direction: column;
   justify-content: center;

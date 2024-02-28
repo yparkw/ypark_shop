@@ -210,36 +210,30 @@ export const cartData = [
 ];
 
 export const mypageMenuList = [
-  {
+/*  {
     id: 1,
     link: "/mypage/favorite",
     text: "찜한상품",
   },
-
+*/
   {
-    id: 2,
+    id: 1,
     link: "/mypage/orders",
     text: "주문내역",
   },
 
   {
-    id: 3,
+    id: 2,
     link: "/mypage/payment",
     text: "결제내역",
   },
-
+/*
   {
     id: 4,
     link: "/mypage/reviews",
     text: "리뷰내역",
   },
-
-  {
-    id: 5,
-    link: '/product-register',
-    text: "상품등록"
-  }
-
+*/
 ];
 
 export const adminpageMenuList = [
@@ -254,15 +248,19 @@ export const adminpageMenuList = [
     link: "/admin/order",
     text: "주문내역",
   },
-
   {
-    id: 3,
+    id:3,
+    link: "/admin/transfer",
+    text: "배송중"
+  },
+  {
+    id: 4,
     link: "/admin/sell",
     text: "판매내역",
   },
 
   {
-    id: 4,
+    id: 5,
     link: "/admin/user",
     text: "사용자관리",
   },
