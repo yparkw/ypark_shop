@@ -42,13 +42,17 @@ function UserInfoCard(props) {
   };
 
   const handleDelete = async (  ) => {
-    console.log('props.id', props.id)
-    try{
-      await deleteUser(props.id);
-    } catch (error) {
-      console.log("삭제 실패: ", error);
+    const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
+    if (isConfirmed){
+      try{
+        await deleteUser(props.id);
+      } catch (error) {
+        console.log("삭제 실패: ", error);
+      }
+    } else {
+      console.log("삭제 작업이 취소되었습니다.");
     }
-  }
+  };
 
   return (
     <>
