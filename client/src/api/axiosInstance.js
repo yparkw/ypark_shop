@@ -2,8 +2,8 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000/", //개 발용 https,
-  //baseURL: "https://www.yparkw.com/",
+  //baseURL: "http://localhost:8000/", //개 발용 https,
+  baseURL: "https://www.yparkw.com/",
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
