@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import EditUserModal from "../Modals/EditUserModal";
 import useUserUpdater from "../../hooks/useUserUpdater";
+import useDeleteUserData from "../../hooks/useDeleteUser";
 
 
 
@@ -23,7 +24,10 @@ function UserInfoCard(props) {
   };
 
   const { updateUser } = useUserUpdater();
-  const handleSaveChanges = async ( editedUserData) => {
+
+  const { mutate: deleteUser, isLoading: isDeleting } = useDeleteUserData();
+  
+  const handleSaveChanges = async ( editedUserData ) => {
     // 저장 로직을 구현합니다.
     setIsEditing(false);
     try {
@@ -37,8 +41,13 @@ function UserInfoCard(props) {
     }
   };
 
-  const handleDelete = () => {
-    setIsEditing(true);
+  const handleDelete = async (  ) => {
+    console.log('props.id', props.id)
+    try{
+      await deleteUser(props.id);
+    } catch (error) {
+      console.log("삭제 실패: ", error);
+    }
   }
 
   return (

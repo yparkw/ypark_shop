@@ -66,8 +66,9 @@ class UserRetrieveUpdateDestroyAV(RetrieveUpdateDestroyAPIView):
         return self.retrieve(request, *args, **kwargs)
 
     def patch(self, request, *args, **kwargs):
-        logger.info(f"Received data for user update: {request.data}")
+        logger.info(f"Received data for user patch: {request.data}")
         return self.partial_update(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
+        logger.info(f"Received data for user delete: {request.data}")
         return self.destroy(request, *args, **kwargs)
