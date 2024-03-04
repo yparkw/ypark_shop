@@ -12,8 +12,10 @@ import Loading from "../Commons/Loading";
 import { tablet } from "../../utils/styleTheme";
 
 export default memo(function CartItem(props) {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(props.maxQuantity);
   const deleteCartItemAction = useDeleteCartData(props.cartId, setQuantity);
+
+  console.log('cartitem', props)
 
   useEffect(() => {
     props.setTotalPrice((prev) => {

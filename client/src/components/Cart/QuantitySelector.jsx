@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { FiMinus, FiPlus } from "react-icons/fi";
 
 export default memo(function QuantitySelector(props) {
-const [quantity, setQuantity] = useState(props.productQuantity);
+const [quantity, setQuantity] = useState(props.maxQuantity);
 
   useEffect(() => {
     props.setQuantity(quantity);
