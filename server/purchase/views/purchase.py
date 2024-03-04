@@ -17,18 +17,14 @@ logger = logging.getLogger(__name__)
 @authentication_classes([JWTAuthentication])  # JWT 인증 사용
 @permission_classes([IsAuthenticated])  # 인증된 사용자만 접근 가능
 def verify_purchase(request):
-    # authentication_classes = [JWTAuthentication]
-    # permission_classes = [IsAuthenticated]
     imp_uid = request.data.get('imp_uid')
     merchant_uid = request.data.get('merchant_uid')
     access = get_token()
-    
     logger.debug(request.data)
     
     # 아임포트 서버로부터 결제 정보 검증
     url = 'https://api.iamport.kr/payments/' + imp_uid
     headers = {'Authorization': 'Bearer ' + access} # 여기서 'YOUR_ACCESS_TOKEN'은 아임포트에서 발급받은 액세스 토큰입니다.
-
     response = requests.get(url, headers=headers)
     result = response.json()
     
@@ -44,6 +40,7 @@ def verify_purchase(request):
             return JsonResponse({'status': 'error', 'message': 'Payment verification failed.'})
     else:
         return JsonResponse({'status': 'error', 'message': 'Payment failed'})
+
 @api_view(['POST'])
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])

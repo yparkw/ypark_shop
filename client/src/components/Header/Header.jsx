@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { tablet } from "../../utils/styleTheme";
 import HeaderMenu from "./HeaderMenu";
@@ -9,6 +9,9 @@ import HeaderMenu from "./HeaderMenu";
 
 const Header = () => {
   const userInfo = useSelector((state) => state.user);
+  const location = useLocation();
+
+  if (location.pathname === "/") return null;
   return (
     <Container>
       <LogoBox>
