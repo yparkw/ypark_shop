@@ -11,27 +11,20 @@ function Footer() {
   if (location.pathname === "/") return null;
   return (
     <Container>
-      <div className="Footer-Left">
-        <span>
-          Take what you want
-        </span>
-      </div>
       <div className="Footer-Middle">
         <Link to="/">
           <img
-            src={`${process.env.PUBLIC_URL}/assets/images/logo_demo02_white.svg`}
+            src={`${process.env.PUBLIC_URL}/assets/images/main_logo.png`}
             alt="logo"
           />
         </Link>
       </div>
-
-      <div className="Footer-Right">
-        <p>CEO: Park</p>
-        <p>E-Mail: part@naver.com</p>
-      </div>
+      
     </Container>
   );
 }
+
+
 
 const Container = styled.footer`
   height: 80px;
