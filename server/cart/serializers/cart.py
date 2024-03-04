@@ -15,7 +15,7 @@ class CartItemSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = CartItem
-        fields = ['cart', 'productItemId', 'quantity', 'size']
+        fields = ['id', 'cart', 'productItemId', 'quantity', 'size']
         extra_kwargs = {'cart': {'read_only': True}}
         
     def create(self, validated_data):
@@ -39,7 +39,7 @@ class CartItemResponseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CartItem
-        fields = ['cart', 'productItemId', 'quantity', 'size']
+        fields = ['id', 'cart', 'productItemId', 'quantity', 'size']
 
 class CartSerializer(serializers.ModelSerializer):
     items = CartItemResponseSerializer(many=True, read_only=True)

@@ -95,7 +95,7 @@ export default memo(function CartForm() {
       return getCartData.data.items.map((v) => (
         <CartItem
           key={v.cart}
-          id={v.cart}
+          id={v.id}
           itemImg={v.productItemId.image_url}
           price={v.productItemId.price}
           maxQuantity={v.quantity}

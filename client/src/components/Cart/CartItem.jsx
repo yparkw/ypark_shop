@@ -13,7 +13,7 @@ import { tablet } from "../../utils/styleTheme";
 
 export default memo(function CartItem(props) {
   const [quantity, setQuantity] = useState(props.maxQuantity);
-  const deleteCartItemAction = useDeleteCartData(props.cartId, setQuantity);
+  const deleteCartItemAction = useDeleteCartData(props.id, setQuantity);
 
   console.log('cartitem', props)
 
