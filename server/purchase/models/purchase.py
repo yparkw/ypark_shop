@@ -18,9 +18,21 @@ class Purchase(TimestampBaseModel):
     buyer_address = models.CharField(max_length=255, null=True)
     buyer_detailAddress = models.CharField(default='상세주소', max_length=255, null=True)
     buyer_postcode = models.CharField(max_length=50, null=True)
+
+    STATUS_CHOICES = (
+        ('ordered', '주문'),
+        ('shipping', '배송중'),
+        ('cofirmed', '구매확정'),
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='ordered',
+    )
     
 class PurchaseItem(models.Model):
     purchase = models.ForeignKey(Purchase, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     size = models.CharField(max_length=10)
+    

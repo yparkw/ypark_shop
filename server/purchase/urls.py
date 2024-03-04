@@ -6,7 +6,7 @@ from .views.purchase import *
 app_name = 'purchase'
 
 urlpatterns = [
-    path('verify_purchase', verify_purchase, name='verify_purchase')
-    # path('ready/', kakaopay_ready, name='kakaopay_ready'),
-    # path('approve/<int:purchase_pk>/', kakaopay_approve, name='kakaopay_approve')
+    path('verify_purchase', verify_purchase, name='verify_purchase'),
+    path('update/<int:pk>', update_to_shipping, name='shipping'),
+    path('reject/<int:pk>', reject_order, name='refund'),
 ]

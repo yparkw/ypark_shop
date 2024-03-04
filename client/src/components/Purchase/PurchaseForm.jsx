@@ -5,7 +5,6 @@ import { useAddPurchaseInfo } from "../../hooks/useAddPurchaseInfo";
 import { paymentClickHandler } from '../../api/payment';
 
 export default function PurchaseForm({ orderInfo, userInfo }) {
-  console.log('orderInfo', orderInfo)
   const [orderDetails, setOrderDetails] = useState({
     merchant_uid: `mid_${new Date().getTime()}`,
     amount: '',
@@ -28,12 +27,14 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
   
 
   const handlePayment = () => {
+
+    const numericTotalAmount = orderInfo.reduce((total, item) => total + calculateTotalPrice(item), 0);
     const paymentData = {
       pg: 'html5_inicis',
       paymentMethod: 'card', // default payment method
       merchant_uid : orderDetails.merchant_uid,
       name: '주문명:결제테스트',
-      amount: totalAmount,
+      amount: numericTotalAmount,
       buyer_email: orderDetails.email,
       buyer_name: userInfo.name || '',
       buyer_tel: orderDetails.phone,
@@ -42,6 +43,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
     };
     
     const onScuccess = async (res) => {
+      console.log('suucess', res);
       const formData = {
         imp_uid: res.imp_uid,
         merchant_uid: res.merchant_uid,
@@ -74,8 +76,6 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Submit the order details
-    console.log(orderDetails);
   };
 
   const formatPrice = (price) => {
