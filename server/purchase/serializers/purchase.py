@@ -33,3 +33,5 @@ class PurchaseSerializer(serializers.ModelSerializer):
         for item_data in items_data:
             PurchaseItem.objects.create(purchase=purchase, **item_data)
         return purchase
+    
+    

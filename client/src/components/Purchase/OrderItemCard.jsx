@@ -8,12 +8,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function OrderItemCard(props) {
   const navigate = useNavigate();  
-  console.log('adminitemcard_props', props )
 
   
-  const handleEditClick = () => {
-    console.log('adminitemscard_editclick', {state : {product: props}});
-    navigate("/product-register", { state : { product: props } });
+  const handleshippingClick = () => {
+    console.log('shipping', );
   }
 
   const handleDelete = () => {
@@ -30,7 +28,7 @@ export default function OrderItemCard(props) {
       <ItemName>{props.title}</ItemName>
       <Price>{formatPrice(props.price)}원</Price>
       <ButtonGroup>
-        <Button onClick={handleEditClick}>배송</Button>
+        <Button onClick={handleshippingClick}>배송</Button>
         <Button onClick={handleDelete}>환불</Button>
       </ButtonGroup>
     </CardContainer>

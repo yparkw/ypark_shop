@@ -24,6 +24,8 @@ class purchaseListCreateAV(ListCreateAPIView):
     http_method_names = ['get', 'post']
     parser_classes = [JSONParser, MultiPartParser, FormParser]
     
+    logger.debug(queryset)
+    
     
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -34,6 +36,7 @@ class purchaseListCreateAV(ListCreateAPIView):
     def get(self, request, *args, **kwargs):
         page = self.paginate_queryset(self.get_queryset())
         serializer = self.get_serializer(page, many=True)
+        logger.debug(serializer)
         return self.get_paginated_response(data=serializer.data)
 
     def post(self, request, *args, **kwargs):
@@ -59,7 +62,7 @@ def verify_purchase(request):
     imp_uid = request.data.get('imp_uid')
     merchant_uid = request.data.get('merchant_uid')
     access = get_token()
-    logger.debug(request.data)
+    
     
     # 아임포트 서버로부터 결제 정보 검증
     url = 'https://api.iamport.kr/payments/' + imp_uid
@@ -71,6 +74,7 @@ def verify_purchase(request):
     # 결제 검증 후 구매 정보 저장
     if result['code'] == 0:  # 결제 검증 성공
         serializer = PurchaseSerializer(data= request.data)
+        logger.debug(serializer)
         
         if serializer.is_valid():
             serializer.save()

@@ -14,11 +14,12 @@ import Skeleton from "../Commons/Skeleton";
 import useGetOrderList from "../../hooks/useGetOrderList";
 
 export default function OrderItems(props) {
-    //const [onLoading, setOnLoading] = useState(false);
-    //const userInfo = useSelector((state) => state.user);
-    const getDataList = useGetOrderList();
+    const [onLoading, setOnLoading] = useState(false);
+   
+    const getDataList = useGetOrderList(props.param, setOnLoading);
     console.log("list", getDataList);
-    //const [editProduct, setEditProduct] = useState(null);
+
+    
     if (getDataList.isSuccess && Array.isArray(getDataList.data.data) && !getDataList.data.data.length) {
       return <NoItems />;
     }

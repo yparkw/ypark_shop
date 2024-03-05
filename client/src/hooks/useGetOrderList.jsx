@@ -6,27 +6,30 @@ import { axiosInstance } from "../api/axiosInstance";
 
 const getOrders = async (param) => {
   const token = Cookies.get("access");
-  try{
-    const res = await axiosInstance.get('/api/purchase', {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+  try {
+    const res = await axiosInstance.get('/api/purchase/', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
+    // 여기서 응답 로깅
+
     return res.data;
-  } catch(error){
+  } catch (error) {
     console.error('Error fetching user items', 
     {
       message: error.message,
       response: error.response,
       request: error.request,
     });
+    // 여기서 에러 로깅
     throw error;
   }
 };
 
 export default function useGetOrderList(params, setFunction) {
   const { data, isLoading, isSuccess, isError, refetch } = useQuery(
-    ["getUsers", params],
+    ["getOrders", params],
     () => getOrders(params),
     {
       retry: 2,
