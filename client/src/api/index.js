@@ -67,9 +67,9 @@ export const deleteFavoriteItem = async (id) => {
 
 export const getOrderList = async () => {
   const token = Cookie.get("access");
-  const res = await axiosInstance.get("/api/v2/orders/info", {
+  const res = await axiosInstance.get("/api/purchase", {
     headers: {
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
   });
   return res.data.data;

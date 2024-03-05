@@ -9,6 +9,11 @@ class PurchaseItemSerializer(serializers.ModelSerializer):
         model = PurchaseItem
         fields = '__all__'
 
+class PurchaseListSZ(serializers.ModelSerializer):
+    class Meta:
+        model = Purchase
+        fields = '__all__'
+        
 class PurchaseSerializer(serializers.ModelSerializer):
     products = PurchaseItemSerializer(many=True)
 

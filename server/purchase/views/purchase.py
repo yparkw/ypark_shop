@@ -1,18 +1,57 @@
-from django.http import JsonResponse
-from purchase.models.purchase import Purchase
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from ..iamport import get_token
 import requests
+from django.http import JsonResponse
+from rest_framework.generics import ListCreateAPIView
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
+from common.paginations import CustomPagination
 
-from purchase.serializers.purchase import PurchaseItemSerializer, PurchaseSerializer
-from products.models.product import Product
+from purchase.iamport import get_token
+from purchase.models.purchase import Purchase
+from purchase.serializers.purchase import PurchaseSerializer, PurchaseListSZ
 
 import logging
 logger = logging.getLogger(__name__)
 
+class purchaseListCreateAV(ListCreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    pagination_class = CustomPagination
+    queryset = Purchase.objects.all()
+    http_method_names = ['get', 'post']
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
+    
+    
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return PurchaseListSZ
+        elif self.request.method == 'POST':
+            return PurchaseSerializer
 
+    def get(self, request, *args, **kwargs):
+        page = self.paginate_queryset(self.get_queryset())
+        serializer = self.get_serializer(page, many=True)
+        return self.get_paginated_response(data=serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        logger.info(f"Received data: {request.data}")
+        serializer = self.get_serializer(data=request.data)
+        print(request.data)
+        # Product에 이미지가 있따면 post로 받아야하고 내용은 form형식이여야 한다.)
+        if serializer.is_valid():
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status= status.HTTP_200_OK, headers=headers)
+        logger.error(f"Serializer errors: {serializer.errors}")    
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def perform_create(self, serializer):
+        serializer.save()
+        return super().perform_create(serializer)
+    
 @api_view(['POST'])  # API 뷰로 지정
 @authentication_classes([JWTAuthentication])  # JWT 인증 사용
 @permission_classes([IsAuthenticated])  # 인증된 사용자만 접근 가능
@@ -41,26 +80,3 @@ def verify_purchase(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Payment failed'})
 
-@api_view(['POST'])
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
-def update_to_shipping(request, purchase_id):
-    try:
-        purchase = Purchase.objects.get(id=purchase_id)
-        purchase.status = 'shipping'  # '배송중' 상태로 업데이트
-        purchase.save()
-        return JsonResponse({'status': 'success', 'message': 'Order status updated to shipping.'})
-    except Purchase.DoesNotExist:
-        return JsonResponse({'status': 'error', 'message': 'Purchase not found.'})   
-
-@api_view(['POST'])
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
-def reject_order(request, purchase_id):
-    try:
-        purchase = Purchase.objects.get(id=purchase_id)
-        purchase.status = 'rejected'  # '거절됨' 상태로 업데이트, `rejected` 상태가 모델에 정의되어 있어야 합니다.
-        purchase.save()
-        return JsonResponse({'status': 'success', 'message': 'Order has been rejected.'})
-    except Purchase.DoesNotExist:
-        return JsonResponse({'status': 'error', 'message': 'Purchase not found.'})
