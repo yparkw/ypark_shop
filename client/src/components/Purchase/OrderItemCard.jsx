@@ -2,12 +2,12 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line
 import React from "react";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 
 export default function OrderItemCard(props) {
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   
   const handleshippingClick = () => {

@@ -24,7 +24,7 @@ class purchaseListCreateAV(ListCreateAPIView):
     http_method_names = ['get', 'post']
     parser_classes = [JSONParser, MultiPartParser, FormParser]
     
-    logger.debug(queryset)
+    
     
     
     def get_serializer_class(self):
@@ -74,7 +74,7 @@ def verify_purchase(request):
     # 결제 검증 후 구매 정보 저장
     if result['code'] == 0:  # 결제 검증 성공
         serializer = PurchaseSerializer(data= request.data)
-        logger.debug(serializer)
+        logger.debug(serializer.data)
         
         if serializer.is_valid():
             serializer.save()

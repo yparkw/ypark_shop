@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { useQuery } from "react-query";
 import { axiosInstance } from "../api/axiosInstance";
 
+
 const getUsers = async (param) => {
   const token = Cookies.get("access");
   try{
