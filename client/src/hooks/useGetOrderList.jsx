@@ -1,13 +1,54 @@
+/* eslint-disable no-unused-vars */
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
-import { getOrderList } from "../api";
+import Cookies from "js-cookie";
+import { axiosInstance } from "../api/axiosInstance";
 
-export default function useGetOrderList() {
-  const navigate = useNavigate();
-  const { data, isLoading } = useQuery(["getOrderList"], getOrderList, {
-    retry: false,
-    onError: () => navigate("/*"),
-  });
 
-  return { data, isLoading };
+const getOrders = async (param) => {
+  const token = Cookies.get("access");
+  try{
+    const res = await axiosInstance.get('/api/purchase', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return res.data;
+  } catch(error){
+    console.error('Error fetching user items', 
+    {
+      message: error.message,
+      response: error.response,
+      request: error.request,
+    });
+    throw error;
+  }
+};
+
+export default function useGetOrderList(params, setFunction) {
+  const { data, isLoading, isSuccess, isError, refetch } = useQuery(
+    ["getUsers", params],
+    () => getOrders(params),
+    {
+      retry: 2,
+      staleTime: 1000 * 60 * 30,
+      onSuccess: () => {
+      if (typeof setFunction === 'function'){
+          setFunction(true);
+          setTimeout(() => {
+            setFunction(false);
+          }, 1200);
+        }
+      },
+        
+      onError: (error) => {
+        console.error('Error in useQuery:', {
+          message: error.message,
+          response: error.response,
+          request: error.request,
+        });
+      }
+    }
+  );
+
+  return { data, isLoading, isSuccess, isError, refetch };
 }

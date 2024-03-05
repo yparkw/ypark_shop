@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 
-function AdminItemCard(props) {
+export default function OrderItemCard(props) {
   const navigate = useNavigate();  
   console.log('adminitemcard_props', props )
 
@@ -27,11 +27,11 @@ function AdminItemCard(props) {
   return (
     <CardContainer>
       <ItemImage src={props.productImg} alt="productImg"/>
-      <ItemName>{props.status}</ItemName>
+      <ItemName>{props.title}</ItemName>
       <Price>{formatPrice(props.price)}원</Price>
       <ButtonGroup>
-        <Button onClick={handleEditClick}>수정</Button>
-        <Button onClick={handleDelete}>삭제</Button>
+        <Button onClick={handleEditClick}>배송</Button>
+        <Button onClick={handleDelete}>환불</Button>
       </ButtonGroup>
     </CardContainer>
   );
@@ -81,4 +81,3 @@ const Button = styled.button`
   }
 `;
 
-export default AdminItemCard;
