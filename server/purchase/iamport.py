@@ -23,18 +23,14 @@ def get_token():
         return None
 
 # 결재 준비: 어떤 주문번호, 얼마 결재할지 아임포트에 미리 정보를 전달
-def payment_prepare(order_id, amount, *args, **kwargs):
-    
+def payment_prepare(order_id, amount, *args, **kwargs):   
     access_token = get_token() # 위에서 만든 함수 (아이엠포트에서 토큰 받아오기)
-
     if access_token:
         access_data = {
             'merchant_uid': order_id,
             'amount': amount
         }
-
-        url = 'https://api.iamport.kr/payments/prepare'
-        
+        url = 'https://api.iamport.kr/payments/prepare'      
         headers = {
             'Authorization': access_token,
         }
@@ -49,6 +45,13 @@ def payment_prepare(order_id, amount, *args, **kwargs):
     
     else:
         raise ValueError("토큰 오류")
+
+def verify_iamport_payment(imp_uid, access_token):
+    url = f'https://api.iamport.kr/payments/{imp_uid}'
+    headers = {'Authorization': f'Bearer {access_token}'}
+    response = requests.get(url, headers=headers)
+    return response.json()
+
 
 # 결재 완료: 결재 이후 실제 거래와 맞는지를 확인
 def find_transaction(order_id, *args, **kwargs):

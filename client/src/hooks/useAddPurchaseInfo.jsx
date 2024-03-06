@@ -8,7 +8,7 @@ export const useAddPurchaseInfo = () => {
     const token = Cookie.get("access"); // 토큰 가져오기
     console.log('formdata', formData)
     try {
-      const res = await axiosInstance.post("/api/purchase/verify_purchase", formData, {
+      const res = await axiosInstance.post("/api/purchase", formData, {
         headers: {
           Authorization: `Bearer ${token}`, // 토큰 헤더에 추가
         }

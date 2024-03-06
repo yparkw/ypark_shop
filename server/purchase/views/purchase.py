@@ -9,7 +9,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from common.paginations import CustomPagination
 
-from purchase.iamport import get_token
+from purchase.iamport import get_token, verify_iamport_payment
 from purchase.models.purchase import Purchase
 from purchase.serializers.purchase import PurchaseSerializer, PurchaseListSZ
 
@@ -22,10 +22,7 @@ class purchaseListCreateAV(ListCreateAPIView):
     pagination_class = CustomPagination
     queryset = Purchase.objects.all()
     http_method_names = ['get', 'post']
-    parser_classes = [JSONParser, MultiPartParser, FormParser]
-    
-    
-    
+    parser_classes = [JSONParser, MultiPartParser, FormParser]    
     
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -36,11 +33,19 @@ class purchaseListCreateAV(ListCreateAPIView):
     def get(self, request, *args, **kwargs):
         page = self.paginate_queryset(self.get_queryset())
         serializer = self.get_serializer(page, many=True)
-        logger.debug(serializer)
+        logger.debug(serializer.data)
         return self.get_paginated_response(data=serializer.data)
 
     def post(self, request, *args, **kwargs):
+        imp_uid= request.data.get('imp_uid')
         logger.info(f"Received data: {request.data}")
+        
+        if imp_uid:
+            access_token = get_token()  # get_token 함수로 IAMPORT 접근 토큰을 가져와야 합니다.
+            verification_result = verify_iamport_payment(imp_uid, access_token)
+
+            if verification_result['code'] != 0:
+                return Response({'status': 'error', 'message': 'Payment verification failed.'}, status=status.HTTP_400_BAD_REQUEST)
         serializer = self.get_serializer(data=request.data)
         print(request.data)
         # Product에 이미지가 있따면 post로 받아야하고 내용은 form형식이여야 한다.)
