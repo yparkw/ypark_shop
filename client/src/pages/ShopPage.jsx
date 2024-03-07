@@ -9,7 +9,7 @@ import SubBanner from "../components/SubBanner/Subbanner";
 
 export default function ShopPage() {
   const [params, setParams] = useState({
-    majorClass: "",
+    category: "",
     color: "",
     priceMax: 10000000,
     priceMin: 0,
@@ -17,6 +17,7 @@ export default function ShopPage() {
   const [page, setPage] = useState(1);
   const [changeList, setChangeList] = useState(false);
 
+  console.log("shop", params)
   const urlParams = {
     page,
     pageSize: 6,
@@ -26,6 +27,8 @@ export default function ShopPage() {
   useEffect(() => {
     setPage(1);
   }, [params]);
+
+
 
   return (
     <Container>

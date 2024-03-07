@@ -1,40 +1,32 @@
 /* eslint-disable react/prop-types */
 
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useState } from "react";
 import styled, { css } from "styled-components";
 import { categoryList } from "../../constance";
 
-export default memo(function CategorySelector(props) {
-  const [isClick, setIsClick] = useState("");
-  const categoryArray = categoryList;
-  useEffect(() => {
-    props.changeHandler({ target: { name: "majorClass", value: isClick } });
-  }, [isClick]);
+export default memo(function CategorySelector({ changeHandler }) {
+  const [isClick, setIsClick] = useState(false);
 
-  const categoryClickHandler = (name) => {
-    if (name === isClick) {
-      setIsClick("");
-    } else {
-      setIsClick(name);
-    }
+  // const handleClick = () => {
+  //   setIsClick(!isClick); // Correctly updates the isClick state
+  // };
+  const categoryClickHandler = (category) => {
+    const newCategory = isClick === category ? "" : category; // Toggle category
+    setIsClick(newCategory);
+    changeHandler({ name: "category", value: newCategory }); // 직접적인 값 전달로 변경
   };
-
+  
   return (
     <Container>
       <p>Category</p>
       <CategoryWrapper>
-        {categoryArray.map((v) => {
-          return (
-            <li key={v.id} onClick={() => categoryClickHandler(v.mainCategory)}>
-              <MainCategory
-                className="check"
-                active={v.mainCategory === isClick}
-              >
-                {v.mainCategory}
-              </MainCategory>
-            </li>
-          );
-        })}
+        {categoryList.map((v) => (
+          <li key={v.id} onClick={() => categoryClickHandler(v.mainCategory)}>
+            <MainCategory active={v.mainCategory === isClick}>
+              {v.mainCategory}
+            </MainCategory>
+          </li>
+        ))}
       </CategoryWrapper>
     </Container>
   );

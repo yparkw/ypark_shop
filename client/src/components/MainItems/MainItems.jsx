@@ -13,12 +13,24 @@ import Skeleton from "../Commons/Skeleton";
 
 function MainItems(props) {
   const [onLoading, setOnLoading] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const userInfo = useSelector((state) => state.user);
   const getDataList = useGetProductItems(props.params, setOnLoading);
+
+
+  console.log("Daga", getDataList);
+  const filteredData = getDataList.isSuccess && Array.isArray(getDataList.data?.data) ? 
+    getDataList.data.data.filter(item => selectedCategory === 'all' || item.category === selectedCategory) : [];
+
+  // 카테고리 선택 핸들러
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
   const nextButtonClickHandler = () => {
     props.setPage((prev) => prev + 1);
   };
-
+  
   const prevButtonClickHandler = () => {
     if (props.params.page === 1) {
       return;
@@ -47,27 +59,31 @@ function MainItems(props) {
     );
   }
 
+  
+
   return (
     <>
+      <select onChange={handleCategoryChange}>
+        <option value="all">모든 카테고리</option>
+        <option value="상의">상의</option>
+        <option value="아우터">아우터</option>
+        <option value="하의">하의</option>
+        <option value="신발">신발</option>
+        <option value="가방">가방</option>
+        <option value="잡화">잡화</option>
+        {/* 여기에 필요한 만큼 카테고리 옵션을 추가할 수 있습니다 */}
+      </select>
       <Container mode={props.mode}>
-        {getDataList.isSuccess && Array.isArray(getDataList.data?.data) &&
-          getDataList.data.data.map((datas) => {
-            // let favorite = false;
-            // const fa = getFavoriteData?.data?.map((v) => v.product.product_id);
-            // if (fa?.includes(datas.product_id)) {
-            //   favorite = true;
-            // }
-            return (
-              <ItemCard
-                key={datas.id}
-                id={datas.id}
-                productImg={datas.image_url}
-                title={datas.name}
-                price={datas.price} 
-                // isLogin={userInfo.isLogin}
-              />
-            );
-          })}
+        
+              {filteredData.map((datas) => (
+                <ItemCard
+                  key={datas.id}
+                  id={datas.id}
+                  productImg={datas.image_url}
+                  title={datas.name}
+                  price={datas.price}
+                />
+              ))}
       </Container>
       <ButtonWrapper>
         <div>

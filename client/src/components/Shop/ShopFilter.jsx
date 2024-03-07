@@ -8,35 +8,13 @@ import CategorySelector from "./CategorySelector";
 import PriceRange from "./PriceRange";
 
 export default memo(function ShopFilter(props) {
-  const setParamsHandler = (e) => {
-    if (e.name === "price") {
-      props.setParams((prev) => {
-        return {
-          ...prev,
-          minPrice: Number(e.value.priceMin),
-          maxPrice: Number(e.value.priceMax),
-        };
-      });
-    } else {
-      props.setParams((prev) => {
-        return { ...prev, [e.target.name]: e.target.value };
-      });
-    }
+  const setParamsHandler = (name, value) => {
+    props.setParams((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
     <Container>
-      <CategorySelector changeHandler={setParamsHandler} />
-      {/* <ColorSelector
-        colorList={props.dummyColor}
-        fontSize={"22px"}
-        changeHandler={setParamsHandler}
-        name={"color"}
-      /> */}
-      {/* <PriceSelector>
-        <p>Price</p>
-        <PriceRange changeHander={setParamsHandler} />
-      </PriceSelector> */}
+       <CategorySelector changeHandler={(value) => setParamsHandler("category", value)} />
     </Container>
   );
 });
