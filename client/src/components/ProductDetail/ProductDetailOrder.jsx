@@ -84,7 +84,9 @@ export default memo(function ProductDetailOrder({ sizes }) {
     e.preventDefault();
     navigate("/purchase", { state: 
       { orderInfo: 
-        [{ name: getItem.data.name,
+        [{ 
+          id: getItem.data.id,
+          name: getItem.data.name,
           quantity, 
           size, 
           price: getItem.data.price, 

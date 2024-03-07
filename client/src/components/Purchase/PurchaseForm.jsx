@@ -24,7 +24,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
     });
   };
 
-  
+  console.log('orderInfo', orderInfo);
 
   const handlePayment = () => {
 
@@ -48,7 +48,9 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
         imp_uid: res.imp_uid,
         merchant_uid: res.merchant_uid,
         products: orderInfo.map(item => ({
-          productId: item.id,
+          product_id: item.id,
+          name: item.name,
+          price: item.price,
           quantity: item.quantity,
           size: item.size,
         })),
