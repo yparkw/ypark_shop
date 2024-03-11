@@ -18,16 +18,16 @@ export default function OrderItems(props) {
     
     if (!isLoading && !isError && data && Array.isArray(data.data) && !data.data.length) {
         return <NoItems />;
-      }
+    }
   
-      if (isError) {
-        return (
-          <ErrorPage
-            errorText={"Network Error"}
-            retryAction={refetch}
-          />
-        );
-      }
+    if (isError) {
+      return (
+        <ErrorPage
+          errorText={"Network Error"}
+          retryAction={refetch}
+        />
+      );
+    }
   
     return (
     <>

@@ -1,19 +1,39 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import React, {useState} from "react";
 import useGetOrderList from "../../hooks/useGetOrderList";
-import Loading from "../Commons/Loading";
+// import Loading from "../Commons/Loading";
 import styled from "styled-components";
 import OrderItem from "./OrderItem";
 import NoItems from "../Commons/NoItems";
+import ErrorPage from "../Commons/ErrorPage";
 
 export default function MyOrderList() {
-  const getOrderList = useGetOrderList();
+  const [onLoading, setOnLoading] = useState(false);
+   
+  const { data, isLoading, isError, refetch } = useGetOrderList(setOnLoading);
 
-  if (getOrderList.isLoading) {
-    return <Loading />;
+  console.log("getOrderList", data)
+
+  if (!isLoading && !isError && data && Array.isArray(data.data) && !data.data.length) {
+    return <NoItems />;
   }
 
-  if (!getOrderList.data.order_response_dto.length) {
-    return <NoItems shopLink={true} />;
+  // if (getOrderList.isLoading) {
+  //   return <Loading />;
+  // }
+
+  // if (!getOrderList.data) {
+  //   return <NoItems shopLink={true} />;
+  // }
+
+  if (isError) {
+    return (
+      <ErrorPage
+        errorText={"Network Error"}
+        retryAction={refetch}
+      />
+    );
   }
 
   return (
@@ -24,12 +44,13 @@ export default function MyOrderList() {
         <MenuBox>STATUS</MenuBox>
       </FormHeader>
       <FormBody>
-        {getOrderList?.data.order_response_dto.map((v) => {
+        {data && Array.isArray(data.data) &&
+          data.data.map((v) => {
           return (
             <OrderItem
-              key={v.order_id}
-              orderStatus={v.order_status}
-              products={v.order_products}
+              key={v.id}
+              orderStatus={v.status}
+              products={v.products}
             />
           );
         })}

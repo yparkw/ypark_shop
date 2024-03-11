@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import EditProfile from "../components/MyPage/EditProfile";
-import MyFavoriteList from "../components/MyPage/MyFavoriteList";
+// import MyFavoriteList from "../components/MyPage/MyFavoriteList";
 import MyOrderList from "../components/MyPage/MyOrderList";
 import MyPageIconBox from "../components/MyPage/MyPageIconBox";
 import MyPaymentList from "../components/MyPage/MyPaymentList";
 import ProfileCard from "../components/MyPage/ProfileCard";
-import MyReviews from "../components/MyPage/MyReviews";
+// import MyReviews from "../components/MyPage/MyReviews";
 import DetailSkeleton from "../components/ProductDetail/DetailSkeleton";
 
 export default function MyPage() {
@@ -19,12 +19,12 @@ export default function MyPage() {
         <ProfileCard info={userInfo} />
         <MyPageIconBox />
         <Routes>
-          <Route index element={<MyFavoriteList />} />
-          <Route path="favorite" element={<MyFavoriteList />} />
+          <Route index element={<MyOrderList />} />
+          {/* <Route path="favorite" element={<MyFavoriteList />} /> */}
           <Route path="orders" element={<MyOrderList />} />
           <Route path="payment" element={<MyPaymentList />} />
           <Route path="edit" element={<EditProfile />} />
-          <Route path="reviews" element={<MyReviews />} />
+          {/* <Route path="reviews" element={<MyReviews />} /> */}
           <Route path="test" element={<DetailSkeleton />} />
         </Routes>
       </ContentsWrapper>

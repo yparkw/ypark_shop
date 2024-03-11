@@ -7,9 +7,10 @@ import styled from "styled-components";
 export default function OrderItem(props) {
   return (
     <>
-      {props.products.map((v) => {
+      {props.products && Array.isArray(props.products) &&
+      props.products.map((v) => {
         return (
-          <Container key={v.order_product_id}>
+          <Container key={v.product_id}>
             <ItemProfile>
               <Link to={`/detail/${v.product_id}`}>
                 <ItemTextWrapper>
@@ -20,13 +21,13 @@ export default function OrderItem(props) {
             <ItemOptions>
               <OptionWrapper>
                 <div>
-                  <span>{v.product_quantity} 개</span>
-                  <span>{v.product_size} size</span>
+                  <span>{v.quantity} 개</span>
+                  <span>{v.size} size</span>
                 </div>
               </OptionWrapper>
             </ItemOptions>
             <OrderStatus>
-              <span>{v.product_order_status}</span>
+              <span>{v.status}</span>
             </OrderStatus>
           </Container>
         );
