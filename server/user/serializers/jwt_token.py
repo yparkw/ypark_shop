@@ -32,7 +32,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     
 class CustomTokenObtainPairResponseSerializer(serializers.Serializer):
     access = serializers.CharField()
-    refresh = serializers.CharField()
+    refresh = serializers.CharField(read_only=True)
+    id = serializers.CharField(read_only=True)
     username = serializers.CharField(read_only=True)
     email = serializers.CharField(read_only=True)
     phone = serializers.CharField(read_only=True)

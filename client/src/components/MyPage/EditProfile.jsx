@@ -13,32 +13,33 @@ import useGetUserInfo from "../../hooks/useGetUserInfo";
 export default function EditProfile() {
   const userInfo = useSelector((state) => state.user);
   const { data: userData, refetch, isLoading: isLoadingUserInfo } = useGetUserInfo(userInfo.id);
+  
   const [inputs, setInputs] = useState({
-    name: "",
-    phone: "",
+    name: userInfo.name || "",
+    phone: userInfo.phone || "",
     address: "",
-    detailAddress: "",
-    postcode: "",
+    detailAddress: userInfo.detailAddress || "",
+    postcode: userInfo.postCode || "",
   });
 
-  const [address, setAddress] = useState("");
-  const [detailAddress, setDetailAddress] = useState("");
-  const [postCode, setPostCode] = useState("");
+  const [address, setAddress] = useState(userInfo.address);
+  // const [detailAddress, setDetailAddress] = useState(userInfo.detailAddress );
+  // const [postCode, setPostCode] = useState(userInfo.postCode);
 
   const { updateUser, isLoading: isLoadingUpdateUser } = useUserUpdater();
   const open = useDaumPostcodePopup();
 
-  useEffect(() => {
-     if (userData) {
-      setInputs({
-        name: userData.name,
-        phone: userData.phone,
-        address: userData.address,
-        detailAddress: userData.detailAddress,
-        postcode: userData.postcode,
-      });
-    }
-  }, [userData]);
+  // useEffect(() => {
+  //    if (userData) {
+  //     setInputs({
+  //       name: userData.name,
+  //       phone: userData.phone,
+  //       address: userData.address,
+  //       detailAddress: userData.detailAddress,
+  //       postcode: userData.postCode,
+  //     });
+  //   }
+  // }, [userData]);
 
   // useEffect(() => {
   //   setInputs({
@@ -86,8 +87,8 @@ export default function EditProfile() {
 
   const handleAddressSelect = (data) => {
     setAddress(data.address);
-    setDetailAddress(data.buildingName);
-    setPostCode(data.zonecode);
+    // setDetailAddress(data.buildingName);
+    // setPostCode(data.zonecode);
   };
 
   const handleInputChange = (e) => {
@@ -95,16 +96,19 @@ export default function EditProfile() {
     setInputs(prev => ({ ...prev, [name]: value }));
   };
 
+  console.log('uid', userInfo)
+
   const handleSubmit = async () => {
     await updateUser(userInfo.id, {
       ...inputs,
+      address: address,
     });
     refetch(); // 사용자 정보를 다시 가져옵니다.
   };
 
-  if (isLoadingUserInfo || isLoadingUpdateUser) {
-    return <Loading />;
-  }
+  // if (isLoadingUserInfo || isLoadingUpdateUser) {
+  //   return <Loading />;
+  // }
 
   return (
     <Container>
@@ -116,7 +120,7 @@ export default function EditProfile() {
       <InputWrapper>
         <InputText
           name={"name"}
-          label={"User Name"}
+          label={"이름"}
           text={"Input User Name"}
           require={false}
           mode={"title"}
@@ -126,7 +130,7 @@ export default function EditProfile() {
         />
         <InputText
           name={"phone"}
-          label={"Phone Number"}
+          label={"전화번호"}
           text={"Input phone number"}
           require={false}
           mode={"title"}
@@ -136,7 +140,7 @@ export default function EditProfile() {
         />
         <InputText
           name={"address"}
-          label={"Address"}
+          label={"주소"}
           text={"Input Address"}
           require={false}
           mode={"title"}
@@ -144,29 +148,29 @@ export default function EditProfile() {
           value={address}
           disabled={true}
         />
-        <InputText
-          name={"detailAddress"}
-          label={"DetailAddress"}
-          text={"Input detailAddress"}
-          require={false}
-          mode={"title"}
-          type={"text"}
-          value={detailAddress}
-          disabled={true}
-        />
+        <AddressPostButton onClick={() => open({onComplete: handleAddressSelect})}>
+          Address
+        </AddressPostButton>
         <InputText
           name={"postcode"}
-          label={"PostCode"}
+          label={"우편번호"}
           text={"Input post code"}
           require={false}
           mode={"title"}
           type={"text"}
-          value={postCode}
-          disabled={true}
+          value={inputs.postcode}
+          changeHandler={handleInputChange}
         />
-        <AddressPostButton onClick={() => open({onComplete: handleAddressSelect})}>
-          Address
-        </AddressPostButton>
+        <InputText
+          name={"detailAddress"}
+          label={"상세주소"}
+          text={"Input detailAddress"}
+          require={false}
+          mode={"title"}
+          type={"text"}
+          value={inputs.detailAddress}
+          changeHandler={handleInputChange}
+        />
         <EditPostButton onClick={handleSubmit}>
           Edit
         </EditPostButton>

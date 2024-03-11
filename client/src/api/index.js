@@ -87,7 +87,7 @@ export const patchUserInfo = async (body, id) => {
 
 export const getUserData = async (id) => {
   const token = Cookie.get("access");
-  const res = await axiosInstance.get(`/api/v1/members/${id}`, {
+  const res = await axiosInstance.get(`/api/user/${id}`, {
     headers: {
       Authorization: token,
     },
