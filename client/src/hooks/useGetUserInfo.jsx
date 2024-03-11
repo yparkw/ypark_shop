@@ -21,7 +21,7 @@ export default function useGetUserInfo(id) {
             phone: res.data.phone,
             address: res.data.address,
             detailAddress: res.data.detailAddress,
-            postcode: res.data.postCode,
+            postCode: res.data.postCode,
             is_active: res.data.is_active,
             is_admin: res.data.is_admin,
             is_staff: res.data.is_staff,
