@@ -10,17 +10,16 @@ import SubBanner from "../components/SubBanner/Subbanner";
 export default function ShopPage() {
   const [params, setParams] = useState({
     category: "",
-    color: "",
-    priceMax: 10000000,
-    priceMin: 0,
   });
   const [page, setPage] = useState(1);
   const [changeList, setChangeList] = useState(false);
   const urlParams = {
     page,
-    pageSize: 6,
+    pageSize: 9,
     ...params,
   };
+
+  console.log("urlParams", urlParams);
 
   useEffect(() => {
     setPage(1);
@@ -34,7 +33,7 @@ export default function ShopPage() {
         imgUrl={`${process.env.PUBLIC_URL}/assets/images/shop_sub_banner.png`}
       />
       <ShopWrapper>
-        <ShopFilter dummyColor={dummyColor} setParams={setParams} />
+        <ShopFilter  setParams={setParams} />
         <ItemsWrapper>
           <MainItems
             setPage={setPage}

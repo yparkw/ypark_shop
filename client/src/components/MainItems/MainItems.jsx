@@ -18,10 +18,11 @@ function MainItems(props) {
   const getDataList = useGetProductItems(props.params, setOnLoading);
 
 
-  const filteredData = getDataList.isSuccess && Array.isArray(getDataList.data?.data) ? 
-    getDataList.data.data.filter(item => selectedCategory === 'all' || item.category === selectedCategory) : [];
 
+  const filteredData = getDataList.isSuccess && Array.isArray(getDataList.data?.data) ? 
+  getDataList.data.data.filter(item => props.params.category === '' || item.category === props.params.category.value) : [];
   // 카테고리 선택 핸들러
+
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
@@ -40,7 +41,7 @@ function MainItems(props) {
   if (getDataList.isLoading || onLoading) {
     return (
       <Container mode={props.mode}>
-        <Skeleton size={8} />
+        <Skeleton size={9} />
       </Container>
     );
   }
