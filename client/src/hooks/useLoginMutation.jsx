@@ -10,7 +10,6 @@ const loginFn = async (payload) => {
   if (res?.headers) {
     Cookies.set("access", res.data.access);
   }
-  console.log("access", res.data)
 
   return res;
 };
@@ -23,7 +22,7 @@ export default function useLoginMutation(value) {
     {
       retry: 2,
       onSuccess: (res) =>
-      {console.log('Server response:', res);
+      {
         dispatch(
           setUser({
             id: res.data.id,

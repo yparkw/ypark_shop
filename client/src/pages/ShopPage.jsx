@@ -16,8 +16,6 @@ export default function ShopPage() {
   });
   const [page, setPage] = useState(1);
   const [changeList, setChangeList] = useState(false);
-
-  console.log("shop", params)
   const urlParams = {
     page,
     pageSize: 6,

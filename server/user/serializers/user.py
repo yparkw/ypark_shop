@@ -4,6 +4,12 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'phone', 'address', 'detailAddress', 'postCode', 'is_active', 'is_admin', 'is_staff']
+
+
 
 class UserListSZ(serializers.ModelSerializer):
     id = serializers.IntegerField(help_text='유저 id')

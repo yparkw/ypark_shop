@@ -12,16 +12,19 @@ export default function useGetUserInfo(id) {
       enabled: false,
       retry: 1,
       onSuccess: (res) => {
+        console.log('getUserData', res);
         dispatch(
           setUser({
-            id: res.data.data.memberId,
-            name: res.data.data.name,
-            email: res.data.data.email,
-            phone: res.data.data.phone,
-            address: res.data.data.homeAddress,
-            postcode: res.data.data.zipcode,
-            profileImg: res.data.data.profileImage,
-            role: res.data.data.role === "ROLE_ADMIN" ? "Admin" : "Member",
+            id: res.data.id,
+            name: res.data.username,
+            email: res.data.email,
+            phone: res.data.phone,
+            address: res.data.address,
+            detailAddress: res.data.detailAddress,
+            postcode: res.data.postCode,
+            is_active: res.data.is_active,
+            is_admin: res.data.is_admin,
+            is_staff: res.data.is_staff,
             isLogin: true,
           })
         );

@@ -13,8 +13,6 @@ export default function MyOrderList() {
    
   const { data, isLoading, isError, refetch } = useGetOrderList(setOnLoading);
 
-  console.log("getOrderList", data)
-
   if (!isLoading && !isError && data && Array.isArray(data.data) && !data.data.length) {
     return <NoItems />;
   }

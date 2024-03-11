@@ -18,7 +18,6 @@ function MainItems(props) {
   const getDataList = useGetProductItems(props.params, setOnLoading);
 
 
-  console.log("Daga", getDataList);
   const filteredData = getDataList.isSuccess && Array.isArray(getDataList.data?.data) ? 
     getDataList.data.data.filter(item => selectedCategory === 'all' || item.category === selectedCategory) : [];
 

@@ -11,7 +11,7 @@ from rest_framework import status
 from drf_spectacular.utils import extend_schema
 
 from user.models import User
-from user.serializers.user import UserListSZ, UserUpdateRequestSZ
+from user.serializers.user import UserListSZ, UserUpdateRequestSZ, UserSerializer
 
 from common.paginations import CustomPagination
 
@@ -72,3 +72,12 @@ class UserRetrieveUpdateDestroyAV(RetrieveUpdateDestroyAPIView):
     def delete(self, request, *args, **kwargs):
         logger.info(f"Received data for user delete: {request.data}")
         return self.destroy(request, *args, **kwargs)
+
+class UserDetailView(APIView):
+    def get(self, request, pk):
+        try:
+            user = User.objects.get(pk=pk)
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
