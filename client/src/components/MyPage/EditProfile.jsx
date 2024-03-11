@@ -5,6 +5,7 @@ import styled from "styled-components";
 import ImageSelector from "../ProductRegister/ImageSelector";
 import InputText from "../ProductRegister/InputText";
 import { useDaumPostcodePopup } from "react-daum-postcode";
+import { useNavigate } from "react-router-dom";
 // import usePatchUserData from "../../hooks/usePatchUserData";
 import useUserUpdater from "../../hooks/useUserUpdater";
 import Loading from "../Commons/Loading";
@@ -98,6 +99,8 @@ export default function EditProfile() {
 
   console.log('uid', userInfo)
 
+  
+
   const handleSubmit = async () => {
     await updateUser(userInfo.id, {
       ...inputs,
@@ -174,6 +177,7 @@ export default function EditProfile() {
         <EditPostButton onClick={handleSubmit}>
           Edit
         </EditPostButton>
+        <button>close</button>
       </InputWrapper>
     </Container>
   );
