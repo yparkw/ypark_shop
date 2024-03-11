@@ -42,6 +42,13 @@ class ProductListCreateAV(ListCreateAPIView):
             return [AllowAny()]
         return super().get_permissions()
     
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        category = self.request.query_params.get('category', None)
+        if category:
+            queryset = queryset.filter(category=category)
+        return queryset
+        
     
     def get_serializer_class(self):
         if self.request.method == 'GET':

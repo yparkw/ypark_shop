@@ -1,17 +1,19 @@
 /* eslint-disable react/prop-types */
 
-import React, { memo, useState } from "react";
+import React, { memo } from "react";
 import styled, { css } from "styled-components";
 import { categoryList } from "../../constance";
 
-export default memo(function CategorySelector({ changeHandler }) {
-  const [isClick, setIsClick] = useState(false);
+export default memo(function CategorySelector({setParams}) {
+  // const [isClick, setIsClick] = useState(false);
 
 
   const categoryClickHandler = (category) => {
-    const newCategory = isClick === category ? "" : category; // Toggle category
-    setIsClick(newCategory);
-    changeHandler({ name: "category", value: newCategory }); // 직접적인 값 전달로 변경
+    setParams((prevParams) => ({
+      ...prevParams,
+      // 카테고리 값을 단순 문자열로 설정
+      category: category,
+    }));
   };
   
   return (
@@ -19,7 +21,7 @@ export default memo(function CategorySelector({ changeHandler }) {
       <p>Category</p>
       <CategoryWrapper>
         {categoryList.map((v) => (
-          <li key={v.id} onClick={() => categoryClickHandler(v.mainCategory)}>
+          <li key={v.id} onClick={() => categoryClickHandler(category)}>
             <MainCategory active={v.mainCategory === isClick}>
               {v.mainCategory}
             </MainCategory>

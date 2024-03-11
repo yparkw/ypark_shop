@@ -16,16 +16,12 @@ function MainItems(props) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const userInfo = useSelector((state) => state.user);
   const getDataList = useGetProductItems(props.params, setOnLoading);
-  const [currentPage, setCurrentPage] = useState(1);
 
+  console.log("getDataList", getDataList);
 
   const filteredData = getDataList.isSuccess && Array.isArray(getDataList.data?.data) ? 
   getDataList.data.data.filter(item => props.params.category === '' || item.category === props.params.category.value) : [];
   // 카테고리 선택 핸들러
-
-  const startIndex = (props.params.page - 1) * props.params.pageSize;
-  const endIndex = startIndex + props.params.pageSize;
-  const itemsToShow = filteredData.slice(startIndex, endIndex);
 
   const nextButtonClickHandler = () => {
     props.setPage((prev) => prev + 1);
@@ -65,7 +61,7 @@ function MainItems(props) {
   return (
     <>
       <Container mode={props.mode}>
-              {itemsToShow.map((datas) => (
+              {filteredData.map((datas) => (
                 <ItemCard
                   key={datas.id}
                   id={datas.id}

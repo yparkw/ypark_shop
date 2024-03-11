@@ -23,7 +23,7 @@ export default function ShopPage() {
 
   useEffect(() => {
     setPage(1);
-  }, [params]);
+  }, [params.category]);
 
 
 

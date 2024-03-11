@@ -10,9 +10,6 @@ import PriceRange from "./PriceRange";
 export default memo(function ShopFilter(props) {
   const setParamsHandler = (name, value) => {
     props.setParams((prev) => ({ ...prev, [name]: value }));
-    if (name === "category") {
-      props.setPage(1); // 카테고리가 변경되면 페이지를 1로 재설정
-    }
   };
 
   return (
