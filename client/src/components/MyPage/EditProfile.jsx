@@ -20,19 +20,18 @@ export default function EditProfile() {
     phone: userInfo.phone ||"",
     address: userInfo.adderess || "",
     detailAddress: userInfo.detailAddress ||"",
-    postcode: userInfo.postCode || "",
+    postCode: userInfo.postCode || "",
   });
 
   console.log("userInfo", userInfo);
 
 
 
-  // useEffect(() => {
-  //   refetch();
-  // }, [refetch]);
+  useEffect(() => {
+    refetch();
+  }, []);
 
   useEffect(() => {
-     refetch();
      if (isLoadingUserInfo && userData) {
 
       setInputs({
@@ -40,10 +39,10 @@ export default function EditProfile() {
         phone: userData.phone,
         address: userData.address,
         detailAddress: userData.detailAddress,
-        postcode: userData.postCode,
+        postCode: userData.postCode,
       });
     }
-  }, [userData, isLoadingUserInfo, refetch]);
+  }, [userData, isLoadingUserInfo]);
 
   const [address, setAddress] = useState(userInfo.address || "");
 
@@ -123,13 +122,13 @@ export default function EditProfile() {
           Address
         </AddressPostButton>
         <InputText
-          name={"postcode"}
+          name={"postCode"}
           label={"우편번호"}
           text={"Input post code"}
           require={false}
           mode={"title"}
           type={"text"}
-          value={inputs.postcode}
+          value={inputs.postCode}
           changeHandler={handleInputChange}
         />
         <InputText

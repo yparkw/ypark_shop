@@ -78,6 +78,7 @@ class UserDetailView(APIView):
         try:
             user = User.objects.get(pk=pk)
             serializer = UserSerializer(user)
+            logger.debug(serializer.data)
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)

@@ -22,7 +22,7 @@ class UserListSZ(serializers.ModelSerializer):
 
 class UserUpdateRequestSZ(serializers.ModelSerializer):
     id = serializers.IntegerField(help_text='유저 id')
-    
+    postCode = serializers.CharField()
     class Meta:
         model = User
         fields = ('id', 'email', 'username', 'phone', 'address', 'detailAddress','postCode', 'is_active', 'is_staff', 'is_admin',)
