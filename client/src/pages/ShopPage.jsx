@@ -33,7 +33,7 @@ export default function ShopPage() {
         imgUrl={`${process.env.PUBLIC_URL}/assets/images/shop_sub_banner.png`}
       />
       <ShopWrapper>
-        <ShopFilter  setParams={setParams} />
+        <ShopFilter  setParams={setParams} setPage={setPage} />
         <ItemsWrapper>
           <MainItems
             setPage={setPage}

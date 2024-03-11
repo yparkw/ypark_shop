@@ -16,16 +16,16 @@ function MainItems(props) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const userInfo = useSelector((state) => state.user);
   const getDataList = useGetProductItems(props.params, setOnLoading);
-
+  const [currentPage, setCurrentPage] = useState(1);
 
 
   const filteredData = getDataList.isSuccess && Array.isArray(getDataList.data?.data) ? 
   getDataList.data.data.filter(item => props.params.category === '' || item.category === props.params.category.value) : [];
   // 카테고리 선택 핸들러
 
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
+  const startIndex = (props.params.page - 1) * props.params.pageSize;
+  const endIndex = startIndex + props.params.pageSize;
+  const itemsToShow = filteredData.slice(startIndex, endIndex);
 
   const nextButtonClickHandler = () => {
     props.setPage((prev) => prev + 1);
@@ -60,22 +60,12 @@ function MainItems(props) {
   }
 
   
+  
 
   return (
     <>
-      <select onChange={handleCategoryChange}>
-        <option value="all">모든 카테고리</option>
-        <option value="상의">상의</option>
-        <option value="아우터">아우터</option>
-        <option value="하의">하의</option>
-        <option value="신발">신발</option>
-        <option value="가방">가방</option>
-        <option value="잡화">잡화</option>
-        {/* 여기에 필요한 만큼 카테고리 옵션을 추가할 수 있습니다 */}
-      </select>
       <Container mode={props.mode}>
-        
-              {filteredData.map((datas) => (
+              {itemsToShow.map((datas) => (
                 <ItemCard
                   key={datas.id}
                   id={datas.id}

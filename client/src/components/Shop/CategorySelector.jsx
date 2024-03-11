@@ -7,9 +7,7 @@ import { categoryList } from "../../constance";
 export default memo(function CategorySelector({ changeHandler }) {
   const [isClick, setIsClick] = useState(false);
 
-  // const handleClick = () => {
-  //   setIsClick(!isClick); // Correctly updates the isClick state
-  // };
+
   const categoryClickHandler = (category) => {
     const newCategory = isClick === category ? "" : category; // Toggle category
     setIsClick(newCategory);
