@@ -13,25 +13,24 @@ import Skeleton from "../Commons/Skeleton";
 
 function MainItems(props) {
   const [onLoading, setOnLoading] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('all');
   const userInfo = useSelector((state) => state.user);
   const getDataList = useGetProductItems(props.params, setOnLoading);
 
+  
+
+  // const filteredData = getDataList.isSuccess && Array.isArray(getDataList.data?.data) ? 
+  // getDataList.data.data.filter(item => props.params.category === '' || item.category === props.params.category.value) : [];
+  // // 카테고리 선택 핸들러
   console.log("getDataList", getDataList);
-
-  const filteredData = getDataList.isSuccess && Array.isArray(getDataList.data?.data) ? 
-  getDataList.data.data.filter(item => props.params.category === '' || item.category === props.params.category.value) : [];
-  // 카테고리 선택 핸들러
-
   const nextButtonClickHandler = () => {
     props.setPage((prev) => prev + 1);
   };
   
   const prevButtonClickHandler = () => {
-    if (props.params.page === 1) {
-      return;
+    if (props.params.page > 1) {
+      props.setPage((prev) => prev - 1);
     }
-    props.setPage((prev) => prev - 1);
+   
   };
 
   if (getDataList.isLoading || onLoading) {
@@ -61,7 +60,7 @@ function MainItems(props) {
   return (
     <>
       <Container mode={props.mode}>
-              {filteredData.map((datas) => (
+              {props.items?.data.map((datas) => (
                 <ItemCard
                   key={datas.id}
                   id={datas.id}
@@ -73,7 +72,7 @@ function MainItems(props) {
       </Container>
       <ButtonWrapper>
         <div>
-          {props.params.page !== 1 && props.mode === "shop" && (
+          {getDataList.data.page_data.page !== 1 && props.mode === "shop" && (
             <button className="button__prev" onClick={prevButtonClickHandler}>
               <MdArrowBackIosNew />
               <span>Prev</span>
@@ -81,7 +80,7 @@ function MainItems(props) {
           )}
         </div>
         <div>
-          {Array.isArray(getDataList.data?.data) && getDataList.data.data.length === props.params.pageSize &&
+          {Array.isArray(getDataList.data?.data) && getDataList.data.data.length === getDataList.data.page_data.pageSize &&
             props.mode === "shop" && (
               <button className="button__next" onClick={nextButtonClickHandler}>
                 <span>Next</span>

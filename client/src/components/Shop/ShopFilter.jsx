@@ -8,13 +8,13 @@ import CategorySelector from "./CategorySelector";
 import PriceRange from "./PriceRange";
 
 export default memo(function ShopFilter(props) {
-  const setParamsHandler = (name, value) => {
-    props.setParams((prev) => ({ ...prev, [name]: value }));
-  };
+  // const setParamsHandler = (name, value) => {
+  //   props.setParams((prev) => ({ ...prev, [name]: value }));
+  // };
 
   return (
     <Container>
-       <CategorySelector changeHandler={(value) => setParamsHandler("category", value)} />
+       <CategorySelector changeHandler={(category) => props.setParams(prev => ({ ...prev, category }))} />
     </Container>
   );
 });

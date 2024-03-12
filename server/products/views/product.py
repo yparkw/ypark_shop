@@ -45,8 +45,10 @@ class ProductListCreateAV(ListCreateAPIView):
     def get_queryset(self):
         queryset = super().get_queryset()
         category = self.request.query_params.get('category', None)
+        
         if category:
             queryset = queryset.filter(category=category)
+            logger.debug(queryset)
         return queryset
         
     
@@ -59,6 +61,7 @@ class ProductListCreateAV(ListCreateAPIView):
     def get(self, request, *args, **kwargs):
         page = self.paginate_queryset(self.get_queryset())
         serializer = self.get_serializer(page, many=True)
+        logger.debug(serializer.data)
         return self.get_paginated_response(data=serializer.data)
 
     def post(self, request, *args, **kwargs):

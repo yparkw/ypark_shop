@@ -4,25 +4,15 @@ import React, { memo } from "react";
 import styled, { css } from "styled-components";
 import { categoryList } from "../../constance";
 
-export default memo(function CategorySelector({setParams}) {
-  // const [isClick, setIsClick] = useState(false);
-
-
-  const categoryClickHandler = (category) => {
-    setParams((prevParams) => ({
-      ...prevParams,
-      // 카테고리 값을 단순 문자열로 설정
-      category: category,
-    }));
-  };
+export default memo(function CategorySelector({changeHandler}) {
   
   return (
     <Container>
       <p>Category</p>
       <CategoryWrapper>
         {categoryList.map((v) => (
-          <li key={v.id} onClick={() => categoryClickHandler(category)}>
-            <MainCategory active={v.mainCategory === isClick}>
+          <li key={v.id} onClick={() => changeHandler(v.mainCategory)}>
+            <MainCategory >
               {v.mainCategory}
             </MainCategory>
           </li>

@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { axiosInstance } from "../api/axiosInstance";
 
 const getProductItems = async (param) => {
+  console.log('param', param)
   try{
     const res = await axiosInstance.get('/api/products', {
       params: param,
