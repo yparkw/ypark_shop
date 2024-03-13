@@ -41,7 +41,7 @@ export default function ShopPage() {
         imgUrl={`${process.env.PUBLIC_URL}/assets/images/shop_sub_banner.png`}
       />
       <ShopWrapper>
-        <ShopFilter  setParams={setParams}/>
+        {/* <ShopFilter  setParams={setParams}/> */}
         <ItemsWrapper>
           <MainItems
             setPage={(page) => setParams((prevParams) => ({ ...prevParams, page }))}
@@ -65,7 +65,7 @@ const Container = styled.article`
 const ShopWrapper = styled.section`
   margin-top: 64px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-gap: 40px;
   width: 100%;
   max-width: 1280px;

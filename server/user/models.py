@@ -32,6 +32,7 @@ class User(TimestampBaseModel, AbstractBaseUser):
     address = models.CharField(max_length = 100, default = "도로명주소")
     detailAddress = models.CharField(max_length = 100, default = "상세주소", help_text='상세주소')
     postCode = models.CharField(max_length = 100, default = "우편번호")
+    points = models.IntegerField(default = 0)
     
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

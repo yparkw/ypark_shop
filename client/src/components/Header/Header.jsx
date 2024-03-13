@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <Container>
       <LogoBox>
-        <Link to="/">
+        <Link to="/shop">
           <img
             src={`${process.env.PUBLIC_URL}/assets/images/main_logo.png`}
             alt="logo"
