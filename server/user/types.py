@@ -17,6 +17,7 @@ class User:
     address: str
     postCode: str
     role: str
+    points: int
     is_active: bool
     is_admin: bool
     is_superuser: bool

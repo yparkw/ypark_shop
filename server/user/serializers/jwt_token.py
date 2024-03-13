@@ -40,6 +40,7 @@ class CustomTokenObtainPairResponseSerializer(serializers.Serializer):
     address = serializers.CharField(read_only=True)
     detailAddress = serializers.CharField(read_only=True)
     postCode = serializers.CharField(read_only=True)
+    points = serializers.IntegerField()
     is_admin = serializers.BooleanField(read_only=True)
     is_active = serializers.BooleanField(read_only=True)
     is_staff = serializers.BooleanField(read_only=True)
