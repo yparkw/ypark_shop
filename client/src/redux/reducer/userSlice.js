@@ -9,6 +9,7 @@ const initState = {
   detailAddress: '',
   postCode: '',
   phone: '',
+  points: 0,
   is_active: false,
   is_staff:false,
   is_admin:false,
@@ -27,6 +28,7 @@ export const userSlice = createSlice({
       state.detailAddress = action.payload.detailAddress;
       state.postCode = action.payload.postCode;
       state.phone = action.payload.phone;
+      state.points = action.payload.points;
       state.is_active = action.payload.is_active;
       state.is_staff = action.payload.is_staff;
       state.is_admin = action.payload.is_admin;

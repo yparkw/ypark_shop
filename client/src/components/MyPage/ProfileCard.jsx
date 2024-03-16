@@ -11,7 +11,8 @@ export default function ProfileCard(props) {
           <img src={props.info.profileImg} alt="profileImg" />
         </ImageWrapper> */}
         <ProfileInfo>
-          <span>{props.info.name}</span>
+          <span>이름: {props.info.name}</span>
+          <span> 보유 포인트: {props.info.points}</span>
           <Link to="edit">프로필 수정</Link>
         </ProfileInfo>
       </div>

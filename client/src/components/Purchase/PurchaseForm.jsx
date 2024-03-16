@@ -115,6 +115,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
                 ))}
             </tbody>
         </Table>
+        <Points>사용 가능 포인트: {userInfo.points}</Points>
         <TotalAmount>결제 금액: {totalAmount} 원</TotalAmount>
 
     <SectionTitle>개인 정보</SectionTitle>
@@ -273,6 +274,13 @@ const TotalAmount = styled.div`
   margin-top: 20px;
   font-size: 20px;
   font-weight: bold;
+`;
+
+const Points = styled.div`
+text-align: right;
+margin-top: 20px;
+font-size: 20px;
+font-weight: bold;
 `;
 
 const SectionTitle = styled.h4`

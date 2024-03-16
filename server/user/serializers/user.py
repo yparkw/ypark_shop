@@ -7,7 +7,7 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'phone', 'address', 'detailAddress', 'postCode', 'is_active', 'is_admin', 'is_staff']
+        fields = ['id', 'username', 'email', 'phone', 'address', 'detailAddress', 'postCode','points', 'is_active', 'is_admin', 'is_staff']
 
 
 
@@ -16,7 +16,7 @@ class UserListSZ(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'username', 'phone', 'address', 'detailAddress','postCode', 'is_active', 'is_staff', 'is_admin',)
+        fields = ('id', 'email', 'username', 'phone', 'address', 'detailAddress','postCode','points', 'is_active', 'is_staff', 'is_admin',)
         read_only_fields = ('id',)
         
 
@@ -25,7 +25,7 @@ class UserUpdateRequestSZ(serializers.ModelSerializer):
     postCode = serializers.CharField()
     class Meta:
         model = User
-        fields = ('id', 'email', 'username', 'phone', 'address', 'detailAddress','postCode', 'is_active', 'is_staff', 'is_admin',)
+        fields = ('id', 'email', 'username', 'phone', 'address', 'detailAddress','postCode', 'points', 'is_active', 'is_staff', 'is_admin',)
         read_only_fields = ('id',)
         
     def update(self, instance, validated_data):

@@ -49,6 +49,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
                         'address': user.address,
                         'detailAddress': user.detailAddress,
                         'postCode': user.postCode,
+                        'points' : user.points,
                         'is_admin': user.is_admin,
                         'is_active': user.is_active,
                         'is_staff': user.is_staff
