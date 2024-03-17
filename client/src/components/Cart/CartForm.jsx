@@ -27,6 +27,34 @@ export default memo(function CartForm() {
     "cart"
   );
 
+  const [selectedItems, setSelectedItems] = useState({});
+  const [selectAll, setSelectAll] = useState(false);
+
+  useEffect(() => {
+    // 상품 정보가 로딩되면 모든 상품을 선택하지 않은 상태로 초기화합니다.
+    if (getCartData?.data?.items) {
+      setSelectedItems(getCartData.data.items.reduce((acc, item) => {
+        acc[item.cart] = false;
+        return acc;
+      }, {}));
+    }
+  }, [getCartData.data]);
+
+  const toggleSelectAll = () => {
+    setSelectAll(!selectAll);
+    setSelectedItems(Object.keys(selectedItems).reduce((acc, key) => {
+      acc[key] = !selectAll;
+      return acc;
+    }, {}));
+  };
+  
+  const toggleSelectItem = (id) => {
+    setSelectedItems({
+      ...selectedItems,
+      [id]: !selectedItems[id],
+    });
+  };
+  
   useEffect(() => {
     if (getCartData?.data?.items) {
       const totalPriceCalc = getCartData.data.items.reduce(
@@ -57,22 +85,16 @@ export default memo(function CartForm() {
   const navigate = useNavigate();
 
   const clickHander = () => {
-    const cartItems = getCartData.data.items.map(item => ({
+    const selectedCartItems = getCartData.data.items
+    .filter(item => selectedItems[item.cart])
+    .map(item => ({
       name: item.productItemId.name,
       price: item.productItemId.price,
       quantity: item.quantity,
       size: item.size,
     }));
 
-    // orderInfo: 
-    //     [{ name: getItem.data.name,
-    //       quantity, 
-    //       size, 
-    //       price: getItem.data.price, 
-    //     } 
-    //   ]} 
-
-    navigate("/purchase", { state: { orderInfo: cartItems }})
+    navigate("/purchase", { state: { orderInfo: selectedCartItems }})
   };
 
   if (getCartData.isError) {
@@ -88,11 +110,37 @@ export default memo(function CartForm() {
     return <NoItems shopLink={true} />;
   }
 
-  const renderCartItems = () => {
-    if (getCartData.isLoading || onLoading) {
-      return <CartItemSkeleton size={3} />;
-    } else if (getCartData?.data?.items) {
-      return getCartData.data.items.map((v) => (
+  const renderCartItemCheckbox = (id) => {
+    return (
+      <input
+        type="checkbox"
+        checked={selectedItems[id] || false}
+        onChange={() => toggleSelectItem(id)}
+      />
+    );
+  };
+  
+  // 전체 선택 체크박스 렌더링
+  const renderSelectAllCheckbox = () => {
+    return (
+      <input
+        type="checkbox"
+        checked={selectAll}
+        onChange={toggleSelectAll}
+      />
+    );
+  };
+
+  return (
+    <Container>
+      <FormHeader>
+        {renderSelectAllCheckbox()} {/* 전체 선택 체크박스 추가 */}
+        <MenuBox>PRODUCT NAME</MenuBox>
+        <MenuBox>OPTION</MenuBox>
+        <MenuBox>TOTAL</MenuBox>
+      </FormHeader>
+      <FormBody>
+      {getCartData.data.items.map((v) => (
         <CartItem
           key={v.cart}
           id={v.id}
@@ -103,22 +151,9 @@ export default memo(function CartForm() {
           size={v.size}
           setTotalPrice={setTotalPrice}
           cartId={v.cart}
+          checkbox={renderCartItemCheckbox(v.cart)} // 각 상품별 체크박스 추가
         />
-      ));
-    } else{
-      return null;
-    }
-  };
-
-  return (
-    <Container>
-      <FormHeader>
-        <MenuBox>PRODUCT NAME</MenuBox>
-        <MenuBox>OPTION</MenuBox>
-        <MenuBox>TOTAL</MenuBox>
-      </FormHeader>
-      <FormBody>
-        {renderCartItems()}
+      ))}
       </FormBody>
       <FormFooter>
         <SubTotal>
