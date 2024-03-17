@@ -10,6 +10,8 @@ export default memo(function SizeSelector(props) {
     return { size: key, quantity: props.sizes[key] };
   });
 
+  console.log("sizeSelector", props)
+
   const [selectItem, setSelectItem] = useState(null);
   
   useEffect(() => {
@@ -46,7 +48,7 @@ export default memo(function SizeSelector(props) {
   
   return (
     <Container>
-      {selectItem === null && <Prompt>Please, select a size</Prompt>}
+      {selectItem === null && <Prompt>사이즈를 선택해 주세요</Prompt>}
       <IoMdArrowDropleft />
       <SliderWrapper arrows={false} {...settings}>
         {sizeArray.map((v) => {
@@ -57,7 +59,7 @@ export default memo(function SizeSelector(props) {
                 quantity={v.quantity}
                 onClick={() => slideItemClickHandler(v.size)}
               >
-                {v.size}
+                {v.size} {v.quantity === 0 ? '품절' : `(${v.quantity})`}
               </SlideItem>
             </div>
           );

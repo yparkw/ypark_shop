@@ -16,6 +16,8 @@ function ItemCard(props) {
   //   setIsClicked(props.favorite);
   // }, [props.favorite]);
 
+
+
   const handleClicked = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -36,18 +38,9 @@ function ItemCard(props) {
       <Link to={`/detail/${props.id}`}>
         <ItemCardImg className="ItemCard-Image">
           <img src={props.productImg} alt="product_img" />
-          {/* {isClicked ? (
-            <button onClick={handleClicked}>
-              <AiFillHeart className="ItemCard-Heart" />
-            </button>
-          ) : (
-            <button onClick={handleClicked}>
-              <AiOutlineHeart className="ItemCard-Heart" />
-            </button>
-          )} */}
+          {props.isSoldOut && <div className="sold-out-overlay">품절</div>}
         </ItemCardImg>
         <div className="ItemCard-Explain">
-          {/* <TextBox brandName>{props.brand}</TextBox> */}
           <TextBox>{props.title}</TextBox>
           <Price price={props.price} />
         </div>

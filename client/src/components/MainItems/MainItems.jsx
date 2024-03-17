@@ -54,6 +54,11 @@ function MainItems(props) {
     );
   }
 
+  const isSoldOut = (sizes) => {
+    const total = Object.values(sizes).reduce((acc, curr) => acc + curr, 0);
+    return total === 0;
+  };
+
   
   
 
@@ -67,6 +72,8 @@ function MainItems(props) {
                   productImg={datas.image_url}
                   title={datas.name}
                   price={datas.price}
+                  sizes={datas.size}
+                  isSoldOut={isSoldOut(datas.sizes)}
                 />
               ))}
       </Container>
