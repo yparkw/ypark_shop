@@ -55,9 +55,6 @@ export default memo(function CartForm() {
   
     setCalcPrice(totalPriceCalc);
   }, [getCartData.data, selectedItems]);
-  
-
-
 
 
   useEffect(() => {
@@ -133,7 +130,7 @@ export default memo(function CartForm() {
     }
   }, [getCartData.data, getCartData.isLoading, onLoading, getCartData.isError]);
 
-  const items = getCartData?.data?.items ?? [];
+  console.log("CartForm_getCartData", getCartData)
   
   return (
     <Container>
@@ -145,7 +142,7 @@ export default memo(function CartForm() {
       </FormHeader>
       <FormBody>
         <CartProductSelector
-          items={items}
+          items={getCartData.data.items}
           onToggleItem={toggleSelectItem}
           onToggleAll={toggleSelectAll}
           selectedItems={selectedItems}
