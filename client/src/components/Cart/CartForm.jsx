@@ -27,18 +27,24 @@ export default memo(function CartForm() {
     "cart"
   );
 
+
+
   const [selectedItems, setSelectedItems] = useState({});
   const [selectAll, setSelectAll] = useState(false);
 
   useEffect(() => {
-    // 상품 정보가 로딩되면 모든 상품을 선택하지 않은 상태로 초기화합니다.
     if (getCartData?.data?.items) {
-      setSelectedItems(getCartData.data.items.reduce((acc, item) => {
-        acc[item.cart] = false;
-        return acc;
-      }, {}));
+      const initialSelectedItems = {};
+      getCartData.data.items.forEach((item) => {
+        initialSelectedItems[item.id] = {
+          selected: false,
+          quantity: item.quantity,
+          price: item.productItemId.price
+        };
+      });
+      setSelectedItems(initialSelectedItems);
     }
-  }, [getCartData.data]);
+  }, [getCartData?.data?.items]);
 
   const toggleSelectAll = () => {
     setSelectAll(!selectAll);
@@ -101,6 +107,8 @@ export default memo(function CartForm() {
     navigate("/purchase", { state: { orderInfo: selectedCartItems }})
   };
 
+
+  
   
 
   if (getCartData.isLoading || onLoading) {
@@ -141,6 +149,7 @@ export default memo(function CartForm() {
     );
   };
 
+
   const renderCartItems = () => {
     return getCartData.data.items.map((v) => (
       <CartItemWrapper key = {v.cart}>
@@ -153,11 +162,12 @@ export default memo(function CartForm() {
             id={v.id}
             itemImg={v.productItemId.image_url}
             price={v.productItemId.price}
-            maxQuantity={v.quantity}
+            quantity={v.quantity}
             itemTitle={v.productItemId.name}
             size={v.size}
             setTotalPrice={setTotalPrice}
             cartId={v.cart}
+            sizesWithCount = {v.productItemId.sizes_with_count}
             checkbox={renderCartItemCheckbox(v.cart)} // 각 상품별 체크박스 추가
           />
       </CartItemWrapper>

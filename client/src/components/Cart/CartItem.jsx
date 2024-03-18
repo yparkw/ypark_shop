@@ -14,8 +14,10 @@ import { tablet } from "../../utils/styleTheme";
 export default memo(function CartItem(props) {
   const [quantity, setQuantity] = useState(props.maxQuantity);
   const deleteCartItemAction = useDeleteCartData(props.id, setQuantity);
+  const sizeInfo = props.sizesWithCount.find(s => s.size_name === props.size);
+  const maxQuantity = sizeInfo ? sizeInfo.size_count : 0;
 
-  console.log('cartitem', props)
+  console.log('cartitem', sizeInfo);
 
   useEffect(() => {
     props.setTotalPrice((prev) => {
@@ -40,19 +42,22 @@ export default memo(function CartItem(props) {
             <img src={props.itemImg} alt="productImg" />
           </ImageWrapper>
           <ItemTextWrapper>
-            <span>{props.brandName}</span>
+            {/* <span>{props.brandName}</span> */}
             <span>{props.itemTitle}</span>
           </ItemTextWrapper>
         </Link>
       </ItemProfile>
       <ItemOptions>
+        
         <OptionWrapper>
           <div>
             <span>{props.size}</span>
+            <span>선택가능 수량: {maxQuantity}</span>
             <QuantitySelector
               setQuantity={setQuantity}
               productQuantity={1}
-              maxQuantity={props.maxQuantity}
+              quantity={props.quantity}
+              maxQuantity={maxQuantity}
             />
           </div>
           <span>

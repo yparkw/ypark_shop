@@ -2,11 +2,28 @@ from rest_framework import serializers
 from products.models.product import Product, ProductSize
 from cart.models.cart import Cart, CartItem
 
+
+class ProductSizeSerializer(serializers.ModelSerializer):
+    size_name = serializers.CharField(source='size.size', read_only=True)
+    size_count = serializers.IntegerField(source='count', read_only=True)
+
+    class Meta:
+        model = ProductSize
+        fields = ['size', 'size_name', 'size_count']
+        
 class ProductSerializer(serializers.ModelSerializer):
+    sizes_with_count = serializers.SerializerMethodField()
+    
     class Meta:
         model = Product
-        fields = ['name', 'price', 'category', 'image_url']
+        fields = ['name', 'price', 'category', 'image_url', 'sizes_with_count']
 
+    def get_sizes_with_count(self, obj):
+        # ProductSize 인스턴스들을 가져오는 쿼리셋
+        product_sizes = ProductSize.objects.filter(product=obj)
+        # ProductSizeSerializer를 이용해 직렬화
+        serializer = ProductSizeSerializer(product_sizes, many=True)
+        return serializer.data
 
 
 class CartItemSerializer(serializers.ModelSerializer):
