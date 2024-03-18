@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import CartItem from "./CartItem";
 import { FaWonSign } from "react-icons/fa";
 import Button from "../Commons/Button";
 import Price from "../Commons/Price";
@@ -13,34 +12,39 @@ import useOrderCartItems from "../../hooks/useOrderCartItems";
 import ErrorPage from "../Commons/ErrorPage";
 import CartItemSkeleton from "./CartItemSkeleton";
 import NoItems from "../Commons/NoItems";
+import CartProductSelector from "./CartProductSelector";
 
 export default memo(function CartForm() {
   const [totalPrice, setTotalPrice] = useState({});
   const [calcPrice, setCalcPrice] = useState(0);
-  const [paymentData, setPaymentData] = useState({});
   const [onLoading, setOnLoading] = useState(false);
-  const userInfo = useSelector((state) => state.user);
+  // const userInfo = useSelector((state) => state.user);
   const getCartData = useGetCartDataQuery(setOnLoading);
-  const orderCartAction = useOrderCartItems(
-    paymentData,
-    getCartData.data,
-    "cart"
-  );
-
-
-
   const [selectedItems, setSelectedItems] = useState({});
   const [selectAll, setSelectAll] = useState(false);
 
   useEffect(() => {
-    // 상품 정보가 로딩되면 모든 상품을 선택하지 않은 상태로 초기화합니다.
+    if (getCartData.isLoading || onLoading) {
+      return <span>로딩중</span>;
+    } else if (getCartData.isError) {
+      return (
+        <ErrorPage
+          errorText={"Network Error"}
+          retryAction={getCartData.refetch}
+        />
+      );
+    } else if (getCartData?.data?.length === 0) {
+      return <NoItems shopLink={true} />
+    }
+
     if (getCartData?.data?.items) {
       setSelectedItems(getCartData.data.items.reduce((acc, item) => {
         acc[item.cart] = false;
         return acc;
       }, {}));
     }
-  }, [getCartData.data]);
+  }, [getCartData.data, getCartData.isLoading, onLoading, getCartData.isError]);
+
 
   const toggleSelectAll = () => {
     setSelectAll(!selectAll);
@@ -58,41 +62,32 @@ export default memo(function CartForm() {
   };
   
   useEffect(() => {
-    if (getCartData?.data?.items) {
-      const totalPriceCalc = getCartData.data.items
-      .filter(item => selectedItems[item.id])
-      .reduce(
-        (acc, item) => acc + parseFloat(item.productItemId.price) * item.quantity,
-        0
-      );
-      setCalcPrice(totalPriceCalc);
-    } else {
+    const selectedItemsCount = Object.values(selectedItems).filter(Boolean).length;
+    if (selectedItemsCount === 0 || !getCartData?.data?.items) {
       setCalcPrice(0);
+      return;
     }
+  
+    const totalPriceCalc = getCartData.data.items
+      .filter(item => selectedItems[item.id])
+      .reduce((acc, item) => {
+        const itemTotal = parseFloat(item.productItemId.price) * item.quantity;
+        return acc + itemTotal;
+      }, 0);
+  
+    setCalcPrice(totalPriceCalc);
   }, [getCartData.data, selectedItems]);
   
 
-  useEffect(() => {
-    setPaymentData({
-      pg: "kakaopay",
-      pay_method: "card",
-      merchant_uid: `mid_${new Date().getTime()}`,
-      name: "stateMall-payment",
-      amount: calcPrice,
-      buyer_email: userInfo.email,
-      buyer_name: userInfo.name,
-      buyer_tel: userInfo.phone,
-      buyer_addr: userInfo.address,
-      buyer_postcode: userInfo.postcode,
-    });
-  }, [totalPrice, calcPrice, userInfo]);
+
 
 
   useEffect(() => {
-    // totalPrice에서 각 항목의 가격을 합산하여 calcPrice를 업데이트합니다.
-    const totalPriceCalc = Object.values(totalPrice).reduce((acc, price) => acc + price, 0);
-    setCalcPrice(totalPriceCalc);
-  }, [totalPrice]);
+  // totalPrice에서 각 항목의 가격을 합산하여 calcPrice를 업데이트합니다.
+  const totalPriceCalc = Object.values(totalPrice).reduce((acc, price) => acc + price, 0);
+  setCalcPrice(totalPriceCalc);
+}, [totalPrice]);
+
 
   const navigate = useNavigate();
 
@@ -113,22 +108,7 @@ export default memo(function CartForm() {
   
   
 
-  if (getCartData.isLoading || onLoading) {
-    // 로딩 상태를 렌더링합니다. 예를 들어 스피너나 스켈레톤 컴포넌트가 될 수 있습니다.
-    return <span>로딩중</span>;  // 실제 로딩 컴포넌트로 교체하세요.
-  }
-  if (getCartData.isError) {
-    return (
-      <ErrorPage
-        errorText={"Network Error"}
-        retryAction={getCartData.refetch}
-      />
-    );
-  }
 
-  if (getCartData?.data?.length === 0) {
-    return <NoItems shopLink={true} />;
-  }
 
   const renderCartItemCheckbox = (id) => {
     return (
@@ -152,29 +132,7 @@ export default memo(function CartForm() {
   };
 
 
-  const renderCartItems = () => {
-    return getCartData.data.items.map((v) => (
-      <CartItemWrapper key = {v.cart}>
-        <input
-          type="checkbox"
-          checked={selectedItems[v.id] || false}
-          onChange={() => toggleSelectItem(v.id)}
-        />
-        <CartItem
-            id={v.id}
-            itemImg={v.productItemId.image_url}
-            price={v.productItemId.price}
-            quantity={v.quantity}
-            itemTitle={v.productItemId.name}
-            size={v.size}
-            setTotalPrice={setTotalPrice}
-            cartId={v.cart}
-            sizesWithCount = {v.productItemId.sizes_with_count}
-            checkbox={renderCartItemCheckbox(v.cart)} // 각 상품별 체크박스 추가
-          />
-      </CartItemWrapper>
-    ));
-  };
+  
 
   return (
     <Container>
@@ -185,7 +143,14 @@ export default memo(function CartForm() {
         <MenuBox>TOTAL</MenuBox>
       </FormHeader>
       <FormBody>
-        {renderCartItems()}
+        <CartProductSelector
+          items={getCartData.data.items}
+          onToggleItem={toggleSelectItem}
+          onToggleAll={toggleSelectAll}
+          selectedItems={selectedItems}
+          selectAll={selectAll}
+          setTotalPrice={setTotalPrice}
+        />
       </FormBody>
       <FormFooter>
         <SubTotal>
@@ -213,13 +178,6 @@ const Container = styled.section`
   margin-top: 64px;
 `;
 
-const CartItemWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid #ccc;
-  /* 필요한 추가 스타일 */
-`;
 
 
 const FormHeader = styled.div`
@@ -300,3 +258,18 @@ const SubTotal = styled.div`
     }
   }
 `;
+
+  // useEffect(() => {
+  //   setPaymentData({
+  //     pg: "kakaopay",
+  //     pay_method: "card",
+  //     merchant_uid: `mid_${new Date().getTime()}`,
+  //     name: "stateMall-payment",
+  //     amount: calcPrice,
+  //     buyer_email: userInfo.email,
+  //     buyer_name: userInfo.name,
+  //     buyer_tel: userInfo.phone,
+  //     buyer_addr: userInfo.address,
+  //     buyer_postcode: userInfo.postcode,
+  //   });
+  // }, [totalPrice, calcPrice, userInfo]);

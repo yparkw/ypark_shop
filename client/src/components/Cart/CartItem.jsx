@@ -17,8 +17,6 @@ export default memo(function CartItem(props) {
   const sizeInfo = props.sizesWithCount.find(s => s.size_name === props.size);
   const maxQuantity = sizeInfo ? sizeInfo.size_count : 0;
 
-  console.log('cartitem', sizeInfo);
-
   useEffect(() => {
     props.setTotalPrice((prev) => {
       return { ...prev, [props.cartId]: props.price * quantity };
