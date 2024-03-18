@@ -57,7 +57,9 @@ export default memo(function CartForm() {
   
   useEffect(() => {
     if (getCartData?.data?.items) {
-      const totalPriceCalc = getCartData.data.items.reduce(
+      const totalPriceCalc = getCartData.data.items
+      .filter(item => selectedItems[item.id])
+      .reduce(
         (acc, item) => acc + parseFloat(item.productItemId.price) * item.quantity,
         0
       );
@@ -65,7 +67,7 @@ export default memo(function CartForm() {
     } else {
       setCalcPrice(0);
     }
-  }, [getCartData.data]);
+  }, [getCartData.data, selectedItems]);
 
   useEffect(() => {
     setPaymentData({
@@ -82,11 +84,13 @@ export default memo(function CartForm() {
     });
   }, [totalPrice, calcPrice, userInfo]);
 
+
+
   const navigate = useNavigate();
 
   const clickHander = () => {
     const selectedCartItems = getCartData.data.items
-    .filter(item => selectedItems[item.cart])
+    .filter(item => selectedItems[item.id])
     .map(item => ({
       name: item.productItemId.name,
       price: item.productItemId.price,
@@ -97,6 +101,12 @@ export default memo(function CartForm() {
     navigate("/purchase", { state: { orderInfo: selectedCartItems }})
   };
 
+  
+
+  if (getCartData.isLoading || onLoading) {
+    // 로딩 상태를 렌더링합니다. 예를 들어 스피너나 스켈레톤 컴포넌트가 될 수 있습니다.
+    return <span>로딩중</span>;  // 실제 로딩 컴포넌트로 교체하세요.
+  }
   if (getCartData.isError) {
     return (
       <ErrorPage
@@ -131,6 +141,29 @@ export default memo(function CartForm() {
     );
   };
 
+  const renderCartItems = () => {
+    return getCartData.data.items.map((v) => (
+      <CartItemWrapper key = {v.cart}>
+        <input
+          type="checkbox"
+          checked={selectedItems[v.id] || false}
+          onChange={() => toggleSelectItem(v.id)}
+        />
+        <CartItem
+            id={v.id}
+            itemImg={v.productItemId.image_url}
+            price={v.productItemId.price}
+            maxQuantity={v.quantity}
+            itemTitle={v.productItemId.name}
+            size={v.size}
+            setTotalPrice={setTotalPrice}
+            cartId={v.cart}
+            checkbox={renderCartItemCheckbox(v.cart)} // 각 상품별 체크박스 추가
+          />
+      </CartItemWrapper>
+    ));
+  };
+
   return (
     <Container>
       <FormHeader>
@@ -140,20 +173,7 @@ export default memo(function CartForm() {
         <MenuBox>TOTAL</MenuBox>
       </FormHeader>
       <FormBody>
-      {getCartData.data.items.map((v) => (
-        <CartItem
-          key={v.cart}
-          id={v.id}
-          itemImg={v.productItemId.image_url}
-          price={v.productItemId.price}
-          maxQuantity={v.quantity}
-          itemTitle={v.productItemId.name}
-          size={v.size}
-          setTotalPrice={setTotalPrice}
-          cartId={v.cart}
-          checkbox={renderCartItemCheckbox(v.cart)} // 각 상품별 체크박스 추가
-        />
-      ))}
+        {renderCartItems()}
       </FormBody>
       <FormFooter>
         <SubTotal>
@@ -180,6 +200,15 @@ const Container = styled.section`
   align-items: flex-end;
   margin-top: 64px;
 `;
+
+const CartItemWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+  /* 필요한 추가 스타일 */
+`;
+
 
 const FormHeader = styled.div`
   width: 100%;
@@ -209,7 +238,7 @@ const MenuBox = styled.div`
 `;
 
 const FormBody = styled.section`
-  display: flex;
+  // display: flex;
   width: 100%;
   align-items: center;
   flex-direction: column;

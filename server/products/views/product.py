@@ -61,13 +61,11 @@ class ProductListCreateAV(ListCreateAPIView):
     def get(self, request, *args, **kwargs):
         page = self.paginate_queryset(self.get_queryset())
         serializer = self.get_serializer(page, many=True)
-        logger.debug(serializer.data)
         return self.get_paginated_response(data=serializer.data)
 
     def post(self, request, *args, **kwargs):
         logger.info(f"Received data: {request.data}")
         serializer = self.get_serializer(data=request.data)
-        print(request.data)
         # Product에 이미지가 있따면 post로 받아야하고 내용은 form형식이여야 한다.)
         if serializer.is_valid():
             self.perform_create(serializer)
