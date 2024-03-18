@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
-import QuantitySelector from "./QuantitySelector";
+import QuantitySelector from "./CartQuantitySelector";
 import { FaWonSign } from "react-icons/fa";
 import DeleteButton from "../Commons/DeleteButton";
 import { Link } from "react-router-dom";

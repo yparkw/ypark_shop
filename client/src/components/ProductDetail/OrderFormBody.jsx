@@ -2,7 +2,7 @@
 import React from "react";
 import {useState} from "react";
 import styled from "styled-components";
-import QuantitySelector from "../Cart/QuantitySelector";
+import QuantitySelector from "./QuantitySelector";
 import SizeSelector from "./SizeSelector";
 
 export default function OrderFormBody(props) {
