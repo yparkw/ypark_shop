@@ -23,7 +23,7 @@ export default memo(function CartItem(props) {
     props.setTotalPrice((prev) => {
       return { ...prev, [props.cartId]: props.price * quantity };
     });
-  }, [quantity, props.cartId]);
+  }, [quantity, props.cartId, props.price, props.setTotalPrice]);
 
   const deleteCartHandler = (e) => {
     e.preventDefault();

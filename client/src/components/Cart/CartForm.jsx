@@ -33,18 +33,14 @@ export default memo(function CartForm() {
   const [selectAll, setSelectAll] = useState(false);
 
   useEffect(() => {
+    // 상품 정보가 로딩되면 모든 상품을 선택하지 않은 상태로 초기화합니다.
     if (getCartData?.data?.items) {
-      const initialSelectedItems = {};
-      getCartData.data.items.forEach((item) => {
-        initialSelectedItems[item.id] = {
-          selected: false,
-          quantity: item.quantity,
-          price: item.productItemId.price
-        };
-      });
-      setSelectedItems(initialSelectedItems);
+      setSelectedItems(getCartData.data.items.reduce((acc, item) => {
+        acc[item.cart] = false;
+        return acc;
+      }, {}));
     }
-  }, [getCartData?.data?.items]);
+  }, [getCartData.data]);
 
   const toggleSelectAll = () => {
     setSelectAll(!selectAll);
@@ -74,6 +70,7 @@ export default memo(function CartForm() {
       setCalcPrice(0);
     }
   }, [getCartData.data, selectedItems]);
+  
 
   useEffect(() => {
     setPaymentData({
@@ -91,6 +88,11 @@ export default memo(function CartForm() {
   }, [totalPrice, calcPrice, userInfo]);
 
 
+  useEffect(() => {
+    // totalPrice에서 각 항목의 가격을 합산하여 calcPrice를 업데이트합니다.
+    const totalPriceCalc = Object.values(totalPrice).reduce((acc, price) => acc + price, 0);
+    setCalcPrice(totalPriceCalc);
+  }, [totalPrice]);
 
   const navigate = useNavigate();
 
@@ -100,7 +102,7 @@ export default memo(function CartForm() {
     .map(item => ({
       name: item.productItemId.name,
       price: item.productItemId.price,
-      quantity: item.quantity,
+      quantity: totalPrice[item.cart] / parseFloat(item.productItemId.price),
       size: item.size,
     }));
 
@@ -187,7 +189,7 @@ export default memo(function CartForm() {
       </FormBody>
       <FormFooter>
         <SubTotal>
-          <span>Subtotal</span>
+          <span>합계: </span>
           <span>
             <FaWonSign />
             <Price price={calcPrice} />
