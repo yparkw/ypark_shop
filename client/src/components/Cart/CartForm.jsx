@@ -23,28 +23,6 @@ export default memo(function CartForm() {
   const [selectedItems, setSelectedItems] = useState({});
   const [selectAll, setSelectAll] = useState(false);
 
-  useEffect(() => {
-    if (getCartData.isLoading || onLoading) {
-      return <span>로딩중</span>;
-    } else if (getCartData.isError) {
-      return (
-        <ErrorPage
-          errorText={"Network Error"}
-          retryAction={getCartData.refetch}
-        />
-      );
-    } else if (getCartData?.data?.length === 0) {
-      return <NoItems shopLink={true} />
-    }
-
-    if (getCartData?.data?.items) {
-      setSelectedItems(getCartData.data.items.reduce((acc, item) => {
-        acc[item.cart] = false;
-        return acc;
-      }, {}));
-    }
-  }, [getCartData.data, getCartData.isLoading, onLoading, getCartData.isError]);
-
 
   const toggleSelectAll = () => {
     setSelectAll(!selectAll);
@@ -133,7 +111,30 @@ export default memo(function CartForm() {
 
 
   
+  useEffect(() => {
+    if (getCartData.isLoading || onLoading) {
+      return <span>로딩중</span>;
+    } else if (getCartData.isError) {
+      return (
+        <ErrorPage
+          errorText={"Network Error"}
+          retryAction={getCartData.refetch}
+        />
+      );
+    } else if (getCartData?.data?.length === 0) {
+      return <NoItems shopLink={true} />
+    }
 
+    if (getCartData?.data?.items) {
+      setSelectedItems(getCartData.data.items.reduce((acc, item) => {
+        acc[item.cart] = false;
+        return acc;
+      }, {}));
+    }
+  }, [getCartData.data, getCartData.isLoading, onLoading, getCartData.isError]);
+
+  const items = getCartData?.data?.items ?? [];
+  
   return (
     <Container>
       <FormHeader>
@@ -144,7 +145,7 @@ export default memo(function CartForm() {
       </FormHeader>
       <FormBody>
         <CartProductSelector
-          items={getCartData.data.items}
+          items={items}
           onToggleItem={toggleSelectItem}
           onToggleAll={toggleSelectAll}
           selectedItems={selectedItems}
