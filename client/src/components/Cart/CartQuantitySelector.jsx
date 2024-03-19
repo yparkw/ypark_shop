@@ -6,7 +6,8 @@ import styled from "styled-components";
 import { FiMinus, FiPlus } from "react-icons/fi";
 
 export default memo(function CartQuantitySelector(props) {
-const [quantity, setQuantity] = useState(props.quantity);
+  const [quantity, setQuantity] = useState(props.quantity);
+
 
   useEffect(() => {
     props.setQuantity(quantity);

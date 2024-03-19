@@ -1,27 +1,37 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { memo, useEffect, useState } from "react";
-import styled from "styled-components";
-import QuantitySelector from "./CartQuantitySelector";
 import { FaWonSign } from "react-icons/fa";
-import DeleteButton from "../Commons/DeleteButton";
 import { Link } from "react-router-dom";
-import Price from "../Commons/Price";
+import styled from "styled-components";
 import useDeleteCartData from "../../hooks/useDeleteCartData";
-import Loading from "../Commons/Loading";
 import { tablet } from "../../utils/styleTheme";
+import DeleteButton from "../Commons/DeleteButton";
+import Loading from "../Commons/Loading";
+import Price from "../Commons/Price";
+import CartQuantitySelector from "./CartQuantitySelector";
 
 export default memo(function CartItem(props) {
-  const [quantity, setQuantity] = useState(props.maxQuantity);
+  const [quantity, setQuantity] = useState(props.quantity);
   const deleteCartItemAction = useDeleteCartData(props.id, setQuantity);
   const sizeInfo = props.sizesWithCount.find(s => s.size_name === props.size);
   const maxQuantity = sizeInfo ? sizeInfo.size_count : 0;
 
   useEffect(() => {
-    props.setTotalPrice((prev) => {
-      return { ...prev, [props.cartId]: props.price * quantity };
-    });
+    props.setTotalPrice((prev) => ({
+      ...prev,
+      [props.cartId]: props.price * quantity
+    }));
   }, [quantity, props.cartId, props.price, props.setTotalPrice]);
+
+  useEffect(() => {
+    props.updateItemQuantity(props.id, quantity);
+  }, [quantity, props.id, props.updateItemQuantity]);
+  // useEffect(() => {
+  //   props.setTotalPrice((prev) => {
+  //     return { ...prev, [props.cartId]: props.price * quantity };
+  //   });
+  // }, [quantity, props.cartId, props.price, props.setTotalPrice]);
 
   const deleteCartHandler = (e) => {
     e.preventDefault();
@@ -51,7 +61,7 @@ export default memo(function CartItem(props) {
           <div>
             <span>{props.size}</span>
             <span>선택가능 수량: {maxQuantity}</span>
-            <QuantitySelector
+            <CartQuantitySelector
               setQuantity={setQuantity}
               productQuantity={1}
               quantity={props.quantity}
@@ -59,8 +69,6 @@ export default memo(function CartItem(props) {
             />
           </div>
           <span>
-            <FaWonSign />
-            <Price price={props.price} />
           </span>
         </OptionWrapper>
       </ItemOptions>

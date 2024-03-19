@@ -21,7 +21,5 @@ export default function useGetCartDataQuery(setFunction) {
       },
     }
   );
-  console.log("useGetDataQuery", data)
-
   return { data, isLoading, isError, refetch, isSuccess };
 }
