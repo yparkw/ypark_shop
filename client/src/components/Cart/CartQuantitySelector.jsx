@@ -9,15 +9,32 @@ export default memo(function CartQuantitySelector(props) {
   const [quantity, setQuantity] = useState(props.quantity);
 
 
+
   useEffect(() => {
     props.setQuantity(quantity);
   }), [quantity];
 
+  // const quantityPlusHandler = () => {
+  //   quantity < props.maxQuantity ? setQuantity((prev) => prev + 1) : null;
+  // };
+  // const quantityMinusHandler = () => {
+  //   quantity > 1 ? setQuantity((prev) => prev - 1) : null;
+  // };
+
   const quantityPlusHandler = () => {
-    quantity < props.maxQuantity ? setQuantity((prev) => prev + 1) : null;
+    if (quantity < props.maxQuantity) {
+      const newQuantity = quantity + 1;
+      setQuantity(newQuantity);
+      props.updateItemQuantity(props.itemId, newQuantity);
+    }
   };
+
   const quantityMinusHandler = () => {
-    quantity > 1 ? setQuantity((prev) => prev - 1) : null;
+    if (quantity > 1) {
+      const newQuantity = quantity - 1;
+      setQuantity(newQuantity);
+      props.updateItemQuantity(props.itemId, newQuantity);
+    }
   };
 
   return (

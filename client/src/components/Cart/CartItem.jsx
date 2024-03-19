@@ -24,9 +24,9 @@ export default memo(function CartItem(props) {
     }));
   }, [quantity, props.cartId, props.price, props.setTotalPrice]);
 
-  useEffect(() => {
-    props.updateItemQuantity(props.id, quantity);
-  }, [quantity, props.id, props.updateItemQuantity]);
+  // useEffect(() => {
+  //   props.updateItemQuantity(props.id, quantity);
+  // }, [quantity, props.id, props.updateItemQuantity]);
   // useEffect(() => {
   //   props.setTotalPrice((prev) => {
   //     return { ...prev, [props.cartId]: props.price * quantity };
@@ -66,6 +66,8 @@ export default memo(function CartItem(props) {
               productQuantity={1}
               quantity={props.quantity}
               maxQuantity={maxQuantity}
+              updateItemQuantity={props.updateItemQuantity}
+              itemId={props.id}
             />
           </div>
           <span>

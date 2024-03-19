@@ -76,9 +76,6 @@ export default memo(function CartForm() {
   const navigate = useNavigate();
 
 
-  console.log("cart_setSeleted", selectedItems);
-  console.log("cart_totalPrice", totalPrice);
-  // console.log("cart_calcPrice", calcPrice);
 
 
   const clickHandler = () => {
