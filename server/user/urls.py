@@ -4,7 +4,7 @@ from django.urls import path
 from .views.jwt_token import CustomTokenObtainPairView, TokenObtainPairView
 from .views.jwt_token import CustomTokenRefreshView, TokenRefreshView
 from .views.login import LoginView
-from .views.signup import UserSignUpCreateAV
+from .views.signup import UserSignUpCreateAV, VerifyIdentityView
 from .views.profile import UserRetrieveUpdate
 from .views.test import celery_test_view
 from .views.users import UserListCreateAV, UserRetrieveUpdateDestroyAV, UserDetailView
@@ -13,6 +13,7 @@ app_name = 'user'
 
 urlpatterns = [
     path('', UserRetrieveUpdate.as_view(), name='profile'),
+    path('verify-identity/', VerifyIdentityView.as_view(), name='verify-identity'),
     path('signup/', UserSignUpCreateAV.as_view(), name='signup'),
     path('login/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('login/refresh/', CustomTokenRefreshView.as_view(), name='login_refresh'),

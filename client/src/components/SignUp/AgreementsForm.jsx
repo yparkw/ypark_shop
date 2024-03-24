@@ -1,14 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import './AgreementsForm.css';
 
 export default function AgreementsForm(props) {
     const [agreements, setAgreements] = useState({
         termsAgreed: false,
         personalInfoAgreed: false,
-        
     })
 
     const handleAgreementChange = (event) => {
@@ -28,7 +26,7 @@ export default function AgreementsForm(props) {
         props.setAllAgreed(checked); // 모든 약관이 동의됐는지 여부를 상위 컴포넌트에 전달
     };
 
-    const isAllAgreed = Object.values(agreements).every((value) => value);
+    // const isAllAgreed = Object.values(agreements).every((value) => value);
 
     return (
         <form className = "agreementForm">
@@ -345,20 +343,20 @@ o 귀하께서는 회사의 서비스를 이용하시며 발생하는 모든 개
             </div> 
         </div>
         <br/>
-        <Certification onClick={() => props.handleIdentifyVerify()} disabled={!isAllAgreed}>
+        {/* <Certification onClick={() => props.handleIdentifyVerify()} disabled={!isAllAgreed}>
             본인 인증
-        </Certification>
+        </Certification> */}
         </form>
     );
 }
 
 
-const Certification = styled.button`
-  width:100%;
-  padding: 14px;
-  border: none;
-  background-color: isAllAgreed ? '#4CAF50' : '#D3D3D3';
-  color: isAllAgreed ? 'white' : 'black',;
-  cursor: isAllAgreed ? 'pointer' : 'not-allowed';
-  border-radius: 8px;
-`
+// const Certification = styled.button`
+//   width:100%;
+//   padding: 14px;
+//   border: none;
+//   background-color: isAllAgreed ? '#4CAF50' : '#D3D3D3';
+//   color: isAllAgreed ? 'white' : 'black',;
+//   cursor: isAllAgreed ? 'pointer' : 'not-allowed';
+//   border-radius: 8px;
+// `
