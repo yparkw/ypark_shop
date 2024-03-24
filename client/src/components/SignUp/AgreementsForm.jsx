@@ -12,6 +12,7 @@ export default function AgreementsForm(props) {
     })
 
 
+
     const handleAgreementChange = (event) => {
         const { name, checked } = event.target;
         setAgreements((prevAgreements) => ({
@@ -346,7 +347,7 @@ o 귀하께서는 회사의 서비스를 이용하시며 발생하는 모든 개
             </div> 
         </div>
         <br/>
-        <Certification onClick={props.handleIdentifyVerify} disabled={!isAllAgreed}>
+        <Certification onClick={() => props.handleIdentifyVerify()} disabled={!isAllAgreed}>
             본인 인증
         </Certification>
         </form>

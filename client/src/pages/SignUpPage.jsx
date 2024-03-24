@@ -7,16 +7,29 @@ import AgreementsForm from "../components/SignUp/AgreementsForm";
 export default function SignUpPage() {
   const [allAgreed, setAllAgreed] = useState(false);
   const [identifyVerified, setIdentifyVerified] = useState(false);
+  
   const handleIdentifyVerify = () => {
-    // 본인 인증 로직을 여기에 구현
-    // 예시로, 본인 인증이 성공했다고 가정하고 상태를 업데이트합니다.
-    setIdentifyVerified(true); // 본인 인증 성공으로 상태 업데이트
-    return true;
+    var IMP = window.IMP;
+    IMP.init("imp64353736");
+    
+    IMP.certification({ // param
+      merchant_uid: `mid_${new Date().getTime()}`,
+      // popup : false // PC환경에서는 popup 파라미터가 무시되고 항상 true 로 적용됨
+    }, function (rsp) { // callback
+      if (rsp.success) {
+        console.log('인증 성공', rsp);
+        setIdentifyVerified(true); 
+      } else {
+        console.log("인증에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
+      }
+    });
+    // setIdentifyVerified(true); 
   };
+
   return (
     <Container>
       {!allAgreed || !identifyVerified ? (
-        <AgreementsForm setAllAgreed={setAllAgreed} onIdentifyVerify={handleIdentifyVerify} />
+        <AgreementsForm setAllAgreed={setAllAgreed} handleIdentifyVerify={handleIdentifyVerify} />
       ) : (
         <SignUpForm />
       )}
