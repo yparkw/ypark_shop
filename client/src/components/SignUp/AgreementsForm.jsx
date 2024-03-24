@@ -1,59 +1,35 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import './AgreementsForm.css';
 
 export default function AgreementsForm(props) {
     const [agreements, setAgreements] = useState({
         termsAgreed: false,
         personalInfoAgreed: false,
-        identifyVerify: false,
+        
     })
 
-    const isAllAgreed = agreements.termsAgreed && agreements.personalInfoAgreed;
 
     const handleAgreementChange = (event) => {
         const { name, checked } = event.target;
         setAgreements((prevAgreements) => ({
-            ...prevAgreements, 
-            [name]: checked
+            ...prevAgreements,
+            [name]: checked,
         }));
-
-        const allChecked = Object.values({
-            ...agreements,
-            [name]: checked
-        }).every(
-            value => value === true
-        );
-        props.setAllAgreed(allChecked);
     };
 
     const handleAllAgreementChange = (event) => {
         const { checked } = event.target;
-        setAgreements((prevAgreements) => 
-            Object.keys(prevAgreements).reduce(
-                (newAgreements, agreementKey) => ({
-                    ...newAgreements,
-                    [agreementKey]: checked,
-                }),
-                {}
-            )
-        );
-        // props.setAllAgreed(checked);/
+        setAgreements({
+            termsAgreed: checked,
+            personalInfoAgreed: checked,
+        });
+        props.setAllAgreed(checked); // 모든 약관이 동의됐는지 여부를 상위 컴포넌트에 전달
     };
 
-    const handleIdentifyVerify = () => {
-        // 본인 인증 로직 구현
-        // 본인 인증 성공을 가정하고 상태 업데이트
-        setAgreements((prevAgreements) => ({
-            ...prevAgreements,
-            identifyVerify: true,
-        }));
-
-        // 본인 인증 성공 시, allAgreed 상태를 true로 설정하여 SignUpForm으로 넘어가도록 함
-        props.setAllAgreed(true);
-    };
-
+    const isAllAgreed = Object.values(agreements).every((value) => value);
 
     return (
         <form className = "agreementForm">
@@ -362,16 +338,28 @@ o 서비스 이용 과정이나 사업 처리 과정에서 서비스이용기록
 o 위탁 대상자 : (주)케이지이니시스o 위탁업무 내용 : PG사 업무 전반
 
 ■ 이용자 및 법정대리인의 권리와 그 행사방법o 이용자는 언제든지 등록되어 있는 자신의 개인정보를 조회하거나 수정할 수 있으며 가입해지를 요청할 수도 있습니다.o 이용자들의 개인정보 조회,수정을 위해서는 "개인정보변경"(또는 "회원정보수정" 등)을 가입해지(동의철회)를 위해서는 "회원탈퇴"를 클릭하여 본인 확인 절차를 거치신 후 직접 열람, 정정 또는 탈퇴가 가능합니다.o 혹은 개인정보보호책임자에게 서면, 전화 또는 이메일로 연락하시면 지체없이 조치하겠습니다.o 귀하가 개인정보의 오류에 대한 정정을 요청하신 경우에는 정정을 완료하기 전까지 당해 개인정보를 이용 또는 제공하지 않습니다. 또한 잘못된 개인정보를 제3자에게 이미 제공한 경우에는 정정 처리결과를 제3자에게 지체없이 통지하여 정정이 이루어지도록 하겠습니다.o 회사는 이용자의 요청에 의해 해지 또는 삭제된 개인정보는 "회사가 수집하는 개인정보의 보유 및 이용기간"에 명시된 바에 따라 처리하고 그 외의 용도로 열람 또는 이용할 수 없도록 처리하고 있습니다.
-■ 개인정보 자동수집 장치의 설치, 운영 및 그 거부에 관한 사항회사는 귀하의 정보를 수시로 저장하고 찾아내는 "쿠키(cookie)" 등을 운용합니다. 쿠키란 웹사이트를 운영하는데 이용되는 서버가 귀하의 브라우저에 보내는 아주 작은 텍스트 파일로서 귀하의 컴퓨터 하드디스크에 저장됩니다.회사은(는) 다음과 같은 목적을 위해 쿠키를 사용합니다.o 쿠키 등 사용 목적1. 회원과 비회원의 접속 빈도나 방문 시간 등을 분석, 이용자의 취향과 관심분야를 파악 및 자취 추적, 각종 이벤트 참여 정도 및 방문 회수 파악 등을 통한 타겟 마케팅 및 개인 맞춤 서비스 제공2. 귀하는 쿠키 설치에 대한 선택권을 가지고 있습니다. 따라서, 귀하는 웹브라우저에서 옵션을 설정함으로써 모든 쿠키를 허용하거나, 쿠키가 저장될 때마다 확인을 거치거나, 아니면 모든 쿠키의 저장을 거부할 수도 있습니다.o 쿠키 설정 거부 방법1. 쿠키 설정을 거부하는 방법으로는 회원님이 사용하시는 웹 브라우저의 옵션을 선택함으로써 모든 쿠키를 허용하거나 쿠키를 저장할 때마다 확인을 거치거나, 모든 쿠키의 저장을 거부할 수 있습니다.2. 설정방법 예(인터넷 익스플로어의 경우) : 웹 브라우저 상단의 도구 > 인터넷 옵션 > 개인정보3. 단, 귀하께서 쿠키 설치를 거부하였을 경우 서비스 제공에 어려움이 있을 수 있습니다.
+■ 개인정보 자동수집 장치의 설치, 운영 및 그 거부에 관한 사항회사는 귀하의 정보를 수시로 저장하고 찾아내는 "쿠키(cookie)" 등을 운용합니다. 쿠키란 웹사이트를 운영하는데 이용되는 서버가 귀하의 브라우저에 보내는 아주 작은 텍스트 파일로서 귀하의 컴퓨터 하드디스크에 저장됩니다.회사은(는) 다음과 같은 목적을 위해 쿠키를 사용합니다.o 쿠키 등 사용 목적1. 회원과 비회원의 접속 빈도나 방문 시간 등을 분석, 이용자의 취향과 관심분야를 파악 및 자취 추적, 각종 이벤트 참여 정도 및 방문 회수 파악 등을 통한 타겟 마케팅 및 개인 맞춤 서비스 제공2. 귀하는 쿠키 설치에 대한 선택권을 가지고 있습니다. 따라서, 귀하는 웹브라우저에서 옵션을 설정함으로써 모든 쿠키를 허용하거나, 쿠키가 저장될 때마다 확인을 거치거나, 아니면 모든 쿠키의 저장을 거부할 수도 있습니다.o 쿠키 설정 거부 방법1. 쿠키 설정을 거부하는 방법으로는 회원님이 사용하시는 웹 브라우저의 옵션을 선택함으로써 모든 쿠키를 허용하거나 쿠키를 저장할 때마다 확인을 거치거나, 모든 쿠키의 저장을 거부할 수 있습니다.2. 설정방법 예(인터넷 익스플로어의 경우) : 웹 브라우저 상단의 도구 → 인터넷 옵션 → 개인정보3. 단, 귀하께서 쿠키 설치를 거부하였을 경우 서비스 제공에 어려움이 있을 수 있습니다.
 ■ 개인정보에 관한 민원서비스회사는 고객의 개인정보를 보호하고 개인정보와 관련한 불만을 처리하기 위하여 아래와 같이 관련 부서 및 개인정보보호책임자를 지정하고 있습니다.o 개인정보보호담당자성명 : 박용우소속 : 와이파크떠블유(YPARKW)전화번호 :010-5603-6059이메일 : yparkw@nate.com
 o 개인정보보호책임자성명 : 박용우소속 : 와이파크떠블유(YPARKW)전화번호 : 010-5603-6059이메일 : yparkw@nate.com
 o 귀하께서는 회사의 서비스를 이용하시며 발생하는 모든 개인정보보호 관련 민원을 개인정보보호책임자 혹은 담당부서로 신고하실 수 있습니다.o 회사는 이용자들의 신고사항에 대해 신속하게 충분한 답변을 드릴 것입니다.o 기타 개인정보침해에 대한 신고나 상담이 필요하신 경우에는 아래 기관에 문의하시기 바랍니다.개인정보침해신고센터 (privacy.kisa.or.kr / 국번 없이 118)개인정보분쟁조정위원회 (kopico.go.kr / 1833-6972)대검찰청 사이버수사과 (spo.go.kr / 지역번호+1301)경찰청 사이버안전국 (cyberbureau.police.go.kr / 국번없이 182)
 
             </div> 
         </div>
-        <button type="button" className="verifyButton" onClick={handleIdentifyVerify} disabled={!isAllAgreed}>
-                본인 인증
-        </button>
+        <br/>
+        <Certification onClick={props.handleIdentifyVerify} disabled={!isAllAgreed}>
+            본인 인증
+        </Certification>
         </form>
     );
 }
+
+
+const Certification = styled.button`
+  width:100%;
+  padding: 14px;
+  border: none;
+  background-color: isAllAgreed ? '#4CAF50' : '#D3D3D3';
+  color: isAllAgreed ? 'white' : 'black',;
+  cursor: isAllAgreed ? 'pointer' : 'not-allowed';
+  border-radius: 8px;
+`

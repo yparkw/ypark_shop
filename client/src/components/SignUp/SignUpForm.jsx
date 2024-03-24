@@ -128,9 +128,6 @@ export default function SignUpForm() {
 
   return (
     <Container>
-      <Certification>
-        본인확인
-      </Certification>
       <SignInput
         label={"이메일"}
         text={"Input your Email"}
@@ -263,14 +260,6 @@ const MiddleWrapper = styled.div`
     }
   }
 `;
-
-const Certification = styled.button`
-  padding: 14px;
-  border: none;
-  background-color: #383838;
-  color: white;
-  border-radius: 8px;
-`
 
 const AddressPostButton = styled.button`
   padding: 14px;
