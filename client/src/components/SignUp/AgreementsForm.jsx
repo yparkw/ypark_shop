@@ -11,8 +11,6 @@ export default function AgreementsForm(props) {
         
     })
 
-
-
     const handleAgreementChange = (event) => {
         const { name, checked } = event.target;
         setAgreements((prevAgreements) => ({

@@ -14,7 +14,7 @@ export default function SignUpPage() {
     
     IMP.certification({ // param
       merchant_uid: `mid_${new Date().getTime()}`,
-      // popup : false // PC환경에서는 popup 파라미터가 무시되고 항상 true 로 적용됨
+      popup : false // PC환경에서는 popup 파라미터가 무시되고 항상 true 로 적용됨
     }, function (rsp) { // callback
       if (rsp.success) {
         console.log('인증 성공', rsp);
