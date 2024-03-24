@@ -1,17 +1,40 @@
-.agreements-form {
-    max-width: 600px;
-    margin: auto;
-}
-
-.agreement-content {
-    border: 1px solid #ccc;
-    margin: 10px 0;
-    padding: 5px;
-}
-
 .content-scroll {
     height: 150px;
     overflow-y: scroll;
     padding: 5px;
     background-color: #f9f9f9;
+}
+
+.agreementsForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+.formTitle {
+    margin-bottom: 20px;
+}
+
+.agreementItems {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.agreementItem {
+    margin-bottom: 10px;
+}
+
+.verifyButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.verifyButton:hover {
+    background-color: #0056b3;
 }

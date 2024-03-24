@@ -7,12 +7,14 @@ import SignUpAlert from "./SignUpAlert";
 import { Link, useNavigate } from "react-router-dom";
 import useSignUpMutation from "../../hooks/useSignUpMutation";
 import { useDaumPostcodePopup } from "react-daum-postcode";
+// import { useGetCertification } from "../../hooks/useGetCertification";
 import {
   emailValidation,
   nameValidation,
   passwordValidation,
   phoneValidation,
 } from "../../utils/validation";
+
 export default function SignUpForm() {
   const [isValid, setIsValid] = useState(false);
   const [inputValid, setInputValid] = useState(false);
@@ -122,8 +124,13 @@ export default function SignUpForm() {
   //   return <Navigate to={"/login"} replace />;
   // };
 
+  
+
   return (
     <Container>
+      <Certification>
+        본인확인
+      </Certification>
       <SignInput
         label={"이메일"}
         text={"Input your Email"}
@@ -256,6 +263,14 @@ const MiddleWrapper = styled.div`
     }
   }
 `;
+
+const Certification = styled.button`
+  padding: 14px;
+  border: none;
+  background-color: #383838;
+  color: white;
+  border-radius: 8px;
+`
 
 const AddressPostButton = styled.button`
   padding: 14px;
