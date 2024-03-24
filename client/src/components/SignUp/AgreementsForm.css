@@ -1,0 +1,17 @@
+.agreements-form {
+    max-width: 600px;
+    margin: auto;
+}
+
+.agreement-content {
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    padding: 5px;
+}
+
+.content-scroll {
+    height: 150px;
+    overflow-y: scroll;
+    padding: 5px;
+    background-color: #f9f9f9;
+}

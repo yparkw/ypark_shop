@@ -13,7 +13,6 @@ import {
   passwordValidation,
   phoneValidation,
 } from "../../utils/validation";
-
 export default function SignUpForm() {
   const [isValid, setIsValid] = useState(false);
   const [inputValid, setInputValid] = useState(false);
@@ -208,9 +207,6 @@ export default function SignUpForm() {
           
         </>
       )}
-      
-      
-
       <AddressPostButton onClick={(e) => postCodeHandler(e)}>
         주소
       </AddressPostButton>
@@ -288,3 +284,4 @@ const AddressInputWrapper = styled.div`
     }
   }
 `;
+
