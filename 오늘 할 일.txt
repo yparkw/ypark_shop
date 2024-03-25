@@ -3,10 +3,10 @@
 0. 구매시 사용가능 마일리지 빈칸 추가(30분)
 
 1. 구매시 수량 차감 및 마일리지 추가(1시간 30분)
-	- product, porductsize에서 사이즈를 차감 후 결제 등록(30분)
-	- purchase 추가(30분)
-	- user의 milige 추가(30분) 
-	
+	- product, porductsize에서 사이즈를 차감 후 결제 등록(30분) O
+	- purchase 추가(30분) O
+	- user의 milige 추가(30분) X 
+
 2. 구매시 사용
 3/26
 - 구매사이클 2일차(3시간)
