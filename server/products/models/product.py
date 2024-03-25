@@ -1,5 +1,4 @@
 from django.db import models
-
 from common.models import TimestampBaseModel
 from common.utils import rename_image_file_to_uuid
 
@@ -12,6 +11,9 @@ class Size(models.Model):
         ('FREE', "Free")
     ]
     size = models.CharField(max_length = 5, choices = SIZE_CHOICES)
+    
+    def __str__(self):
+        return self.size # 이는 choices의 레이블을 반환
     
 class Product(TimestampBaseModel):
     CATEGORY_CHOICES = [

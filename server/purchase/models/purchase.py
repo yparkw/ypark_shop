@@ -4,7 +4,8 @@ from django.db import models
 from django.conf import settings
 from common.models import TimestampBaseModel
 
-from products.models.product import Product
+
+from products.models.product import Product, Size
 
 class Purchase(TimestampBaseModel):
     imp_uid = models.CharField(default = 'null', max_length=100) # 아임포트 결제 고유 ID
@@ -34,5 +35,5 @@ class PurchaseItem(models.Model):
     purchase = models.ForeignKey(Purchase, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-    size = models.CharField(max_length=10)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE)
     

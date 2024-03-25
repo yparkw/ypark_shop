@@ -19,7 +19,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (loginAction.isSuccess) {
-      navigate("/");
+      navigate("/shop");
     }
   }, [loginAction.isSuccess]);
 

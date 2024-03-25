@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useAddPurchaseInfo } from "../../hooks/useAddPurchaseInfo";
 import { paymentClickHandler } from '../../api/payment';
+import { useNavigate } from "react-router-dom";
 
 export default function PurchaseForm({ orderInfo, userInfo }) {
   const [orderDetails, setOrderDetails] = useState({
@@ -26,6 +27,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
 
   console.log('orderInfo', orderInfo);
 
+  const navigate = useNavigate();
   const handlePayment = () => {
 
     const numericTotalAmount = orderInfo.reduce((total, item) => total + calculateTotalPrice(item), 0);
@@ -63,7 +65,8 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
       };
       try {
         const response = await addPurchaseInfo(formData);
-        console.log("결제 검증 결과: ", response);          
+        console.log("결제 검증 결과: ", response);
+        navigate('/shop')          
       } catch(error) {
         console.error('결제 검증 에러: ', error);
       }
