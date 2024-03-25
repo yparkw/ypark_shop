@@ -78,7 +78,7 @@ def verify_purchase(request):
     # 결제 검증 로직...
     # 결제 검증 후 구매 정보 저장
     if result['code'] == 0:  # 결제 검증 성공
-        serializer = PurchaseSerializer(data= request.data)
+        serializer = PurchaseSerializer(data= request.data, context={'request':request})
         logger.debug(serializer.data)
         
         if serializer.is_valid():

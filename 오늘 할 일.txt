@@ -6,6 +6,7 @@
 	- product, porductsize에서 사이즈를 차감 후 결제 등록(30분)
 	- purchase 추가(30분)
 	- user의 milige 추가(30분) 
+	
 2. 구매시 사용
 3/26
 - 구매사이클 2일차(3시간)
