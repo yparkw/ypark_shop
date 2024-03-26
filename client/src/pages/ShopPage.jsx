@@ -36,7 +36,7 @@ export default function ShopPage() {
   return (
     <Container>
       <SubBanner
-        imgUrl={`${process.env.PUBLIC_URL}/assets/images/main_banner_1920x460.jpg`}
+        imgUrl={`${process.env.PUBLIC_URL}/assets/images/main_banner_1920x460.png`}
       />
       <ShopWrapper>
         {/* <ShopFilter  setParams={setParams}/> */}

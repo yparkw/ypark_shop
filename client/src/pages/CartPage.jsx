@@ -13,7 +13,7 @@ export default function CartPage() {
   return (
     <Container>
       <SubBanner
-        imgUrl={`${process.env.PUBLIC_URL}/assets/images/cart_sub_banner.png`}
+        imgUrl={`${process.env.PUBLIC_URL}/assets/images/main_banner_1920x460.png`}
       />
       <CartForm />
     </Container>

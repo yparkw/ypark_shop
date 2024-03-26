@@ -18,14 +18,17 @@ export default function MainPage() {
       }
     };
 
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        navigate('/shop');
-      }, 5500);
+    // useEffect(() => {
+    //   const timer = setTimeout(() => {
+    //     navigate('/shop');
+    //   }, 5500);
 
-      return () => clearTimeout(timer);
-    }, [navigate]);
+    //   return () => clearTimeout(timer);
+    // }, [navigate]);
 
+    const handleVideoEnd = () => {
+      navigate('/shop');
+   };
 
     const [videoSrc, setVideoSrc] = useState(getVideoSource());
 
@@ -45,7 +48,10 @@ export default function MainPage() {
 
   return (
       <VideoContainer>
-        <Video autoPlay loop muted>
+        <Video
+        autoPlay
+        onEnded={handleVideoEnd}
+        muted>
           <source src={videoSrc} type="video/mp4" />
         </Video>
       </VideoContainer>

@@ -15,12 +15,12 @@ function SubBanner(props) {
 }
 
 const Container = styled.div`
-  width: 100%;
+  width: 50%;
   img {
     object-fit: cover;
     object-position: center;
     width: 100%;
-    min-height: 320px;
+    min-height: 280px;
   }
 
   @media ${tablet} {
