@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MainItems from "../components/MainItems/MainItems";
-import ShopFilter from "../components/Shop/ShopFilter";
-import { dummyColor } from "../constance/index";
 import SubBanner from "../components/SubBanner/Subbanner";
 import useGetProductItems from "../hooks/useGetProductItems";
 
@@ -38,7 +36,7 @@ export default function ShopPage() {
   return (
     <Container>
       <SubBanner
-        imgUrl={`${process.env.PUBLIC_URL}/assets/images/shop_sub_banner.png`}
+        imgUrl={`${process.env.PUBLIC_URL}/assets/images/main_banner_1920x460.jpg`}
       />
       <ShopWrapper>
         {/* <ShopFilter  setParams={setParams}/> */}
