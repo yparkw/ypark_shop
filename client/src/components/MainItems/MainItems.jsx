@@ -23,15 +23,17 @@ function MainItems(props) {
   // // 카테고리 선택 핸들러
   console.log("getDataList", getDataList);
   const nextButtonClickHandler = () => {
-    props.setPage((prev) => prev + 1);
+    const nextPageNumber = getDataList.page_data.next ? new URL(getDataList.page_data.next).searchParams.get('page') : null;
+    if (nextPageNumber) props.setPage(parseInt(nextPageNumber));
   };
   
   const prevButtonClickHandler = () => {
-    if (props.params.page > 1) {
-      props.setPage((prev) => prev - 1);
-    }
-   
+    const prevPageNumber = getDataList.page_data.previous ? new URL(getDataList.page_data.previous).searchParams.get('page') : null;
+    if (prevPageNumber) props.setPage(parseInt(prevPageNumber));
   };
+
+  // const showPrevButton = getDataList.page_data.previous !== null;
+  // const showNextButton = getDataList.page_data.next !== null;
 
   if (getDataList.isLoading || onLoading) {
     return (
@@ -79,21 +81,20 @@ function MainItems(props) {
       </Container>
       <ButtonWrapper>
         <div>
-          {getDataList.data.page_data.page !== 1 && props.mode === "shop" && (
+          
             <button className="button__prev" onClick={prevButtonClickHandler}>
               <MdArrowBackIosNew />
               <span>Prev</span>
             </button>
-          )}
+          
         </div>
         <div>
-          {Array.isArray(getDataList.data?.data) && getDataList.data.data.length === getDataList.data.page_data.pageSize &&
-            props.mode === "shop" && (
-              <button className="button__next" onClick={nextButtonClickHandler}>
-                <span>Next</span>
-                <MdArrowForwardIos />
-              </button>
-            )}
+          
+            <button className="button__next" onClick={nextButtonClickHandler}>
+              <span>Next</span>
+              <MdArrowForwardIos />
+            </button>
+           
         </div>
       </ButtonWrapper>
     </>

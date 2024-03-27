@@ -8,7 +8,7 @@ import useGetProductItems from "../hooks/useGetProductItems";
 
 export default function ShopPage() {
   const [params, setParams] = useState({
-    category: "",
+    // category: "",
     page: 1,
     pageSize: 9,
   });
@@ -25,11 +25,9 @@ export default function ShopPage() {
   console.log("urlParams", urlParams);
 
   useEffect(() => {
-    if (params.category) {
-      setParams((prevParams) => ({ ...prevParams, page: 1 }));
-      refetch(); // 카테고리가 변경될 때 목록을 즉시 갱신합니다.
-    }
-  }, [params.category, refetch]);
+    setParams((prevParams) => ({ ...prevParams, page: 1 }));
+    refetch(); // 카테고리가 변경될 때 목록을 즉시 갱신합니다.
+  }, [refetch]);
 
 
 
@@ -46,6 +44,7 @@ export default function ShopPage() {
             items={data}
             mode={"shop"}
             changeList={changeList}
+            params={params}
           />
         </ItemsWrapper>
       </ShopWrapper>
