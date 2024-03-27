@@ -40,6 +40,7 @@ export default function ShopPage() {
         {/* <ShopFilter  setParams={setParams}/> */}
         <ItemsWrapper>
           <MainItems
+            // setPage={setPage}
             setPage={(page) => setParams((prevParams) => ({ ...prevParams, page }))}
             items={data}
             mode={"shop"}
