@@ -12,29 +12,13 @@ import NoItems from "../Commons/NoItems";
 import Skeleton from "../Commons/Skeleton";
 
 function MainItems(props) {
-  const [onLoading, setOnLoading] = useState(false);
-  const userInfo = useSelector((state) => state.user);
-  const getDataList = useGetProductItems(props.params, setOnLoading);
-
-  // const filteredData = getDataList.isSuccess && Array.isArray(getDataList.data?.data) ? 
-  // getDataList.data.data.filter(item => props.params.category === '' || item.category === props.params.category.value) : [];
-  // // 카테고리 선택 핸들러
-  console.log("getDataList", getDataList);
-  const nextButtonClickHandler = () => {
-    const nextPageNumber = getDataList.data.page_data.next ? new URL(getDataList.data.page_data.next).searchParams.get('page') : null;
-    if (nextPageNumber) props.setPage(parseInt(nextPageNumber));
-  };
   
-  const prevButtonClickHandler = () => {
-    const prevPageNumber = getDataList.data.page_data.previous ? new URL(getDataList.data.page_data.previous).searchParams.get('page') : null;
-    if (prevPageNumber) props.setPage(parseInt(prevPageNumber));
-  };
-
-  const showPrevButton = getDataList.data.page_data.previous !== null;
-  const showNextButton = getDataList.data.page_data.next !== null;
-  // const showPrevButton = getDataList.page_data.previous !== null;
-  // const showNextButton = getDataList.page_data.next !== null;
-  if (getDataList.isLoading || onLoading) {
+  // const filteredData = data.isSuccess && Array.isArray(data.data?.data) ? 
+  // data.data.data.filter(item => props.params.category === '' || item.category === props.params.category.value) : [];
+  // // 카테고리 선택 핸들러
+  const { setParams, data, isLoading, isSuccess, isError, mode } = props;
+  
+  if (isLoading) {
     return (
       <Container mode={props.mode}>
         <Skeleton size={9} />
@@ -42,18 +26,39 @@ function MainItems(props) {
     );
   }
 
-  if (getDataList.isSuccess && Array.isArray(getDataList.data.data) && !getDataList.data.data.length) {
+  if (isSuccess && Array.isArray(data.data.data) && !data.data.data.length) {
     return <NoItems />;
   }
 
-  if (getDataList.isError) {
+  if (isError) {
     return (
       <ErrorPage
         errorText={"Network Error"}
-        retryAction={getDataList.refetch}
+        retryAction={data.refetch}
       />
     );
   }
+
+  const nextButtonClickHandler = () => {
+    const nextPageUrl = new URL(data.page_data.next);
+    const nextPageNumber = nextPageUrl.searchParams.get('page')
+    if (nextPageNumber) {
+      props.setParams(prevParams => ({ ...prevParams, page: parseInt(nextPageNumber, 10) }));
+    }
+  };
+  
+  const prevButtonClickHandler = () => {
+    const previousPageUrl = new URL(data.page_data.previous);
+    const prevPageNumber = previousPageUrl.searchParams.get('page');
+    if (prevPageNumber) {
+      props.setParams(prevParams => ({ ...prevParams, page: parseInt(prevPageNumber, 10) }));
+    }
+  };
+
+  const showPrevButton = data.page_data.previous !== null;
+  const showNextButton = data.page_data.next !== null;
+
+  
 
   const isSoldOut = (sizes) => {
     const total = Object.values(sizes).reduce((acc, curr) => acc + curr, 0);
@@ -66,7 +71,7 @@ function MainItems(props) {
   return (
     <>
       <Container mode={props.mode}>
-              {props.items?.data.map((datas) => (
+              {data?.data.map((datas) => (
                 <ItemCard
                   key={datas.id}
                   id={datas.id}

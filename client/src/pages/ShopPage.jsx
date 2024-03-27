@@ -8,29 +8,20 @@ import useGetProductItems from "../hooks/useGetProductItems";
 
 export default function ShopPage() {
   const [params, setParams] = useState({
-    // category: "",
     page: 1,
     pageSize: 9,
   });
 
-  const [page, setPage] = useState(1);
   const [changeList, setChangeList] = useState(false);
-  const urlParams = {
-    page,
-    pageSize: 9,
-    ...params,
-  };
 
   const { data, isLoading, isSuccess, isError, refetch } = useGetProductItems(params, setChangeList);
-  console.log("urlParams", urlParams);
 
   useEffect(() => {
-    setParams((prevParams) => ({ ...prevParams, page: 1 }));
-    refetch(); // 카테고리가 변경될 때 목록을 즉시 갱신합니다.
-  }, [refetch]);
+    refetch();
+  }, [params.page, refetch]);
 
-
-
+  
+  console.log("shopPage", data)
   return (
     <Container>
       <SubBanner
@@ -40,12 +31,15 @@ export default function ShopPage() {
         {/* <ShopFilter  setParams={setParams}/> */}
         <ItemsWrapper>
           <MainItems
-            // setPage={setPage}
-            setPage={(page) => setParams((prevParams) => ({ ...prevParams, page }))}
-            items={data}
+            setParams={setParams}
+            data={data}
+            isLoading={isLoading}
+            isSuccess={isSuccess}
+            isError={isError}
             mode={"shop"}
             changeList={changeList}
             params={params}
+            
           />
         </ItemsWrapper>
       </ShopWrapper>

@@ -21,8 +21,9 @@ const getProductItems = async (param) => {
 };
 
 export default function useGetProductItems(params, setFunction) {
+  const queryKey = ['getItems', ...Object.values(params)];
   const { data, isLoading, isSuccess, isError, refetch } = useQuery(
-    ["getItems", params],
+    queryKey,
     () => getProductItems(params),
     {
       retry: 2,
