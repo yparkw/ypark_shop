@@ -135,7 +135,7 @@ const StyledLink = styled(Link)`
 const ButtonWrapper = styled.div`
   width: 100%;
   margin-top: 40px;
-  // display: flex;/
+  display: flex;
   flex-direction: column; // Changed to column for vertical stacking
   align-items: center; // Center the buttons vertically
   gap: 1rem; // Adjust gap as needed

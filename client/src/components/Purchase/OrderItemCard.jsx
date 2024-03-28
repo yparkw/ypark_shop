@@ -10,6 +10,18 @@ export default function OrderItemCard(props) {
   const navigate = useNavigate();
 
   const { handleStatusChange, isLoading, error } = usePatchPurchase();
+  const isoDateString = props.created_at;
+  const date = new Date(isoDateString);
+  const formatter = new Intl.DateTimeFormat('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    // second: 'numeric',
+    // timeZoneName: 'short',
+  });
+  const formattedDate = formatter.format(date);
 
   
   const handleshippingClick = () => {
@@ -32,6 +44,7 @@ export default function OrderItemCard(props) {
     <CardContainer>
       <UserInfo>
       {/* <ItemImage src={props.productImg} alt="productImg"/> */}
+        <ItemName>주문날짜: {formattedDate}</ItemName>
         <ItemName>이메일: {props.buyer_email}</ItemName>
         <ItemName>연락처: {props.buyer_tel}</ItemName>
         <ItemName>주소: {props.buyer_address}({props.buyer_postcode}) {props.buyer_detailAddress}</ItemName>

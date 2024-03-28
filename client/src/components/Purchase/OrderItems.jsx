@@ -46,6 +46,7 @@ export default function OrderItems(props) {
                 id={datas.id}
                 imp_uid={datas.imp_uid}
                 merchant_uid={datas.merchant_uid}
+                created_at={datas.created_at}
                 price={datas.amount}
                 status={datas.status}
                 buyer_name={datas.buyer_name}
