@@ -14,10 +14,11 @@ export default function OrderItemCard(props) {
   const [purchaseIdForDetail, setPurchaseIdForDetail] = useState(null);
   const { purchaseDetails, getPurchaseDetails, loading } = useGetPurchaseDetail(purchaseIdForDetail);
   useEffect(() => {
-    if (purchaseIdForDetail) {
+    // purchaseIdForDetail이 있고, 아직 purchaseDetails가 없을 때만 데이터를 가져옵니다.
+    if (purchaseIdForDetail && !purchaseDetails) {
       getPurchaseDetails();
     }
-  }, [purchaseIdForDetail, getPurchaseDetails]);
+  }, [purchaseIdForDetail, getPurchaseDetails, purchaseDetails]); 
   
   const { handleStatusChange, isLoading, error } = usePatchPurchase();
   const isoDateString = props.created_at;
@@ -68,6 +69,7 @@ export default function OrderItemCard(props) {
               isVisible={isModalVisible}
               setIsVisible={setIsModalVisible}
               onClose={() => setIsModalVisible(false)}
+              purchaseDetails={purchaseDetails}
             />
             <Button onClick={handleShippingClick}>배송 시작</Button>
             <Button onClick={handleRefundClick}>환불 처리</Button>
@@ -77,8 +79,18 @@ export default function OrderItemCard(props) {
         return <Button onClick={handlePurchaseConfirmClick}>구매 확정</Button>;
       case 'cofirmed':
         // 구매 확정 상태에서는 특별한 버튼을 보여줄 필요가 없을 수 있습니다.
-        return <Button onClick={handleShowDetail}>주문상세</Button>;
-      default:
+        return (
+          <>
+            <Button onClick={handleShowDetail}>주문상세</Button>
+            <PurchaseDetailModal
+                  isVisible={isModalVisible}
+                  setIsVisible={setIsModalVisible}
+                  onClose={() => setIsModalVisible(false)}
+                  purchaseDetails={purchaseDetails}
+                />
+          </>
+        );
+        default:
         // 기본적으로 상세보기 버튼만 보여줍니다.
         return <Button onClick={handleShowDetail}>주문상세</Button>;
     }

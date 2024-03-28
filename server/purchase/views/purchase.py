@@ -121,6 +121,7 @@ def purchase_detail(request, pk):
         purchase = Purchase.objects.get(pk=pk)
         purchase_items = PurchaseItem.objects.filter(purchase=purchase)
         serializer = PurchaseItemSerializer(purchase_items, many=True)
+        
         return Response(serializer.data)
     except Purchase.DoesNotExist:
         return Response({'error': 'Purchase not found'}, status=404)

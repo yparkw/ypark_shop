@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { axiosInstance } from "../api/axiosInstance";
+import Cookies from "js-cookie";
+
 
 
 
@@ -12,10 +14,14 @@ export const useGetPurchaseDetail = (purchaseId) => {
   
     const getPurchaseDetails = async () => {
       if (retryCount >= 3) return;
-
       setLoading(true);
+      const token = Cookies.get("access");
       try {
-        const response = await axiosInstance.get(`/api/purchase/detail/${purchaseId}`);
+        const response = await axiosInstance.get(`/api/purchase/detail/${purchaseId}`,{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setPurchaseDetails(response.data);
         setRetryCount(0); 
       } catch (error) {

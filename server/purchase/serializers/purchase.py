@@ -16,13 +16,16 @@ logger = logging.getLogger(__name__)
 #         fields = "__all__"
 
 class PurchaseItemSerializer(serializers.ModelSerializer):
-    product_id = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(), source='product')
+    product_name = serializers.CharField(source='product.name', read_only=True)
+    # product_id = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(), source='product')
     # size = serializers.PrimaryKeyRelatedField(queryset=Size.objects.all())
     size = serializers.SlugRelatedField(slug_field='size', queryset=Size.objects.all())
-   
+    
     class Meta:
         model = PurchaseItem
-        fields = ('product_id', 'quantity', 'size')
+        fields = ('product_name', 'quantity', 'size')
+        
+        
 class PurchaseSerializer(serializers.ModelSerializer):
     products = PurchaseItemSerializer(many=True, source='items')
     
