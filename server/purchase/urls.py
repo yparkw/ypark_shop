@@ -10,6 +10,6 @@ app_name = 'purchase'
 urlpatterns = [
     path('', purchaseListCreateAV.as_view(), name = 'purchase_list_create'),
     path('verify_purchase', verify_purchase, name='verify_purchase'),
-    path('update/<int:pk>', update_to_shipping, name='shipping'),
+    path('<int:pk>/', update_purchase_status, name='purchase_patch'),
     path('reject/<int:pk>', reject_order, name='refund'),
 ]

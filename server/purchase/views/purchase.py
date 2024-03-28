@@ -11,7 +11,7 @@ from common.paginations import CustomPagination
 
 from purchase.iamport import get_token, verify_iamport_payment
 from purchase.models.purchase import Purchase
-from purchase.serializers.purchase import PurchaseSerializer, PurchaseListSZ
+from purchase.serializers.purchase import PurchaseSerializer, PurchaseStatusUpdateSerializer, PurchaseListSZ
 
 import logging
 logger = logging.getLogger(__name__)
@@ -88,3 +88,17 @@ def verify_purchase(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Payment failed'})
 
+@api_view(['POST'])  # API 뷰로 지정
+@authentication_classes([JWTAuthentication])  # JWT 인증 사용
+@permission_classes([IsAuthenticated])  # 인증된 사용자만 접근 가능
+def update_purchase_status(request, pk):
+    try:
+        purchase = Purchase.objects.get(pk=pk)
+    except Purchase.DoesNotExist:
+        return Response({'error': 'Purchase not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = PurchaseStatusUpdateSerializer(purchase, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -4,18 +4,20 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
+import { usePatchPurchase } from "../../hooks/usePatchPurchase";
 
 export default function OrderItemCard(props) {
   const navigate = useNavigate();
 
+  const { handleStatusChange, isLoading, error } = usePatchPurchase();
+
   
   const handleshippingClick = () => {
-    console.log('shipping', );
+    handleStatusChange(props.id, 'shipping');
   }
 
-  const handleDelete = () => {
-    // 여기서 삭제 로직을 구현합니다.
+  const handleRefundClick = () => {
+    handleStatusChange(props.id, 'Refund')
   };
 
   const handleShowDetail = () => {
@@ -38,7 +40,7 @@ export default function OrderItemCard(props) {
       <ButtonGroup>
         <Button onClick={handleShowDetail}>주문상세</Button>
         <Button onClick={handleshippingClick}>배송</Button>
-        <Button onClick={handleDelete}>환불</Button>
+        <Button onClick={handleRefundClick}>환불</Button>
       </ButtonGroup>
     </CardContainer>
   );

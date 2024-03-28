@@ -105,3 +105,7 @@ class PurchaseListSZ(serializers.ModelSerializer):
         model = Purchase
         fields = '__all__'
         
+class PurchaseStatusUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Purchase
+        fields = ['status']
