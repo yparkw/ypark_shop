@@ -17,7 +17,7 @@ export default function ProductRegisterPage() {
 
   return (
     <Container>
-      <ProductRegisterForm />
+      <ProductRegisterForm mode="create" />
     </Container>
   );
 }

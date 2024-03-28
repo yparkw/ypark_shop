@@ -124,3 +124,5 @@ class ProductUpdateRequestSZ(serializers.ModelSerializer):
                 ProductSize.objects.create(product=instance, size=size, count=size_data['count'])
 
         return instance
+    
+

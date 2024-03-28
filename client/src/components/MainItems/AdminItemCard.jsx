@@ -2,22 +2,24 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line
 import React from "react";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
+import styled from "styled-components";
+import useDeleteProduct from "../../hooks/useDeleteProduct";
 
 function AdminItemCard(props) {
   const navigate = useNavigate();  
-  console.log('adminitemcard_props', props )
-
+  const productDelete = useDeleteProduct(props.id)
+  const id = props.id
   
   const handleEditClick = () => {
-    console.log('adminitemscard_editclick', {state : {product: props}});
-    navigate("/product-register", { state : { product: props } });
-  }
+    // 상품 ID를 경로 파라미터로 사용하여 상품 수정 페이지로 이동합니다.
+    navigate(`/product-modify/${id}`);
+  };
 
-  const handleDelete = () => {
-    // 여기서 삭제 로직을 구현합니다.
+  const handleDelete = (e) => {
+    e.preventDefault();
+    productDelete.mutate();
+    location.reload();
   };
 
   const formatPrice = (price) => {

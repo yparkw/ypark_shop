@@ -13,8 +13,6 @@ export default memo(function ImageSelector(props) {
     
   };
 
-  console.log('imageselector_prop', props)
-
   return (
     <Container>
       <span>{props.label}</span>
