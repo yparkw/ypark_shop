@@ -11,5 +11,6 @@ urlpatterns = [
     path('', purchaseListCreateAV.as_view(), name = 'purchase_list_create'),
     path('verify_purchase', verify_purchase, name='verify_purchase'),
     path('<int:pk>/', update_purchase_status, name='purchase_patch'),
+    path('detail/<int:pk>', purchase_detail, name = "purchase_detail"),
     path('reject/<int:pk>', reject_order, name='refund'),
 ]

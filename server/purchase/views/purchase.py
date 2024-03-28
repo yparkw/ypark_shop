@@ -10,8 +10,8 @@ from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from common.paginations import CustomPagination
 
 from purchase.iamport import get_token, verify_iamport_payment
-from purchase.models.purchase import Purchase
-from purchase.serializers.purchase import PurchaseSerializer, PurchaseStatusUpdateSerializer, PurchaseListSZ
+from purchase.models.purchase import Purchase, PurchaseItem
+from purchase.serializers.purchase import PurchaseSerializer, PurchaseStatusUpdateSerializer, PurchaseListSZ, PurchaseItemSerializer
 
 import logging
 logger = logging.getLogger(__name__)
@@ -112,3 +112,15 @@ def update_purchase_status(request, pk):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@authentication_classes([JWTAuthentication])  # JWT 인증 사용
+@permission_classes([IsAuthenticated])  # 인증된 사용자만 접근 가능
+def purchase_detail(request, pk):
+    try:
+        purchase = Purchase.objects.get(pk=pk)
+        purchase_items = PurchaseItem.objects.filter(purchase=purchase)
+        serializer = PurchaseItemSerializer(purchase_items, many=True)
+        return Response(serializer.data)
+    except Purchase.DoesNotExist:
+        return Response({'error': 'Purchase not found'}, status=404)

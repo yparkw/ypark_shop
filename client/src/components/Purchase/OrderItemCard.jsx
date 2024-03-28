@@ -1,14 +1,24 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line
-import React from "react";
+import React, {useState,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import PurchaseDetailModal from './PurchaseDetailModal';
 import { usePatchPurchase } from "../../hooks/usePatchPurchase";
+import { useGetPurchaseDetail } from "../../hooks/useGetPurchaseDetail"
 
 export default function OrderItemCard(props) {
   const navigate = useNavigate();
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [purchaseIdForDetail, setPurchaseIdForDetail] = useState(null);
+  const { purchaseDetails, getPurchaseDetails, loading } = useGetPurchaseDetail(purchaseIdForDetail);
+  useEffect(() => {
+    if (purchaseIdForDetail) {
+      getPurchaseDetails();
+    }
+  }, [purchaseIdForDetail, getPurchaseDetails]);
+  
   const { handleStatusChange, isLoading, error } = usePatchPurchase();
   const isoDateString = props.created_at;
   const date = new Date(isoDateString);
@@ -24,6 +34,8 @@ export default function OrderItemCard(props) {
   const formattedDate = formatter.format(date);
 
   
+
+  
   const handleShippingClick = () => {
     handleStatusChange(props.id, 'shipping');
   }
@@ -33,7 +45,9 @@ export default function OrderItemCard(props) {
   };
 
   const handleShowDetail = () => {
-
+    console.log("ShowDetail", props.id);
+    setPurchaseIdForDetail(props.id); 
+    setIsModalVisible(true);
   };
 
 
@@ -46,9 +60,15 @@ export default function OrderItemCard(props) {
 
   const renderButtons = () => {
     switch (props.status) {
-      case 'order':
+      case 'ordered':
         return (
           <>
+            <Button onClick={handleShowDetail}>주문상세</Button>
+            <PurchaseDetailModal
+              isVisible={isModalVisible}
+              setIsVisible={setIsModalVisible}
+              onClose={() => setIsModalVisible(false)}
+            />
             <Button onClick={handleShippingClick}>배송 시작</Button>
             <Button onClick={handleRefundClick}>환불 처리</Button>
           </>
