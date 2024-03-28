@@ -86,6 +86,7 @@ class ProductImageUploadAV(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request, *args, **kwargs):
+        logger.debug(f"request: ", request)
         serializer = ProductImageUploadSerializer(data=request.data)
         if serializer.is_valid():
             data = serializer.save()  # 이미지 저장 및 URL 반환

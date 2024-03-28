@@ -10,7 +10,7 @@ import InputSelect from "./InputSelect";
 import InputText from "./InputText";
 
 
-export default function ProductRegisterForm({ productToEdit }) {
+export default function ProductModifyForm({ productToEdit }) {
   const location = useLocation();
 
   const [inputs, setInputs] = useState({
