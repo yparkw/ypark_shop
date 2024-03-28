@@ -11,8 +11,7 @@ export default function ShippingItems(props) {
     const [onLoading, setOnLoading] = useState(false);
     
 
-   
-    const { data, isLoading, isError, refetch } = useGetOrderList("confirmed", setOnLoading);
+    const { data, isLoading, isError, refetch } = useGetOrderList("cofirmed", setOnLoading);
     
     if (!isLoading && !isError && data && Array.isArray(data.data) && !data.data.length) {
         return <NoItems />;

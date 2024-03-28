@@ -255,7 +255,7 @@ export const adminpageMenuList = [
   },
   {
     id: 4,
-    link: "/admin/sell",
+    link: "/admin/cofirmed",
     text: "판매내역",
   },
 

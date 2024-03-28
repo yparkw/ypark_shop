@@ -21,7 +21,7 @@ export default function AdminPage() {
           <Route path='product' element={<ProductList />} />
           <Route path="order" element={<OrderList />} />
           <Route path="ship" element={<ShippingList />} />
-          <Route path="confirmed" element={<ConfirmedList />} />
+          <Route path="cofirmed" element={<ConfirmedList />} />
           <Route path="user" element={<UserList />} />
         </Routes>
       </ContentsWrapper>
