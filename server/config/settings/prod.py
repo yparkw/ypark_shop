@@ -3,7 +3,7 @@ from .base import *
 Debug = False
 
 ALLOWED_HOSTS = ['api.ipify.org', 'www.shadowserver.org', 'ip-api.com', 'google.com',
-                 '211.45.167.63', 'yparkw.com', 'www.yparkw.com']
+                 '211.45.167.63', 'yparkw.com', 'www.yparkw.com', 'api64.ipify.org']
 
 STATIC_ROOT = '/app/static/'
 STATICFILES_DIRS = []
