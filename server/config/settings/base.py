@@ -176,7 +176,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_PAGINATION_CLASS': 'common.paginations.CustomPagination',
-    'PAGE_SIZE': 10,
+    'PAGE_SIZE': 9,
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
     ],

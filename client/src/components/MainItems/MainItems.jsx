@@ -58,8 +58,6 @@ function MainItems(props) {
   const showPrevButton = data.page_data.previous !== null;
   const showNextButton = data.page_data.next !== null;
 
-  
-
   const isSoldOut = (sizes) => {
     const total = Object.values(sizes).reduce((acc, curr) => acc + curr, 0);
     return total === 0;

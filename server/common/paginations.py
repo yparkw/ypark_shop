@@ -34,6 +34,19 @@ class CustomPagination(PageNumberPagination):
 
         self.request = request
         return list(self.page)
+    
+    
+    def get_previous_link(self):
+        if not self.page.has_previous():
+            return None
+        page_number = self.page.previous_page_number()
+        return self.request.build_absolute_uri('?page={}&pageSize={}'.format(page_number, self.page_size))
+    
+    def get_previous_link(self):
+        if not self.page.has_previous():
+            return None
+        page_number = self.page.previous_page_number()
+        return self.request.build_absolute_uri('?page={}&pageSize={}'.format(page_number, self.page_size))
 
     def page_data_format(self, next, previous, page, size, max_page):
         page_data = dict(
@@ -59,7 +72,7 @@ class CustomPagination(PageNumberPagination):
                 next=None,
                 previous=None,
                 page=1,
-                size=10,
+                size=9,
                 max_page=0,
             )
         return Response(OrderedDict((
@@ -76,11 +89,11 @@ class CustomPagination(PageNumberPagination):
                     'properties': {
                         'next': {
                             'type': 'string',
-                            'example': 'http://localhost/api/products/?page=3'
+                            'example': 'http://localhost/api/products/?page=3&pageSize=9'
                         },
                         'previous': {
                             'type': 'string',
-                            'example': "http://localhost/api/products/?page=1"
+                            'example': "http://localhost/api/products/?page=1&pageSize=9"
                         },
                         'page': {
                             'type': 'integer',

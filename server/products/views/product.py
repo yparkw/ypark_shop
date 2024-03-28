@@ -61,6 +61,7 @@ class ProductListCreateAV(ListCreateAPIView):
     def get(self, request, *args, **kwargs):
         page = self.paginate_queryset(self.get_queryset())
         serializer = self.get_serializer(page, many=True)
+        logger.debug(serializer)
         return self.get_paginated_response(data=serializer.data)
 
     def post(self, request, *args, **kwargs):
