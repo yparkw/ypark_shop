@@ -9,6 +9,8 @@ import OrderItemCard from "./OrderItemCard";
 
 export default function OrderItems(props) {
     const [onLoading, setOnLoading] = useState(false);
+    
+
    
     const { data, isLoading, isError, refetch } = useGetOrderList(setOnLoading);
     
@@ -19,6 +21,10 @@ export default function OrderItems(props) {
     if (!isLoading && !isError && data && Array.isArray(data.data) && !data.data.length) {
         return <NoItems />;
     }
+
+    // if (isSuccess && Array.isArray(data.data.data) && !data.data.data.length) {
+    //   return <NoItems />;
+    // }
   
     if (isError) {
       return (

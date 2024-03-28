@@ -179,12 +179,20 @@ const ButtonWrapper = styled.div`
     }
   }
 
+  .button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
   .button__prev {
-    padding-right: 2rem;
+    max_width: none;
+    // padding-right: 2rem;
   }
 
   .button__next {
-    padding-left: 2rem;
+    max_width: none;
+    // padding-left: 2rem;
   }
 `;
 

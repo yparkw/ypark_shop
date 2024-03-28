@@ -66,11 +66,11 @@ class PurchaseSerializer(serializers.ModelSerializer):
             PurchaseItem.objects.create(purchase=purchase, **item_data)
             total_amount += item_data['product'].price * item_data['quantity']
         
-        buyer = self.context['request'].user
+        purchase.amount = total_amount
+        purchase.save()
         
-        logger.debug(f'target_user {buyer}')
+        buyer = self.context['request'].user
         buyer.points += Decimal(total_amount) * Decimal(0.01)
-        logger.debug(f'plus {total_amount} after {buyer.points}')
         buyer.save()
         buyer.refresh_from_db()
         
