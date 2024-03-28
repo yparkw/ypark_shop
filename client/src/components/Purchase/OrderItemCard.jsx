@@ -18,16 +18,25 @@ export default function OrderItemCard(props) {
     // 여기서 삭제 로직을 구현합니다.
   };
 
+  const handleShowDetail = () => {
+
+  };
+
   const formatPrice = (price) => {
     return new Intl.NumberFormat('ko-KR').format(price);
   }
 
   return (
     <CardContainer>
-      <ItemImage src={props.productImg} alt="productImg"/>
-      <ItemName>{props.title}</ItemName>
-      <Price>{formatPrice(props.price)}원</Price>
+      <UserInfo>
+      {/* <ItemImage src={props.productImg} alt="productImg"/> */}
+        <ItemName>이메일: {props.buyer_email}</ItemName>
+        <ItemName>연락처: {props.buyer_tel}</ItemName>
+        <ItemName>주소: {props.buyer_address}({props.buyer_postcode}) {props.buyer_detailAddress}</ItemName>
+      {/* <Price>{formatPrice(props.price)}원</Price> */}
+      </UserInfo>
       <ButtonGroup>
+        <Button onClick={handleShowDetail}>주문상세</Button>
         <Button onClick={handleshippingClick}>배송</Button>
         <Button onClick={handleDelete}>환불</Button>
       </ButtonGroup>
@@ -43,30 +52,22 @@ const CardContainer = styled.div`
   border-bottom: 1px solid #eaeaea;
 `;
 
-const ItemImage = styled.img`
-  width: 200px; // 또는 원하는 크기
-  height: 200px;
-  object-fit: cover;
-
+const UserInfo = styled.div`
+  // Styles for the user information section
+  margin-bottom: 12px; // Adjust as necessary
 `;
 
-const ItemName = styled.span`
-  flex-grow: 1;
-  text-align: center;
-  font-size: 30px; // 글자 크기를 지정합니다.
-  color: #333; // 글자 색상을 지정합니다.
-`;
-
-const Price = styled.span`
-  flex-grow: 1;
-  font-size: 30px;
-  text-align: center;
+const ItemName = styled.div`
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 4px; 
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin-top: 12px;
 `;
 
 const Button = styled.button`
