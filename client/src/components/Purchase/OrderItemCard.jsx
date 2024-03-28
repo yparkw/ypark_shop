@@ -61,10 +61,15 @@ export default function OrderItemCard(props) {
 
 const CardContainer = styled.div`
   display: flex;
+  flex-direction: column; // 기본적으로 세로 방향으로 배열합니다.
   justify-content: space-between;
   align-items: center;
   padding: 16px;
   border-bottom: 1px solid #eaeaea;
+
+  @media (min-width: 768px) {
+    flex-direction: row; // 화면 너비가 768px 이상일 때 가로 방향으로 배열합니다.
+  }
 `;
 
 const UserInfo = styled.div`
@@ -80,13 +85,21 @@ const ItemName = styled.div`
 
 const ButtonGroup = styled.div`
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
   gap: 10px;
-  margin-top: 12px;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    flex-direction: row; // 화면 너비가 768px 이상일 때 버튼을 가로로 배열합니다.
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 12px;
+    width: auto; // 데스크톱 화면에서는 버튼 그룹의 너비를 자동 조정합니다.
+  }
 `;
 
 const Button = styled.button`
-  padding: 8px 12px; // 버튼의 패딩을 지정합니다.
+  padding: 12px 20px; // 버튼의 패딩을 지정합니다.
   border: 1px solid #ddd; // 버튼의 테두리를 지정합니다.
   background-color: #f8f8f8; // 버튼의 배경색을 지정합니다.
   cursor: pointer; // 마우스 커서를 포인터로 지정합니다.

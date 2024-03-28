@@ -4,7 +4,8 @@ import { Route, Routes} from "react-router-dom";
 import styled from "styled-components";
 import ProductList from "../components/Admin/ProductList"
 import OrderList from "../components/Admin/OrderList"
-import SellList from "../components/Admin/SellList"
+import ShippingList from "../components/Admin/ShippingList"
+import ConfirmedList from "../components/Admin/ConfirmedList"
 import UserList from "../components/Admin/UserList"
 import AdminPageMenuBox  from "../components/Admin/AdminPageMenuBox";
 
@@ -19,7 +20,8 @@ export default function AdminPage() {
           <Route index element={<ProductList />} />
           <Route path='product' element={<ProductList />} />
           <Route path="order" element={<OrderList />} />
-          <Route path="sell" element={<SellList />} />
+          <Route path="ship" element={<ShippingList />} />
+          <Route path="confirmed" element={<ConfirmedList />} />
           <Route path="user" element={<UserList />} />
         </Routes>
       </ContentsWrapper>

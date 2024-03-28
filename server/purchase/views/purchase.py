@@ -29,6 +29,16 @@ class purchaseListCreateAV(ListCreateAPIView):
             return PurchaseListSZ
         elif self.request.method == 'POST':
             return PurchaseSerializer
+        
+    def get_queryset(self):
+        """
+        이 메서드는 요청된 status 값에 따라 Purchase 객체의 쿼리셋을 필터링합니다.
+        """
+        queryset = super().get_queryset()  # 원래 쿼리셋을 가져옵니다.
+        status = self.request.query_params.get('status')  # 쿼리 파라미터에서 status 값을 가져옵니다.
+        if status is not None:
+            queryset = queryset.filter(status=status)  # status 값으로 필터링합니다.
+        return queryset
 
     def get(self, request, *args, **kwargs):
         page = self.paginate_queryset(self.get_queryset())

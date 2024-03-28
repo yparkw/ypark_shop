@@ -250,7 +250,7 @@ export const adminpageMenuList = [
   },
   {
     id:3,
-    link: "/admin/transfer",
+    link: "/admin/ship",
     text: "배송중"
   },
   {
