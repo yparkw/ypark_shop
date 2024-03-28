@@ -55,9 +55,9 @@ export default function OrderItemCard(props) {
         );
       case 'shipping':
         return <Button onClick={handlePurchaseConfirmClick}>구매 확정</Button>;
-      case 'purchaseConfirmed':
+      case 'cofirmed':
         // 구매 확정 상태에서는 특별한 버튼을 보여줄 필요가 없을 수 있습니다.
-        return null;
+        return <Button onClick={handleShowDetail}>주문상세</Button>;
       default:
         // 기본적으로 상세보기 버튼만 보여줍니다.
         return <Button onClick={handleShowDetail}>주문상세</Button>;

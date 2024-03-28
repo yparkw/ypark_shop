@@ -9,9 +9,6 @@ import OrderItemCard from "./OrderItemCard";
 
 export default function ShippingItems(props) {
     const [onLoading, setOnLoading] = useState(false);
-    
-
-   
     const { data, isLoading, isError, refetch } = useGetOrderList("shipping", setOnLoading);
     
     if (!isLoading && !isError && data && Array.isArray(data.data) && !data.data.length) {
