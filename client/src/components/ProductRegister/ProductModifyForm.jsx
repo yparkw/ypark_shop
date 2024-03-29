@@ -29,7 +29,7 @@ export default function ProductModifyForm({ productToEdit }) {
     const {name, value} = e.target;
     const newValue = (name === 'price') ? Number(value) : value;
     setInputs({
-      ...inputs, 
+      ...inputs,
       [name]: newValue
     });
   };
