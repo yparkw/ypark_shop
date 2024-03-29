@@ -32,7 +32,7 @@ export default function PurchaseForm({ orderInfo, userInfo }) {
 
     const numericTotalAmount = orderInfo.reduce((total, item) => total + calculateTotalPrice(item), 0);
     const paymentData = {
-      pg: 'html5_inicis',
+      pg: 'html5_inicis.MOI6429104',
       paymentMethod: 'card', // default payment method
       merchant_uid : orderDetails.merchant_uid,
       name: '주문명:결제테스트',
