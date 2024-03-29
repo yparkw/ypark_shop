@@ -8,7 +8,7 @@ export default function useProductUpdater() {
       // thumbImage.forEach((image, index) => {
       //   imageFormData.append(`thumb_images[${index}]`, image);
       // });
-      console.log('productInfo', productInfo)
+      console.log('productInfo', productInfo, thumbImage);
       
 
       imageFormData.append('image', thumbImage[0]);

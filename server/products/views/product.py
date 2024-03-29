@@ -20,6 +20,9 @@ from products.serializers.product import ProductImageUploadSerializer
 from products.serializers.product import ProductResponseSZ
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 import logging
 logger = logging.getLogger(__name__)
@@ -72,7 +75,7 @@ class ProductListCreateAV(ListCreateAPIView):
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             return Response(serializer.data, status= status.HTTP_200_OK, headers=headers)
-        logger.error(f"Serializer errors: {serializer.errors}")    
+        logger.error(f"Serializer errors: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         
@@ -83,6 +86,7 @@ class ProductImageUploadAV(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request, *args, **kwargs):
+        logger.debug(f"request: ", request)
         serializer = ProductImageUploadSerializer(data=request.data)
         if serializer.is_valid():
             data = serializer.save()  # 이미지 저장 및 URL 반환
@@ -124,3 +128,16 @@ class ProductRetrieveUpdateDestroyAV(RetrieveUpdateDestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+    
+
+class ProductDeleteView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def delete(self, request, pk):
+        try:
+            item = Product.objects.get(pk=pk)
+            item.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Product.DoesNotExist:
+            return Response({'error': 'CartItem not found'}, status=status.HTTP_404_NOT_FOUND)

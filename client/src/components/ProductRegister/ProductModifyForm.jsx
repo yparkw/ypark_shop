@@ -1,29 +1,28 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import useProductRegister from "../../hooks/useProductRegister";
+import useProductUpdater from "../../hooks/useProductUpdater";
 import Button from "../Commons/Button";
 import ImageSelector from "./ImageSelector";
 import InputSelect from "./InputSelect";
 import InputText from "./InputText";
 
 
-export default function ProductRegisterForm() {
+export default function ProductModifyForm({ productToEdit }) {
   const location = useLocation();
-  const { product, mode } = location.state || {};
 
-
-  
   const [inputs, setInputs] = useState({
-    name: "",
-    price: 0,
-    category: "",
-    sizes: { 'S': 0, 'M': 0, 'L': 0, 'XL': 0, 'FREE': 0 },
+    name: productToEdit.name || "",
+    price: productToEdit.price || 0,
+    category: productToEdit.category || "",
+    sizes: productToEdit.sizes || { 'S': 0, 'M': 0, 'L': 0, 'XL': 0, 'FREE': 0 },
   });
   const [thumbImage, setThumbImage] = useState(null);
   const [isValid, setIsValid] = useState(false);
 
+  console.log("PTE", productToEdit)
 
 
   const inputChangeHandler = (e) => {
@@ -34,7 +33,6 @@ export default function ProductRegisterForm() {
       [name]: newValue
     });
   };
-
 
   const handleSizeQuantityChange = (size, value) => {
     const count = value === '' ? 0 : Number(value);
@@ -47,10 +45,8 @@ export default function ProductRegisterForm() {
     }));
   };
 
-
-  const {postProduct} = useProductRegister();
+  const {updateProduct} = useProductUpdater();
   
-
   useEffect(() => {
     let valid = true;
     for (let i in inputs) {
@@ -67,7 +63,6 @@ export default function ProductRegisterForm() {
 
   const navigate = useNavigate();
 
-
   const postRegisterHandler = async(e) => {
     e.preventDefault();
     const sizesArray = Object.entries(inputs.sizes).map(([sizeKey, count]) => {
@@ -79,13 +74,13 @@ export default function ProductRegisterForm() {
       sizes: sizesArray
     };
 
-    console.log('Sending:', product);
+    console.log('Sending:', requestData, thumbImage);
     if (isValid) {
-      const result = await postProduct(requestData, thumbImage);
-      console.log('Result:', result);
+        const result = await updateProduct(productToEdit.id, requestData, thumbImage)
+        console.log('Result:', result);
       if (result) {
         console.log('register success');
-        navigate('/shop');
+        navigate('/admin/product');
       } else {
         console.log('register failed');
       }
@@ -181,7 +176,7 @@ export default function ProductRegisterForm() {
       </InputWrapper>
       <SubmitButtonWrapper>
         <Button disable={isValid} onClick={postRegisterHandler}>
-          Register
+          수정
         </Button>
       </SubmitButtonWrapper>
     </Container>

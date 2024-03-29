@@ -10,11 +10,7 @@ export default memo(function ImageSelector(props) {
 
     const selectedImage = files;
     props.changeHandler(selectedImage); // 상위 컴포넌트로 선택된 이미지 전달
-    
   };
-
-  console.log('imageselector_prop', props)
-
   return (
     <Container>
       <span>{props.label}</span>

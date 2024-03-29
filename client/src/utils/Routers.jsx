@@ -1,15 +1,16 @@
 /* eslint-disable react/react-in-jsx-scope */
+import AdminPage from "../pages/AdminPage";
 import CartPage from "../pages/CartPage";
 import LoginPage from "../pages/LoginPage";
 import MainPage from "../pages/MainPage";
 import MyPage from "../pages/MyPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
+import ProductModifyPage from "../pages/ProductModifyPage";
 import ProductRegisterPage from "../pages/ProductRegisterPage";
 import PurchasePage from "../pages/PurchasePage";
 import ShopPage from "../pages/ShopPage";
 import SignUpPage from "../pages/SignUpPage";
-import AdminPage from "../pages/AdminPage";
 
 export const routerList = [
   {
@@ -78,4 +79,10 @@ export const routerList = [
     isPrivate: true,
     element: <AdminPage/>,
   },
+  {
+    id: 12,
+    path: "/product-modify/:id",
+    isPrivate: true,
+    element: <ProductModifyPage/>
+  }
 ];
