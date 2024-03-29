@@ -40,7 +40,7 @@ function AdminItems(props) {
     return <Container>
         <StyledLink to="/product-register">상품등록</StyledLink>
       </Container>
-  };
+  }
 
   if (isError) {
     return (
