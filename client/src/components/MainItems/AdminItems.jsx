@@ -37,8 +37,10 @@ function AdminItems(props) {
   }
   
   if (isSuccess && Array.isArray(data.data) && !data.data.length) {
-    return <NoItems />;
-  }
+    return <Container>
+        <StyledLink to="/product-register">상품등록</StyledLink>
+      </Container>
+  };
 
   if (isError) {
     return (
