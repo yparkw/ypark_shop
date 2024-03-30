@@ -9,6 +9,8 @@ export default function AgreementsForm(props) {
         personalInfoAgreed: false,
     })
 
+
+
     const handleAgreementChange = (event) => {
         const { name, checked } = event.target;
         setAgreements((prevAgreements) => ({
@@ -16,6 +18,16 @@ export default function AgreementsForm(props) {
             [name]: checked,
         }));
     };
+
+    const handleDeagreementChange = (event) => {
+        const { name, checked } = event.target;
+        setAgreements((prevAgreements) => ({
+            ...prevAgreements,
+            [name]: checked,
+        }));
+    };
+
+    console.log('agreements', setAgreements);
 
     const handleAllAgreementChange = (event) => {
         const { checked } = event.target;
@@ -52,6 +64,15 @@ export default function AgreementsForm(props) {
                         onChange={handleAgreementChange}
                 />
                 <label htmlFor="agree_terms">[필수] 이용약관 동의</label>
+                <input
+                        type="checkbox"
+                        id="agree_terms"
+                        name="termsAgreed"
+                        required
+                        checked={agreements.termsAgreed}
+                        onChange={handleDeagreementChange}
+                />
+                <label htmlFor="agree_terms">동의하지 않음</label>
             </div>
             <div id="terms_content" className="content-scroll"> 
 이용약관
@@ -317,6 +338,15 @@ export default function AgreementsForm(props) {
                     onChange={handleAgreementChange}
                 />
                 <label htmlFor="agree_check_used">[필수] 개인정보 이용 수집 방침</label>
+                <input
+                        type="checkbox"
+                        id="agree_terms"
+                        name="termsAgreed"
+                        required
+                        checked={agreements.termsAgreed}
+                        onChange={handleDeagreementChange}
+                />
+                <label htmlFor="agree_terms">동의하지 않음</label>
             </div>
             <div id="privacy_content" className="content-scroll">
             개인정보처리방침

@@ -94,7 +94,7 @@ const ItemCardImg = styled.div`
   align-items: flex-end;
   border-radius: 10px;
   width: 100%;
-  max-height: 290px;
+  max-height: 360px;
   overflow: hidden;
   background-color: #ebf0f5;
 
