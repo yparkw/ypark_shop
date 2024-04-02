@@ -46,7 +46,7 @@ def update_to_shipping(request, purchase_id):
     except Purchase.DoesNotExist:
         return JsonResponse({'status': 'error', 'message': 'Purchase not found.'})   
 
-@api_view(['POST'])
+@api_view(['DELETE'])
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
 def reject_order(request, purchase_id):

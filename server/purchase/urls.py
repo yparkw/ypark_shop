@@ -9,9 +9,8 @@ app_name = 'purchase'
 
 urlpatterns = [
     path('', purchaseListCreateAV.as_view(), name = 'purchase_list_create'),
-    path('list/<int:pk>/', purchase_my_list, name='purchase_my_list'),
-    path('verify_purchase', verify_purchase, name='verify_purchase'),
-    path('<int:pk>/', update_purchase_status, name='purchase_patch'),
-    path('detail/<int:pk>', purchase_detail, name = "purchase_detail"),
-    path('reject/<int:pk>', reject_order, name='refund'),
+    path('<int:pk>/all-detail/', purchase_detail, name = "purchase_detail"),
+    path('<int:pk>/my-list/', purchase_my_list, name='purchase_my_list'),
+    path('<int:pk>/status/', update_purchase_status, name='purchase_patch'),
+    path('<int:pk>/reject/', reject_order, name='refund'),
 ]
