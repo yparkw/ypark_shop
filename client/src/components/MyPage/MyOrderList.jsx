@@ -36,6 +36,8 @@ export default function MyOrderList() {
     );
   }
 
+  console.log('myOrderList', data);
+
   return (
     <Container>
       <FormHeader>

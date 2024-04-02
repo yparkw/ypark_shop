@@ -1,5 +1,6 @@
 import requests
 from django.http import JsonResponse
+from django.db.models import Q
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
@@ -79,11 +80,15 @@ def purchase_my_list(request, pk):
     
     # 사용자 ID와 선택적 상태를 기반으로 구매 목록 필터링
     if status=="ordered":
-        purchases = Purchase.objects.filter(buyer_email=email, status=status)
+        purchases = Purchase.objects.filter(
+            Q(buyer_email=email) & 
+            (Q(status=status) | Q(status="shipping")))    
     else:
         purchases = Purchase.objects.filter(buyer_email=email, status="cofirmd")
     
+    
     serializer = PurchaseListSZ(purchases, many=True)
+    logger.debug(f'orderedItem, {serializer.data}')
     return Response(serializer.data)
    
 @api_view(['POST'])  # API 뷰로 지정

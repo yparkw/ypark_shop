@@ -11,7 +11,7 @@ export default function MyPaymentList() {
   const [onLoading, setOnLoading] = useState(false);
   const userInfo = useSelector((state) => state.user);
 
-  const { data, isLoading, isError, refetch } = useGetMyOrder(userInfo.id, "cofirmed", setOnLoading);
+  const { data, isLoading, isError, refetch } = useGetMyOrder(userInfo.id, userInfo.email, "cofirmed", setOnLoading);
 
   if (!isLoading && !isError && data && Array.isArray(data.data) && !data.data.length) {
     return <NoItems />;
