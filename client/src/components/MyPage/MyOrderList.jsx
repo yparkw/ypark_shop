@@ -1,17 +1,19 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, {useState} from "react";
-import useGetOrderList from "../../hooks/useGetOrderList";
+import useGetMyOrder from "../../hooks/useGetMyOrder";
 // import Loading from "../Commons/Loading";
 import styled from "styled-components";
 import OrderItem from "./OrderItem";
 import NoItems from "../Commons/NoItems";
 import ErrorPage from "../Commons/ErrorPage";
+import { useSelector } from "react-redux";
 
 export default function MyOrderList() {
   const [onLoading, setOnLoading] = useState(false);
-   
-  const { data, isLoading, isError, refetch } = useGetOrderList(setOnLoading);
+  const userInfo = useSelector((state) => state.user);
+
+  const { data, isLoading, isError, refetch } = useGetMyOrder(userInfo.id, userInfo.email, "ordered", setOnLoading);
 
   if (!isLoading && !isError && data && Array.isArray(data.data) && !data.data.length) {
     return <NoItems />;

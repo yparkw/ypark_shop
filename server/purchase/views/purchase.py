@@ -69,7 +69,23 @@ class purchaseListCreateAV(ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save()
         return super().perform_create(serializer)
+
+@api_view(['GET'])
+@authentication_classes([JWTAuthentication])  # JWT 인증 사용
+@permission_classes([IsAuthenticated])     
+def purchase_my_list(request, pk):
+    status = request.query_params.get('status', None)
+    email = request.query_params.get('email', None)
     
+    # 사용자 ID와 선택적 상태를 기반으로 구매 목록 필터링
+    if status:
+        purchases = Purchase.objects.filter(buyer_email=email, status=status)
+    else:
+        purchases = Purchase.objects.filter(buyer_id=pk)
+    
+    serializer = PurchaseListSZ(purchases, many=True)
+    return Response(serializer.data)
+   
 @api_view(['POST'])  # API 뷰로 지정
 @authentication_classes([JWTAuthentication])  # JWT 인증 사용
 @permission_classes([IsAuthenticated])  # 인증된 사용자만 접근 가능
@@ -125,3 +141,4 @@ def purchase_detail(request, pk):
         return Response(serializer.data)
     except Purchase.DoesNotExist:
         return Response({'error': 'Purchase not found'}, status=404)
+
