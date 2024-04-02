@@ -1,7 +1,7 @@
 import { productImageRegisterFn, productUpdateFn } from "../api";
 
 export default function useProductUpdater() {
-  const updateProduct = async (productInfo, thumbImage) => {
+  const updateProduct = async (id, productInfo, thumbImage) => {
     try {
       // 이미지 업로드 로직
       const imageFormData = new FormData();
@@ -9,7 +9,7 @@ export default function useProductUpdater() {
       //   imageFormData.append(`thumb_images[${index}]`, image);
       // });
       console.log('productInfo', productInfo, thumbImage);
-      
+      console.log('thumbImage', thumbImage)
 
       imageFormData.append('image', thumbImage[0]);
       console.log('image', imageFormData.get('image'))
@@ -22,6 +22,7 @@ export default function useProductUpdater() {
         const fullImageUrl = imageUploadResponse.data.url;
         const updatedProductInfo = {
           ...productInfo,
+          id: id,
           image_url: fullImageUrl,
         };
 

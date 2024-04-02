@@ -116,12 +116,18 @@ class ProductUpdateRequestSZ(serializers.ModelSerializer):
         instance = super().update(instance, validated_data)
 
         if sizes_data is not None:
-            # 기존 사이즈 정보를 삭제하고 새로운 데이터로 업데이트
-            instance.sizes.all().delete()
+            existing_sizes= {size.size: size for size in instance.sizes.all()}
             for size_data in sizes_data:
                 size_value = size_data['size']
-                size, _ = Size.objects.get_or_create(size=size_value)
-                ProductSize.objects.create(product=instance, size=size, count=size_data['count'])
+                count_value = size_data['count']
+                if size_value in existing_sizes:
+                    product_size = ProductSize.objects.get(product=instance, size=existing_sizes[size_value])
+                    product_size.count = count_value
+                    product_size.save()
+                else:
+                    # 새로운 사이즈는 생성
+                    size, _ = Size.objects.get_or_create(size=size_value)
+                    ProductSize.objects.create(product=instance, size=size, count=count_value)
 
         return instance
     

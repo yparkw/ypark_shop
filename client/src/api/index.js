@@ -36,7 +36,7 @@ export const productRegisterFn = async (formData) => {
 
 export const productUpdateFn = async (formData) => {
   const token = Cookie.get("access");
-  const res = await axiosInstance.patch(`/api/products/${formData.id}`, formData, {
+  const res = await axiosInstance.patch(`/api/products/${formData.id}/`, formData, {
     headers: {
       Authorization: `Bearer ${token}`, // 토큰 헤더에 추가
     }

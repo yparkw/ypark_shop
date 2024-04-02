@@ -83,7 +83,7 @@ class ProductListCreateAV(ListCreateAPIView):
 class ProductImageUploadAV(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     def post(self, request, *args, **kwargs):
         logger.debug(f"request: ", request)

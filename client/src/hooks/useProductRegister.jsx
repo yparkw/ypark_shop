@@ -8,7 +8,7 @@ export default function useProductRegister() {
       // thumbImage.forEach((image, index) => {
       //   imageFormData.append(`thumb_images[${index}]`, image);
       // });
-      console.log('productInfo', productInfo)
+      console.log('thumbImage', thumbImage)
       
 
       imageFormData.append('image', thumbImage[0]);
