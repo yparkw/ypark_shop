@@ -52,6 +52,7 @@ THIRD_PARTY_APPS = [
     # 'django_celery_results',
     'corsheaders',
     'django_prometheus',
+    'django_extensions',
 ]
 
 LOCAL_APPS = [

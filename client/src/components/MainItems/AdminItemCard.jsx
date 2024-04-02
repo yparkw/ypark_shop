@@ -18,7 +18,7 @@ function AdminItemCard(props) {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    productDelete.mutate();
+    productDelete.mutate(props.id);
     location.reload();
   };
 

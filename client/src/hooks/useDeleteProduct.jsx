@@ -4,7 +4,7 @@ import { axiosInstance } from "../api/axiosInstance";
 
 const deleteProductItem= async (id) => {
   const token = Cookies.get("access");
-  const res = await axiosInstance.delete(`/api/products/delete/${id}/`, {
+  const res = await axiosInstance.delete(`/api/products/${id}/`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -14,6 +14,7 @@ const deleteProductItem= async (id) => {
 
 export default function useDeleteProduct(id, setFunction) {
   const queryClient = useQueryClient();
+  console.log("useDeleteProduct am");
   const { mutate, isLoading, isSuccess } = useMutation(
     () => deleteProductItem(id),
     {

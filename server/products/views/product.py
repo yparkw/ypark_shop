@@ -23,6 +23,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.exceptions import NotFound
 
 import logging
 logger = logging.getLogger(__name__)
@@ -127,17 +128,25 @@ class ProductRetrieveUpdateDestroyAV(RetrieveUpdateDestroyAPIView):
         return self.partial_update(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+        try:
+            # `super().destroy(request, *args, **kwargs)`를 호출하여 기본 삭제 로직을 실행합니다.
+            # 이 로직은 내부적으로 `get_object()`를 사용하여 인스턴스를 가져오고,
+            # 해당 인스턴스가 없을 경우 `NotFound` 예외를 발생시킵니다.
+            return super().destroy(request, *args, **kwargs)
+        except NotFound:
+            # `Product.DoesNotExist` 대신 `NotFound` 예외를 사용합니다.
+            # DRF는 `get_object()` 호출 시 `Product.DoesNotExist`를 `NotFound`로 변환합니다.
+            return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
     
 
-class ProductDeleteView(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+# class ProductDeleteView(APIView):
+#     authentication_classes = [JWTAuthentication]
+#     permission_classes = [IsAuthenticated]
     
-    def delete(self, request, pk):
-        try:
-            item = Product.objects.get(pk=pk)
-            item.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except Product.DoesNotExist:
-            return Response({'error': 'CartItem not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def delete(self, request, pk):
+#         try:
+#             item = Product.objects.get(pk=pk)
+#             item.delete()
+#             return Response(status=status.HTTP_204_NO_CONTENT)
+#         except Product.DoesNotExist:
+#             return Response({'error': 'CartItem not found'}, status=status.HTTP_404_NOT_FOUND)

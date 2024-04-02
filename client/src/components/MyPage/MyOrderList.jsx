@@ -19,14 +19,6 @@ export default function MyOrderList() {
     return <NoItems />;
   }
 
-  // if (getOrderList.isLoading) {
-  //   return <Loading />;
-  // }
-
-  // if (!getOrderList.data) {
-  //   return <NoItems shopLink={true} />;
-  // }
-
   if (isError) {
     return (
       <ErrorPage
