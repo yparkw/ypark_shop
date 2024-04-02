@@ -78,10 +78,10 @@ def purchase_my_list(request, pk):
     email = request.query_params.get('email', None)
     
     # 사용자 ID와 선택적 상태를 기반으로 구매 목록 필터링
-    if status:
+    if status=="ordered":
         purchases = Purchase.objects.filter(buyer_email=email, status=status)
     else:
-        purchases = Purchase.objects.filter(buyer_id=pk)
+        purchases = Purchase.objects.filter(buyer_email=email, status="cofirmd")
     
     serializer = PurchaseListSZ(purchases, many=True)
     return Response(serializer.data)
