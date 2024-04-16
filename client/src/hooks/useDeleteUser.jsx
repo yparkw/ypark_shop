@@ -4,7 +4,7 @@ import { axiosInstance } from "../api/axiosInstance";
 
 const deleteUser = async (id) => {
   const token = Cookies.get("access");
-  const res = await axiosInstance.delete(`/api/user/update/${id}`, {
+  const res = await axiosInstance.delete(`/api/user/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -24,6 +24,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.exceptions import NotFound
+from drf_yasg.utils import swagger_auto_schema
 
 import logging
 logger = logging.getLogger(__name__)
@@ -86,6 +87,11 @@ class ProductImageUploadAV(APIView):
     permission_classes = [IsAuthenticated]
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
+    @swagger_auto_schema(
+            operation_summary="이미지 업로드",
+            operation_description="이 엔드포인트는 상품 이미지를 업로드하기 위해 사용됩니다.",
+            responses={200: "이미지 업로드 성공"}
+        )
     def post(self, request, *args, **kwargs):
         logger.debug(f"request: ", request)
         serializer = ProductImageUploadSerializer(data=request.data)

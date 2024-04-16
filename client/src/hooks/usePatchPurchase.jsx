@@ -10,7 +10,7 @@ export const usePatchPurchase = () => {
         const token = Cookies.get("access");
         setIsLoading(true);
         try {
-            const res = await axiosInstance.post(`/api/purchase/${purchaseId}/`, { status: newStatus }, {
+            const res = await axiosInstance.patch(`/api/purchase/${purchaseId}/status/`, { status: newStatus }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
