@@ -3,24 +3,22 @@ from .base import *
 Debug = False
 
 ALLOWED_HOSTS = ['api.ipify.org', 'www.shadowserver.org', 'ip-api.com', 'google.com',
-                 'http://192.168.30.15/','34.125.116.9', 'yparkw.com', 'www.yparkw.com', 'api64.ipify.org']
+                 'http://iseul.org/','34.125.116.9', 'iseul.org', 'www.iseul.org', 'api64.ipify.org']
 
 STATIC_ROOT = '/app/static/'
 STATICFILES_DIRS = []
 
 # MEDIA_URL = 'https://www.yparkw.com/media/'
-MEDIA_URL = 'http://192.168.30.15/media/'
+MEDIA_URL = 'http://iseul.org/media/'
 MEDIA_ROOT = '/app/media/'
 
 
 CORS_ALLOW_ALL_ORIGINS = False # 개발용, 실제 배포시 보안을 위해 수정 필요
 CORS_ALLOWED_ORIGINS = [
-    "http://www.yparkw.com",
-    "http://yparkw.com",
-    "https://yparkw.com",
-    "https://www.yparkw.com",    # 실제 배포된 React 앱의 도메인
-    "http://192.168.30.15:3000"
-    "https://192.168.30.15:3000"
+    "http://www.iseul.org",
+    "https://www.iseul.org",
+    "http://iseul.org",
+    "https://iseul.org",
     "http://34.125.116.9:3000",
     "https://34.125.116.9:3000",
 ]
