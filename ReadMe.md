@@ -20,6 +20,7 @@
 
 
 ## Must
+0. docker compose 빌드 시간 줄이기
 1. cerbot을 활용하여 HTTPS 강화하기
 2. Docker-compose를 활용하여 로컬에서 PostgreSQL 사용하기 
 3. 이미지 스토리지 분리하기
