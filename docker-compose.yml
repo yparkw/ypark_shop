@@ -32,7 +32,7 @@ services:
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./client/build:/usr/share/nginx/html
-    entrypoint: "/bin/sh -c 'certbot certonly --webroot --webroot-path=/var/www/certbot --email ehgus.dev.8621@gmail.com --agree-tos --no-eff-email -d iseul.org -d www.iseul.org && sleep 12h'"
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     restart: unless-stopped
 
   client:
