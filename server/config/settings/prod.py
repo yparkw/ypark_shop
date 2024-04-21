@@ -3,7 +3,7 @@ from .base import *
 Debug = False
 
 ALLOWED_HOSTS = ['api.ipify.org', 'www.shadowserver.org', 'ip-api.com', 'google.com',
-                 'http://iseul.org/','34.125.116.9', 'iseul.org', 'www.iseul.org', 'api64.ipify.org']
+                 'http://iseul.org/','34.64.42.175', 'iseul.org', 'www.iseul.org', 'api64.ipify.org']
 
 STATIC_ROOT = '/app/static/'
 STATICFILES_DIRS = []
@@ -19,8 +19,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.iseul.org",
     "http://iseul.org",
     "https://iseul.org",
-    "http://34.125.116.9:3000",
-    "https://34.125.116.9:3000",
+    "http://34.64.42.175:3000",
+    "https://34.64.42.175:3000",
 ]
 CORS_ALLOW_CREDENTIALS = True # 쿠키와 함꼐 요청을 보낼 수있도록
 
