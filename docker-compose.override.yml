@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    environment:
+      POSTGRES_DB: dev_db
+
+  server:
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.local
+
+  client:
+    ports:
+      - "3000:80"
+      - "3443:443"
+    volumes:
+      - ./client/src:/app/src
+
+  certbot:
+    command: ""

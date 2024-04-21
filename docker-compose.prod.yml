@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  db:
+    environment:
+      POSTGRES_DB: prod_db
+
+  server:
+    ports:
+      - "80:8000"
+
+  client:
+    ports:
+      - "80:80"
+      - "443:443"
