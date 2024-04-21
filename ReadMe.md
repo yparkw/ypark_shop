@@ -20,8 +20,10 @@
 
 
 ## Must
-0. docker compose 빌드 시간 줄이기
-1. cerbot을 활용하여 HTTPS 강화하기
+0. docker compose 빌드 시간 줄이기 (해결)
+      - 메모리 문제였음
+1. certbot을 활용하여 HTTPS 강화하기(해결)
+      - docker-compose.yml: 볼륨 마운트 문제 + 인증서 발급 최적화 문제
 2. Docker-compose를 활용하여 로컬에서 PostgreSQL 사용하기 
 3. 이미지 스토리지 분리하기
 4. 테스트 코드 작성을 통한 유닛 테스트
