@@ -3,13 +3,21 @@ version: '3.8'
 services:
   db:
     environment:
-      POSTGRES_DB: prod_db
+      POSTGRES_DB: prod_yparkw
+      POSTGRES_USER: prod_admin
+      POSTGRES_PASSWORD: prod_qkr102998!!
 
   server:
-    ports:
-      - "80:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.prod
 
   client:
     ports:
       - "80:80"
       - "443:443"
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  certbot:
+    volumes:
+      - ./certbot/conf/letsencrypt:/etc/letsencrypt
+      - ./client/build:/usr/share/nginx/html
