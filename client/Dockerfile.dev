@@ -21,7 +21,6 @@ COPY nginx/dev/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/dev/localhost.crt /etc/nginx/localhost.crt
 COPY nginx/dev/localhost.key /etc/nginx/localhost.key
 
-EXPOSE 443
 EXPOSE 80
 
 
