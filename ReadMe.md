@@ -24,7 +24,7 @@
       issue: 메모리 문제였음
 1. certbot을 활용하여 HTTPS 강화하기(해결)
       issue: docker-compose.yml: 볼륨 마운트 문제 + 인증서 발급 최적화 문제
-2. Docker-compose를 활용하여 로컬에서 PostgreSQL 사용하기 
+2. Docker-compose를 활용하여 로컬에서 PostgreSQL 사용하기
       - docker-compose.yml 과 nginx.conf 개발환경 배포환경 분리하기
 3. github actions를 활용한 테스트 자동화 및 배포 자동화
 4. 이미지 스토리지 분리하기

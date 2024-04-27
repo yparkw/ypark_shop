@@ -1,15 +1,7 @@
 version: '3.8'
 
 services:
-  db:
-    environment:
-      POSTGRES_DB: dev_db
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password_dev
-
   server:
-    ports:
-      - "8000:8000"  # 개발 환경에서는 8080 포트 사용을 추천
     environment:
       - DJANGO_SETTINGS_MODULE=config.settings.local
 
@@ -17,6 +9,3 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile.dev
-    ports:
-      - "80:80"  # 개발 환경에서 다른 포트 사용
-      - "443:443"  # SSL 포트도 변경
