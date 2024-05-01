@@ -8,7 +8,7 @@ import { axiosInstance } from "../api/axiosInstance";
 const getOrders = async (id, email, status) => {
     const token = Cookies.get("access");
     try {
-      const url = status ? `/api/purchase/list/${id}/?status=${status}&email=${email}` : `/api/purchase/list/${id}/?email=${email}`;
+      const url = status ? `/api/purchase/${id}/my-list/?status=${status}&email=${email}` : `/api/purchase/list/${id}/my-list/?email=${email}`;
       const res = await axiosInstance.get(url, {
         headers: {
           Authorization: `Bearer ${token}`,

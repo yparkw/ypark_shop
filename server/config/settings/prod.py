@@ -3,32 +3,33 @@ from .base import *
 Debug = False
 
 ALLOWED_HOSTS = ['api.ipify.org', 'www.shadowserver.org', 'ip-api.com', 'google.com',
-                 '211.45.167.63', 'yparkw.com', 'www.yparkw.com', 'api64.ipify.org']
+                 'http://iseul.org/','34.64.42.175', 'iseul.org', 'www.iseul.org', 'api64.ipify.org']
 
 STATIC_ROOT = '/app/static/'
 STATICFILES_DIRS = []
 
-MEDIA_URL = 'https://www.yparkw.com/media/'
+# MEDIA_URL = 'https://www.yparkw.com/media/'
+MEDIA_URL = 'http://iseul.org/media/'
 MEDIA_ROOT = '/app/media/'
 
 
 CORS_ALLOW_ALL_ORIGINS = False # 개발용, 실제 배포시 보안을 위해 수정 필요
 CORS_ALLOWED_ORIGINS = [
-    "http://www.yparkw.com",
-    "http://yparkw.com",
-    "https://yparkw.com",
-    "https://www.yparkw.com",    # 실제 배포된 React 앱의 도메인
-    "http://211.45.167.63:3000",
-    "https://211.45.167.63:3000",
+    "http://www.iseul.org",
+    "https://www.iseul.org",
+    "http://iseul.org",
+    "https://iseul.org",
+    "http://34.64.42.175:3000",
+    "https://34.64.42.175:3000",
 ]
 CORS_ALLOW_CREDENTIALS = True # 쿠키와 함꼐 요청을 보낼 수있도록
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'yparkw',
+        'NAME': 'iseul',
         'USER': 'admin',
-        'PASSWORD': 'qkr102998!!',
+        'PASSWORD': '!l1185216',
         'HOST': 'db',  # 혹은 도커 서비스 이름
         'PORT': 5432,
     }

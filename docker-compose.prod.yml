@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  server:
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.prod
+    command: >
+      sh -c "python manage.py makemigrations --settings=config.settings.prod &&
+             python manage.py migrate --settings=config.settings.prod &&
+             gunicorn config.wsgi:application --bind 0.0.0.0:8000 --timeout 120 --workers 6"
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+        - ./certbot/conf/letsencrypt:/etc/letsencrypt
+        - ./certbot/www:/var/www/certbot
+        - ./server/media:/app/media
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf/letsencrypt:/etc/letsencrypt
+      - ./client/build:/usr/share/nginx/html
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    depends_on:
+      - client

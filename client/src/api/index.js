@@ -13,7 +13,7 @@ export const authorizeToken = async () => {
 
 export const productImageRegisterFn = async (formData) => {
   const token = Cookie.get("access"); // 토큰 가져오기
-  const res = axiosInstance.post("/api/products/upload/", formData,{
+  const res = axiosInstance.post("/api/products/images/", formData,{
     headers: {
       Authorization: `Bearer ${token}`, // 토큰 헤더에 추가
       "Content-type" : "multipart/form-data"
@@ -87,7 +87,7 @@ export const patchUserInfo = async (body, id) => {
 
 export const getUserData = async (id) => {
   const token = Cookie.get("access");
-  const res = await axiosInstance.get(`/api/user/detail/${id}/`, {
+  const res = await axiosInstance.get(`/api/detail/${id}/`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

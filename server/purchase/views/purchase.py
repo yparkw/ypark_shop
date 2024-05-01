@@ -48,24 +48,29 @@ class purchaseListCreateAV(ListCreateAPIView):
         return self.get_paginated_response(data=serializer.data)
 
     def post(self, request, *args, **kwargs):
-        imp_uid= request.data.get('imp_uid')
-        logger.info(f"Received data: {request.data}")
+        imp_uid = request.data.get('imp_uid')
+        merchant_uid = request.data.get('merchant_uid')
+        access = get_token()
         
-        if imp_uid:
-            access_token = get_token()  # get_token 함수로 IAMPORT 접근 토큰을 가져와야 합니다.
-            verification_result = verify_iamport_payment(imp_uid, access_token)
-
-            if verification_result['code'] != 0:
-                return Response({'status': 'error', 'message': 'Payment verification failed.'}, status=status.HTTP_400_BAD_REQUEST)
-        serializer = self.get_serializer(data=request.data)
-        print(request.data)
-        # Product에 이미지가 있따면 post로 받아야하고 내용은 form형식이여야 한다.)
-        if serializer.is_valid():
-            self.perform_create(serializer)
-            headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status= status.HTTP_200_OK, headers=headers)
-        logger.error(f"Serializer errors: {serializer.errors}")    
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        # 아임포트 서버로부터 결제 정보 검증
+        url = 'https://api.iamport.kr/payments/' + imp_uid
+        headers = {'Authorization': 'Bearer ' + access} # 여기서 'YOUR_ACCESS_TOKEN'은 아임포트에서 발급받은 액세스 토큰입니다.
+        response = requests.get(url, headers=headers)
+        result = response.json()
+        
+        # 결제 검증 로직...
+        # 결제 검증 후 구매 정보 저장
+        if result['code'] == 0:  # 결제 검증 성공
+            serializer = PurchaseSerializer(data= request.data, context={'request':request})
+            
+            if serializer.is_valid():
+                serializer.save()
+                return JsonResponse({'status': 'success', 'data': 'Purchase completed successfully.'})
+            else:
+                return JsonResponse({'status': 'error', 'message': 'Payment verification failed.'})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Payment failed'})
     
     def perform_create(self, serializer):
         serializer.save()
@@ -91,35 +96,35 @@ def purchase_my_list(request, pk):
     logger.debug(f'orderedItem, {serializer.data}')
     return Response(serializer.data)
    
-@api_view(['POST'])  # API 뷰로 지정
-@authentication_classes([JWTAuthentication])  # JWT 인증 사용
-@permission_classes([IsAuthenticated])  # 인증된 사용자만 접근 가능
-def verify_purchase(request):
-    imp_uid = request.data.get('imp_uid')
-    merchant_uid = request.data.get('merchant_uid')
-    access = get_token()
+# @api_view(['POST'])  # API 뷰로 지정
+# @authentication_classes([JWTAuthentication])  # JWT 인증 사용
+# @permission_classes([IsAuthenticated])  # 인증된 사용자만 접근 가능
+# def verify_purchase(request):
+#     imp_uid = request.data.get('imp_uid')
+#     merchant_uid = request.data.get('merchant_uid')
+#     access = get_token()
     
     
-    # 아임포트 서버로부터 결제 정보 검증
-    url = 'https://api.iamport.kr/payments/' + imp_uid
-    headers = {'Authorization': 'Bearer ' + access} # 여기서 'YOUR_ACCESS_TOKEN'은 아임포트에서 발급받은 액세스 토큰입니다.
-    response = requests.get(url, headers=headers)
-    result = response.json()
+#     # 아임포트 서버로부터 결제 정보 검증
+#     url = 'https://api.iamport.kr/payments/' + imp_uid
+#     headers = {'Authorization': 'Bearer ' + access} # 여기서 'YOUR_ACCESS_TOKEN'은 아임포트에서 발급받은 액세스 토큰입니다.
+#     response = requests.get(url, headers=headers)
+#     result = response.json()
     
-    # 결제 검증 로직...
-    # 결제 검증 후 구매 정보 저장
-    if result['code'] == 0:  # 결제 검증 성공
-        serializer = PurchaseSerializer(data= request.data, context={'request':request})
+#     # 결제 검증 로직...
+#     # 결제 검증 후 구매 정보 저장
+#     if result['code'] == 0:  # 결제 검증 성공
+#         serializer = PurchaseSerializer(data= request.data, context={'request':request})
         
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse({'status': 'success', 'data': 'Purchase completed successfully.'})
-        else:
-            return JsonResponse({'status': 'error', 'message': 'Payment verification failed.'})
-    else:
-        return JsonResponse({'status': 'error', 'message': 'Payment failed'})
+#         if serializer.is_valid():
+#             serializer.save()
+#             return JsonResponse({'status': 'success', 'data': 'Purchase completed successfully.'})
+#         else:
+#             return JsonResponse({'status': 'error', 'message': 'Payment verification failed.'})
+#     else:
+#         return JsonResponse({'status': 'error', 'message': 'Payment failed'})
 
-@api_view(['POST'])  # API 뷰로 지정
+@api_view(['PATCH'])  # API 뷰로 지정
 @authentication_classes([JWTAuthentication])  # JWT 인증 사용
 @permission_classes([IsAuthenticated])  # 인증된 사용자만 접근 가능
 def update_purchase_status(request, pk):

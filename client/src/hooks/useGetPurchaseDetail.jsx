@@ -17,7 +17,7 @@ export const useGetPurchaseDetail = (purchaseId) => {
       setLoading(true);
       const token = Cookies.get("access");
       try {
-        const response = await axiosInstance.get(`/api/purchase/detail/${purchaseId}`,{
+        const response = await axiosInstance.get(`/api/purchase/${purchaseId}/all-detail/`,{
           headers: {
             Authorization: `Bearer ${token}`,
           },
