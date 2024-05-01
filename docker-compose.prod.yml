@@ -17,8 +17,6 @@ services:
         - ./certbot/conf/letsencrypt:/etc/letsencrypt
         - ./certbot/www:/var/www/certbot
         - ./server/media:/app/media
-    depends_on: 
-      - certbot
 
   certbot:
     image: certbot/certbot
@@ -26,6 +24,5 @@ services:
       - ./certbot/conf/letsencrypt:/etc/letsencrypt
       - ./client/build:/usr/share/nginx/html
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-    command: certonly --webroot --webroot-path=/var/www/certbot --email ehgus.dev.8621@gmail.com --agree-tos --no-eff-email --staging --domains iseul.org,www.iseul.org
     depends_on:
       - client
