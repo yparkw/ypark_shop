@@ -6,14 +6,13 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: yparkw
+      POSTGRES_DB: iseul
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: qkr102998!!
+      POSTGRES_PASSWORD: "!l1185216"
 
   server:
     build: ./server
     restart: always
-    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --timeout 120 --workers 6
     volumes:
       - ./server:/app
       - ./server/logs:/app/logs
@@ -24,31 +23,15 @@ services:
       - db
     expose:
       - "8000"
-    environment:
-      - DJANGO_SETTINGS_MODULE=config.settings.prod
 
   client:
-      build: 
-        context: ./client
-        dockerfile: Dockerfile
       restart: always
       ports:
         - "80:80"
         - "443:443"
-      volumes:
-        - ./certbot/conf/letsencrypt:/etc/letsencrypt
-        - ./certbot/www:/var/www/certbot
-        - ./server/media:/app/media
       depends_on:
         - server
       command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - ./certbot/conf/letsencrypt:/etc/letsencrypt
-      - ./client/build:/usr/share/nginx/html
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-    depends_on:
-      - client
+
 

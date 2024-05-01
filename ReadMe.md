@@ -20,16 +20,24 @@
 
 
 ## Must
-0. docker compose 빌드 시간 줄이기
-1. cerbot을 활용하여 HTTPS 강화하기
-2. Docker-compose를 활용하여 로컬에서 PostgreSQL 사용하기 
-3. 이미지 스토리지 분리하기
-4. 테스트 코드 작성을 통한 유닛 테스트
-5. github actions를 활용한 테스트 자동화 및 배포 자동화
-6. postman을 활용한 결제 테스트 vs vs확장팩 활용
-7. Seleninum을 통한 통합테스트
-8. 구매시 db 성능저하 개선
-   
+0. docker compose 빌드 시간 줄이기 (해결)
+      issue: 메모리 문제였음
+1. certbot을 활용하여 HTTPS 강화하기(해결)
+      issue: docker-compose.yml: 볼륨 마운트 문제 + 인증서 발급 최적화 문제
+2. Docker-compose를 활용하여 로컬에서 PostgreSQL 사용하기(해결)
+      - docker-compose.yml 과 nginx.conf 개발환경 배포환경 분리하기
+      - 초기 잘못 생성한 db의 이름이 postgres였다 이게 문제였음
+      
+3. github actions를 활용한 테스트 자동화 및 배포 자동화
+4. 이미지 스토리지 분리하기(해결)
+      - 포트폴리오 용이므로 비용적 비효율성으로 스킵
+      - 이미지 스토리지로 이전하는 방법을 블로그에 포스팅 하기
+5. 테스트 코드 작성을 통한 유닛 테스트
+      - 테스트 코드 어떤 것을 작성해야할 까부터 고민하기
+      - 필요한 것만 효율적으로 합시다.
+      - 0순위는 구매시 db 성능저하를 테스트하고 개선
+6. postman을 활용한 결제 테스트 vs vs확장팩 활용 vs Seleninum
+
 
 ## alpha
 1. 환불 로직 구현하기

@@ -9,3 +9,6 @@ cafe24
 cafe24.pub
 data
 certbot
+certs
+localhost.crt
+localhost.key
