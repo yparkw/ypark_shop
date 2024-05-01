@@ -20,4 +20,4 @@ jobs:
         
         - name: Connect to Server and Deploy
           run: |
-            ssh -o "StrictHostKeyChecking=no" ehgus_dev_8621@34.64.42.175 "cd /home/ehgus_dev_8621/yparkw/ypark_shop && git pull origin master&& docker-compose -f docker-compose.yml -f docker-compose.prod.yml build && docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d"
+            ssh -o "StrictHostKeyChecking=no" ehgus_dev_8621@34.64.42.175 "cd /home/ehgus_dev_8621/yparkw/ypark_shop && git pull origin master&& sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml build && sudo docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d"
