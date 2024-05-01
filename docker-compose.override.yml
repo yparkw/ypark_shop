@@ -4,6 +4,11 @@ services:
   server:
     environment:
       - DJANGO_SETTINGS_MODULE=config.settings.local
+    command: >
+      sh -c "python manage.py makemigrations --settings=config.settings.local &&
+             python manage.py migrate --settings=config.settings.local &&
+             gunicorn config.wsgi:application --bind 0.0.0.0:8000 --timeout 120 --workers 6"
+
 
   client:
     build:

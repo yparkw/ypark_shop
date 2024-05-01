@@ -6,14 +6,13 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: yparkw
+      POSTGRES_DB: iseul
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: qkr102998!!
+      POSTGRES_PASSWORD: "!l1185216"
 
   server:
     build: ./server
     restart: always
-    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --timeout 120 --workers 6
     volumes:
       - ./server:/app
       - ./server/logs:/app/logs
