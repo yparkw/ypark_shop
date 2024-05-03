@@ -6,6 +6,41 @@ on:
     types: [closed]
 
 jobs:
+    test:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12.1'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Run Django Tests
+        run: |
+          cd server
+          python manage.py test --settings=config.settings.prod
+      
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.10.0'
+      
+      - name: Install NPM dependencies
+        run: |
+          cd client
+          npm install --legacy-peer-deps
+      
+      - name: Run React Tests
+        run: |
+          npm test
+
     deploy:
         runs-on: ubuntu-latest
         if: github.event.pull_request.merged == true
