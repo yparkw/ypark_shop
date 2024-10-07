@@ -27,12 +27,14 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    productItemId = ProductSerializer(read_only=True)
-    
+    productItemId = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.all(), write_only=True, source='product'
+    )
+    product = ProductSerializer(read_only=True)  # Read-only product representation
     
     class Meta:
         model = CartItem
-        fields = ['id', 'cart', 'productItemId', 'quantity', 'size']
+        fields = ['id', 'cart', 'productItemId','product', 'quantity', 'size']
         extra_kwargs = {'cart': {'read_only': True}}
         
     def create(self, validated_data):
@@ -41,12 +43,8 @@ class CartItemSerializer(serializers.ModelSerializer):
         cart, _ = Cart.objects.get_or_create(user=user)
         validated_data['cart'] = cart
         
-        product_id = self.context['request'].data.get('productItemId')
-        if product_id:
-            # Product 인스턴스 찾기
-            product = Product.objects.get(id=product_id)
-            # CartItem에 Product 할당
-            validated_data['productItemId'] = product
+        validated_data['productItemId'] = validated_data.pop('product')
+        
         return super().create(validated_data)
     
     
