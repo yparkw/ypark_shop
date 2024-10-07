@@ -45,6 +45,8 @@ class CartItemSerializer(serializers.ModelSerializer):
         
         validated_data['productItemId'] = validated_data.pop('product')
         
+        
+        
         return super().create(validated_data)
     
     
