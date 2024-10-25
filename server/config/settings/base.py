@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'coverage'
 ] + THIRD_PARTY_APPS + LOCAL_APPS + DEV_APPS
 
 
@@ -283,3 +284,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn="https://161f26bf997e389b91bab0297cf2db48@o4508181709520896.ingest.us.sentry.io/4508181764046848",
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for tracing.
+    traces_sample_rate=1.0,
+    _experiments={
+        # Set continuous_profiling_auto_start to True
+        # to automatically start the profiler on when
+        # possible.
+        "continuous_profiling_auto_start": True,
+    },
+)

@@ -25,10 +25,16 @@ from django.conf import settings
 
 # from config.schema import schema
 
+
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls"), name = "api"),
     # re_path(r'^graphql/?$', jwt_cookie(GQLView.as_view(schema=schema))),
+    path('sentry-debug/', trigger_error),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

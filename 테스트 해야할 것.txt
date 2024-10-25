@@ -1,0 +1,33 @@
+테스트 해야할 것
+
+api 테스트
+
+1. cart
+/cart/ get
+/cart/ post
+/cart/{id} delete
+
+2. products
+/products/ get
+/products/ post
+/products/images/ post
+/products/{id}/ get
+/products/{id} patch
+/products/{id}/ delete
+
+3. purchase
+/purchase/ get
+/purchase/ post
+/purchase/{id}/all-detail get
+/purchase/{id}/my-list/ get
+/purchase/{id}/reject/ delete
+/purchase/{id}/status/ 
+
+4. user
+/user/list/ get
+/user/login/ post
+/user/login/refresh/ post
+/user/signup/ post
+/user/{id}/ get
+/user/{id}/ patch
+/user/{id}/ delete

@@ -1,0 +1,3 @@
+1. 파이썬 가상환경 생성후 환경변수 생성시 사용할 환경변수는 맨 위로하게 하여 가상환경의 python.exe못 찾는 문제 해결
+2. django app 별로 tests폴더 안에 test를 관리할경우 manage.py test 로 모두 테스트하기 위해선 폴더 안에 __init__.py를 생성하여 모두 테스트 할수 있게 됨
+3. postgresql 설치 하여 설정하는 법
