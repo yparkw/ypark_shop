@@ -4,6 +4,22 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+DEV_APPS = [
+    # 'django_seed',
+    'debug_toolbar',
+]
+
+INSTALLED_APPS += DEV_APPS
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+DEV_MIDDLEWARE =[
+    "debug_toolbar.middleware.DebugToolbarMiddleware"
+]
+
+MIDDLEWARE += DEV_MIDDLEWARE
 
 STATIC_ROOT = '/app/static/'
 STATICFILES_DIRS = []
@@ -28,7 +44,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': '!l1185216',
-        'HOST': 'localhost',  # 혹은 도커 서비스 이름
+        'HOST': 'db',  # 혹은 도커 서비스 이름
         'PORT': '5432',
     }
 }
@@ -60,3 +76,4 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'user.validators.CustomPasswordValidator',  # 'your_app_name'을 앱의 실제 이름으로 변경
     },
 ]
+

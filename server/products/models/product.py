@@ -38,5 +38,5 @@ class Product(TimestampBaseModel):
     
 class ProductSize(models.Model):
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, db_index=True)
     count = models.IntegerField(default=0)

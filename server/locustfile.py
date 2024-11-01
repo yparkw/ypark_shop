@@ -2,8 +2,8 @@
 from locust import HttpUser, task, between
 
 class WebsiteTestUser(HttpUser):
-    wait_time = between(1, 2.5) 
+    wait_time = between(1, 2) 
     
     @task
-    def my_task(self):
-        self.client.get("/api/product/")
+    def product_list(self):
+        self.client.get("/api/products/")

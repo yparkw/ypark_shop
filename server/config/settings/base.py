@@ -30,9 +30,7 @@ DEBUG = True
 
 SITE_ID = 1
 
-DEV_APPS = [
-    # 'django_seed',
-]
+
 
 # Application definition
 THIRD_PARTY_APPS = [
@@ -74,8 +72,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'coverage'
-] + THIRD_PARTY_APPS + LOCAL_APPS + DEV_APPS
+    'coverage',
+] + THIRD_PARTY_APPS + LOCAL_APPS
 
 
 MIDDLEWARE = [
@@ -89,6 +87,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
+
 
 ROOT_URLCONF = "config.urls"
 
@@ -298,3 +297,13 @@ sentry_sdk.init(
         "continuous_profiling_auto_start": True,
     },
 )
+
+CASHES = {
+    'default' : {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://cache:6379/1',
+        'OPTIONS': {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
+    }
+}

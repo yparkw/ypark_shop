@@ -19,6 +19,15 @@ from django.conf.urls.static import static
 from django.urls import path,include
 from django.urls import re_path
 from django.conf import settings
+import mimetypes
+mimetypes.add_type("application/javascript", ".js", True)
+
+# if config.settings.base.DEBUG:
+#     mimetypes.add_type("application/javascript", ".js", True)
+#     if "debug_toolbar" in settings.base.INSTALLED_APPS:
+#         import debug_toolbar
+#         urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+
 
 # from strawberry_django_jwt.decorators import jwt_cookie
 # from strawberry_django_jwt.views import StatusHandlingGraphQLView as GQLView
