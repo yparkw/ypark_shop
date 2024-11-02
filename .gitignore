@@ -14,3 +14,4 @@ localhost.crt
 localhost.key
 .vscode
 venv
+.env

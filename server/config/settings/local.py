@@ -1,6 +1,6 @@
 from .base import *
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -43,7 +43,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': '!l1185216',
+        'PASSWORD': env('POSTGRES_PASSWORD'),
         'HOST': 'db',  # 혹은 도커 서비스 이름
         'PORT': '5432',
     }
@@ -51,8 +51,8 @@ DATABASES = {
 
 
 
-IAMPORT_KEY = '1513772424248766',
-IAMPORT_SECRET = 'jCgJnrqDO8WS3XXpIGMB5Gd8KtjdNlx9TRKFw7tGcuuI70QxdaKlpHXu7W8dypdklSQ2mk1vczmxquCe',
+IAMPORT_KEY = env('IAMPORT_KEY'),
+IAMPORT_SECRET = env('IAMPORT_SECRET'),
 
 AUTH_PASSWORD_VALIDATORS = [
     # 기존의 비밀번호 검증기 설정들...

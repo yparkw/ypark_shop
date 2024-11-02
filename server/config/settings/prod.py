@@ -29,15 +29,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'iseul',
         'USER': 'admin',
-        'PASSWORD': '!l1185216',
+        'PASSWORD': env('POSTGRES_PASSWORD'),
         'HOST': 'db',  # 혹은 도커 서비스 이름
         'PORT': 5432,
     }
 }
 
 
-IAMPORT_KEY = 'store-451d72a3-954f-477a-90ad-32ca43320cf4',
-IAMPORT_SECRET = 'o2HcZRmup46s7kkhnNmYIH8QT3PVUzWMVwLc4Bdq4vYVj20Gr3YLyOoRlP06RrgbAKCwDjnkASJ1mmvi',
+IAMPORT_KEY = env('IAMPORT_KEY'),
+IAMPORT_SECRET = env('IAMPORT_SECRET'),
 
 AUTH_PASSWORD_VALIDATORS = [
     # 기존의 비밀번호 검증기 설정들...
