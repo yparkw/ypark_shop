@@ -72,6 +72,10 @@ jobs:
           cd server
           python manage.py makemigrations --settings=config.settings.local
           python manage.py migrate --settings=config.settings.local
+        env:
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
         
       
       - name: Run Django Tests
