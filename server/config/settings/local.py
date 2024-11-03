@@ -45,7 +45,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': env('POSTGRES_PASSWORD'),
-        'HOST': 'db',  # 혹은 도커 서비스 이름
+        'HOST': 'localhost',  # 혹은 도커 서비스 이름
         'PORT': '5432',
     }
 }
