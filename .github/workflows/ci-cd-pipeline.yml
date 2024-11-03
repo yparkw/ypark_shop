@@ -10,9 +10,10 @@ jobs:
       runs-on: ubuntu-latest
 
       services:
-        postgres:
+        db:
           image: postgres:latest
           env:
+            POSTGRES_HOST: db
             POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           ports:
             - 5432:5432
@@ -54,7 +55,6 @@ jobs:
         env:
           DEBUG: ${{ secrets.DEBUG }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          POSTGRES_HOST: localhost
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           IAMPORT_KEY: ${{ secrets.IAMPORT_KEY }}
@@ -67,11 +67,20 @@ jobs:
           pip install -r requirements.txt
           mkdir -p logs
           pip install setuptools
+
+      - name: Connet to PostgreSQL
+        run: |
+          cd server
+          python manage.py makemigrations --settings=config.settings.prod
+          python manage.py migrate --settings=config.settings.prod
+        env:
+          POSTGRES_HOST: db
+          POSTGRES_PORT: 5432
       
       - name: Run Django Tests
         run: |
           cd server
-          python manage.py test --settings=config.settings.local
+          python manage.py test --settings=config.settings.prod
         env:
           env:
           DEBUG: ${{ secrets.DEBUG }}
