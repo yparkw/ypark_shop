@@ -52,7 +52,6 @@ jobs:
           echo "IAMPORT_KEY=$IAMPORT_KEY" >> .env
           echo "IAMPORT_SECRET=$IAMPORT_SECRET" >> .env
         env:
-
           DEBUG: ${{ secrets.DEBUG }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           POSTGRES_HOST: localhost
@@ -60,6 +59,14 @@ jobs:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           IAMPORT_KEY: ${{ secrets.IAMPORT_KEY }}
           IAMPORT_SECRET: ${{ secrets.IAMPORT_SECRET }}
+
+      - name: Install dependencies
+        run: |
+          cd server
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          mkdir -p logs
+          pip install setuptools
       
       - name: Run Django Tests
         run: |
