@@ -27,10 +27,19 @@ jobs:
             --health-retries 5
           ports:
             - 6379:6379
-
+    
       steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Wait for DB
+        run: |
+          echo "Waiting for DB to be ready..."
+          until pg_isready -h db -p 5432; do
+            sleep 2;
+          done
+          echo "PostgreSQL is ready."
+
       
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -49,6 +58,7 @@ jobs:
         env:
           DEBUG: ${{ secrets.DEBUG }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          POSTGRES_HOST: db
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           IAMPORT_KEY: ${{ secrets.IAMPORT_KEY }}
@@ -70,6 +80,7 @@ jobs:
           env:
           DEBUG: ${{ secrets.DEBUG }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          POSTGRES_HOST: db
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           IAMPORT_KEY: ${{ secrets.IAMPORT_KEY }}
