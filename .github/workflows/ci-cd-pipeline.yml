@@ -13,7 +13,6 @@ jobs:
         db:
           image: postgres:latest
           env:
-            POSTGRES_HOST: db
             POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           ports:
             - 5432:5432
@@ -71,16 +70,17 @@ jobs:
       - name: Connet to PostgreSQL
         run: |
           cd server
-          python manage.py makemigrations --settings=config.settings.prod
-          python manage.py migrate --settings=config.settings.prod
+          python manage.py makemigrations --settings=config.settings.local
+          python manage.py migrate --settings=config.settings.local
         env:
-          POSTGRES_HOST: db
+          POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
       
       - name: Run Django Tests
         run: |
           cd server
-          python manage.py test --settings=config.settings.prod
+          python manage.py test --settings=config.settings.local
+          
         env:
           env:
           DEBUG: ${{ secrets.DEBUG }}
