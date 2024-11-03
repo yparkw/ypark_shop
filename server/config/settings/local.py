@@ -19,6 +19,11 @@ DEV_MIDDLEWARE =[
     "debug_toolbar.middleware.DebugToolbarMiddleware"
 ]
 
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}
+
 MIDDLEWARE += DEV_MIDDLEWARE
 
 STATIC_ROOT = '/app/static/'
