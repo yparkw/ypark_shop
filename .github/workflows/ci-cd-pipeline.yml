@@ -10,12 +10,17 @@ jobs:
       runs-on: ubuntu-latest
 
       services:
-        db:
+        postgres:
           image: postgres:latest
           env:
             POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           ports:
             - 5432:5432
+          options: >-
+            --health-cmd pg_isready
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
 
         cache:
           image: redis
@@ -30,20 +35,6 @@ jobs:
       steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Install PostgresSQL client
-        run: |
-          apt-get update
-          apt-get install --yes postgresql-client
-        
-
-      - name: Wait for DB
-        run: |
-          echo "Waiting for DB to be ready..."
-          until pg_isready -h localhost -p 5432; do
-            sleep 2;
-          done
-          echo "PostgreSQL is ready."
 
       
       - name: Set up Python
@@ -70,23 +61,14 @@ jobs:
           IAMPORT_KEY: ${{ secrets.IAMPORT_KEY }}
           IAMPORT_SECRET: ${{ secrets.IAMPORT_SECRET }}
       
-      - name: Install dependencies
-        run: |
-          cd server
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          mkdir -p logs
-          pip install setuptools
-      
       - name: Run Django Tests
         run: |
           cd server
-          python manage.py test --settings=config.settings.prod
+          python manage.py test --settings=config.settings.local
         env:
           env:
           DEBUG: ${{ secrets.DEBUG }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          POSTGRES_HOST: db
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           IAMPORT_KEY: ${{ secrets.IAMPORT_KEY }}
