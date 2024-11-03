@@ -15,3 +15,4 @@ localhost.key
 .vscode
 venv
 .env
+.coverage
