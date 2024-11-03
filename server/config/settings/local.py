@@ -11,10 +11,6 @@ DEV_APPS = [
 
 INSTALLED_APPS += DEV_APPS
 
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
-
 DEV_MIDDLEWARE =[
     "debug_toolbar.middleware.DebugToolbarMiddleware"
 ]
