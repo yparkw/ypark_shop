@@ -10,7 +10,7 @@ jobs:
       runs-on: ubuntu-latest
 
       services:
-        postgres:
+        db:
           image: postgres:latest
           env:
             POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -54,7 +54,6 @@ jobs:
         env:
           DEBUG: ${{ secrets.DEBUG }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          POSTGRES_HOST: localhost
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           IAMPORT_KEY: ${{ secrets.IAMPORT_KEY }}
@@ -71,7 +70,7 @@ jobs:
       - name: Run Django Tests
         run: |
           cd server
-          python manage.py test --settings=config.settings.local
+          python manage.py test --settings=config.settings.prod
         env:
           env:
           DEBUG: ${{ secrets.DEBUG }}
