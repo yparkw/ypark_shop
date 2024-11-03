@@ -10,7 +10,7 @@ jobs:
       runs-on: ubuntu-latest
 
       services:
-        db:
+        postgres:
           image: postgres:latest
           env:
             POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -22,7 +22,7 @@ jobs:
             --health-timeout 5s
             --health-retries 5
 
-        cache:
+        redis:
           image: redis
           options: >-
             --health-cmd "redis-cli ping"
@@ -72,15 +72,12 @@ jobs:
           cd server
           python manage.py makemigrations --settings=config.settings.local
           python manage.py migrate --settings=config.settings.local
-        env:
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
+        
       
       - name: Run Django Tests
         run: |
           cd server
           python manage.py test --settings=config.settings.local
-          
         env:
           env:
           DEBUG: ${{ secrets.DEBUG }}
