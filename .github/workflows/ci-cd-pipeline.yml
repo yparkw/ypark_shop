@@ -13,13 +13,20 @@ jobs:
         postgres:
           image: postgres:latest
           env:
-            POSTGRES_USER: postgres
             POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-            POSTGRES_DB: db
           ports:
             - 5432:5432
           options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
   
+        redis:
+          image: redis
+          options: >-
+            --health-cmd "redis-cli ping"
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
+          ports:
+            - 6379:6379
 
       steps:
       - name: Checkout code
@@ -59,6 +66,15 @@ jobs:
         run: |
           cd server
           python manage.py test --settings=config.settings.prod
+        env:
+          env:
+          DEBUG: ${{ secrets.DEBUG }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          sentry_dsn: ${{ secrets.sentry_dsn }}
+          IAMPORT_KEY: ${{ secrets.IAMPORT_KEY }}
+          IAMPORT_SECRET: ${{ secrets.IAMPORT_SECRET }}
+      
       
       - name: Set up Node
         uses: actions/setup-node@v2
