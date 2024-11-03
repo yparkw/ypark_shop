@@ -78,7 +78,7 @@ class purchaseListCreateAV(ListCreateAPIView):
 
 @api_view(['GET'])
 @authentication_classes([JWTAuthentication])  # JWT 인증 사용
-@permission_classes([IsAuthenticated])     
+@permission_classes([IsAuthenticated])
 def purchase_my_list(request, pk):
     status = request.query_params.get('status', None)
     email = request.query_params.get('email', None)
@@ -86,8 +86,8 @@ def purchase_my_list(request, pk):
     # 사용자 ID와 선택적 상태를 기반으로 구매 목록 필터링
     if status=="ordered":
         purchases = Purchase.objects.filter(
-            Q(buyer_email=email) & 
-            (Q(status=status) | Q(status="shipping")))    
+            Q(buyer_email=email) &
+            (Q(status=status) | Q(status="shipping")))
     else:
         purchases = Purchase.objects.filter(buyer_email=email, status="cofirmd")
     

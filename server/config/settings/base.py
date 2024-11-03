@@ -13,26 +13,27 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
+import environ
+
+env = environ.Env(DEBUG=(bool,False))
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-b*clcs12p*h9du7=pawx9na)p4v%!^h%lu#qxt^-vo0av!y=_o"
+environ.Env.read_env(
+    env_file=os.path.join(BASE_DIR, '.env')
+)
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 
 SITE_ID = 1
 
-DEV_APPS = [
-    # 'django_seed',
-]
+
 
 # Application definition
 THIRD_PARTY_APPS = [
@@ -74,7 +75,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-] + THIRD_PARTY_APPS + LOCAL_APPS + DEV_APPS
+    'coverage',
+] + THIRD_PARTY_APPS + LOCAL_APPS
 
 
 MIDDLEWARE = [
@@ -88,6 +90,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
+
 
 ROOT_URLCONF = "config.urls"
 
@@ -283,3 +286,27 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn=env('sentry_dsn'),
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for tracing.
+    traces_sample_rate=1.0,
+    _experiments={
+        # Set continuous_profiling_auto_start to True
+        # to automatically start the profiler on when
+        # possible.
+        "continuous_profiling_auto_start": True,
+    },
+)
+
+CASHES = {
+    'default' : {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://cache:6379/1',
+        'OPTIONS': {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
+    }
+}

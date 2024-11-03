@@ -4,6 +4,22 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
+DEV_APPS = [
+    # 'django_seed',
+    'debug_toolbar',
+]
+
+INSTALLED_APPS += DEV_APPS
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+DEV_MIDDLEWARE =[
+    "debug_toolbar.middleware.DebugToolbarMiddleware"
+]
+
+MIDDLEWARE += DEV_MIDDLEWARE
 
 STATIC_ROOT = '/app/static/'
 STATICFILES_DIRS = []
@@ -25,18 +41,18 @@ CORS_ALLOW_CREDENTIALS = True # 쿠키와 함꼐 요청을 보낼 수있도록
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'iseul',
-        'USER': 'admin',
-        'PASSWORD': '!l1185216',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': env('POSTGRES_PASSWORD'),
         'HOST': 'db',  # 혹은 도커 서비스 이름
-        'PORT': 5432,
+        'PORT': '5432',
     }
 }
 
 
 
-IAMPORT_KEY = '1513772424248766',
-IAMPORT_SECRET = 'jCgJnrqDO8WS3XXpIGMB5Gd8KtjdNlx9TRKFw7tGcuuI70QxdaKlpHXu7W8dypdklSQ2mk1vczmxquCe',
+IAMPORT_KEY = env('IAMPORT_KEY'),
+IAMPORT_SECRET = env('IAMPORT_SECRET'),
 
 AUTH_PASSWORD_VALIDATORS = [
     # 기존의 비밀번호 검증기 설정들...
@@ -60,3 +76,4 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'user.validators.CustomPasswordValidator',  # 'your_app_name'을 앱의 실제 이름으로 변경
     },
 ]
+

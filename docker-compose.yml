@@ -6,8 +6,8 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: iseul
-      POSTGRES_USER: admin
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "!l1185216"
 
   server:
@@ -21,6 +21,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - cache
     expose:
       - "8000"
 
@@ -33,4 +34,7 @@ services:
         - server
       command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
-  
+  cache:
+    image: redis
+    ports:
+      - "6379:6379"

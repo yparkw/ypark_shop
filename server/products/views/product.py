@@ -12,7 +12,7 @@ from drf_spectacular.utils import extend_schema
 
 from common.paginations import CustomPagination
 # from core.paginations import CustomPaginatorInspectorClass
-from products.models.product import Product
+from products.models.product import Product, ProductSize
 from products.serializers.product import ProductListSZ
 from products.serializers.product import ProductCreateSZ
 from products.serializers.product import ProductUpdateRequestSZ
@@ -26,16 +26,24 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.exceptions import NotFound
 from drf_yasg.utils import swagger_auto_schema
 
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+from django.conf import settings
+from django.db.models import Prefetch
+
 import logging
 logger = logging.getLogger(__name__)
 
 # @permission_classes([AllowAny, ]) # 디버깅용 AllowAny
 # Create your views here.
+
 class ProductListCreateAV(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     pagination_class = CustomPagination
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().prefetch_related(
+        Prefetch('product_sizes', queryset=ProductSize.objects.select_related('size'))
+    )
     http_method_names = ['get', 'post']
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
@@ -53,7 +61,7 @@ class ProductListCreateAV(ListCreateAPIView):
         
         if category:
             queryset = queryset.filter(category=category)
-            logger.debug(queryset)
+            logger.info(f"queryset: {queryset}")
         return queryset
         
     
@@ -64,10 +72,25 @@ class ProductListCreateAV(ListCreateAPIView):
             return ProductCreateSZ
 
     def get(self, request, *args, **kwargs):
-        page = self.paginate_queryset(self.get_queryset())
-        serializer = self.get_serializer(page, many=True)
-        logger.debug(serializer)
-        return self.get_paginated_response(data=serializer.data)
+        cache_key = f"products_{request.GET.get('category', '')}"
+        cache_time = 60 * 15
+
+        data = cache.get(cache_key)
+        if data is None:
+            queryset = self.paginate_queryset(self.get_queryset())
+            serializer = self.get_serializer(queryset, many=True)
+            data = serializer.data
+            cache.set(cache_key, data, cache_time) # 빈 쿼리를 캐시로 두는 것은 피하되, 테스트 중이므로 사용
+            if data:
+                # cache.set(cache_key, data, cache_time)
+                logger.info(f"Cache miss - Data retrieved and cached: {data}")
+            else:
+                logger.info("Cache miss - No data available to cache.")
+        else:
+            logger.info(f"Cache hit - Data retrieved from cache: {data}")
+
+
+        return self.get_paginated_response(data)
 
     def post(self, request, *args, **kwargs):
         logger.info(f"Received data: {request.data}")

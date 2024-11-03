@@ -2,8 +2,8 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  // baseURL: "http://localhost/", //개 발용 https,
-  baseURL: "https://www.iseul.org/",
+  baseURL: "http://localhost/", //개 발용 https,
+  // baseURL: "https://www.iseul.org/",
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });

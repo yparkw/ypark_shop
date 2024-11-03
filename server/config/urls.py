@@ -19,16 +19,31 @@ from django.conf.urls.static import static
 from django.urls import path,include
 from django.urls import re_path
 from django.conf import settings
+import mimetypes
+mimetypes.add_type("application/javascript", ".js", True)
+
+# if config.settings.base.DEBUG:
+#     mimetypes.add_type("application/javascript", ".js", True)
+#     if "debug_toolbar" in settings.base.INSTALLED_APPS:
+#         import debug_toolbar
+#         urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+
 
 # from strawberry_django_jwt.decorators import jwt_cookie
 # from strawberry_django_jwt.views import StatusHandlingGraphQLView as GQLView
 
 # from config.schema import schema
 
+
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls"), name = "api"),
     # re_path(r'^graphql/?$', jwt_cookie(GQLView.as_view(schema=schema))),
+    path('sentry-debug/', trigger_error),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -60,16 +60,7 @@ class ProductListSZ(serializers.ModelSerializer):
         read_only_fields = ('id',)
         
     def get_sizes(self, obj):
-        # `obj`는 `Product` 모델 인스턴스입니다.
-        # `ProductSize` 모델을 쿼리하여 사이즈와 count를 가져옵니다.
-        product_sizes = ProductSize.objects.filter(product=obj)
-        
-        # 각 사이즈와 count를 담을 사전을 초기화합니다.
-        size_data = {}
-        
-        # ProductSize 모델에서 가져온 정보를 사전에 추가합니다.
-        for product_size in product_sizes:
-            size_data[product_size.size.size] = product_size.count
+        size_data = {size.size.size: size.count for size in obj.product_sizes.all()}
         
         return size_data
         

@@ -12,3 +12,6 @@ certbot
 certs
 localhost.crt
 localhost.key
+.vscode
+venv
+.env

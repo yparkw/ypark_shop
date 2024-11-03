@@ -19,38 +19,24 @@
 - test : 테스트 코드 수정에 대한 커밋
 
 
-## Must
-0. docker compose 빌드 시간 줄이기 (해결)
-      issue: 메모리 문제였음
-1. certbot을 활용하여 HTTPS 강화하기(해결)
-      issue: docker-compose.yml: 볼륨 마운트 문제 + 인증서 발급 최적화 문제
-2. Docker-compose를 활용하여 로컬에서 PostgreSQL 사용하기(해결)
-      - docker-compose.yml 과 nginx.conf 개발환경 배포환경 분리하기
-      - 초기 잘못 생성한 db의 이름이 postgres였다 이게 문제였음
-      
-3. github actions를 활용한 테스트 자동화 및 배포 자동화(해결)
-      - sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
-sudo: a password is required: sudo visudo -> add ehgus_dev_8621 ALL=(ALL) NOPASSWD:ALL
-Error: Process completed with exit code 1.
-      - ehgus_dev_8621@34.64.42.175: Permission denied (publickey).
-Error: Process completed with exit code 255.:nano /etc/ssh/sshd_config -> add PasswordAuthentication yes, check AuthorizedKeysFile, 나는 파일이름 잘 못 지은것이 문제
-      - ssh -i path/to/private_key -o "StrictHostKeyChecking=no" username@server-ip 로컬 접속 테스트
-4. 이미지 스토리지 분리하기(해결)
-      - 포트폴리오 용이므로 비용적 비효율성으로 스킵
-      - 이미지 스토리지로 이전하는 방법을 블로그에 포스팅 하기
-5. 결제 유닛 테스트 작성하고 자동화하기
-6. 결제 통합 테스트 작성하고 자동화하기
-7. 결제시 정보 업데이트가 늦는 지점 찾아서 해결하기
+## notice
+1. ci-cd 자동화 끝
+2. 필요한 것만 테스트하면 됨
+3. 배포가 안되는 것은 당연한 것 배포하면서 테스트할 필요없음 
+4. gcp로 배포중인 것 삭제(비용문제)
 
+-----------------------------------------------------------
+해결해야할 문제
 
-## alpha
-1. 환불 로직 구현하기
-2. Celery를 활용하여 구매확정 스케줄링하기
-
-
-
-
-
+1. cart, ProductItemId issue
+2. 포트폴리오: cloud를 사용하지 않기 때문에 local에서 docker를 통해 서버를 실행시키기
+   1) 프로젝트개요
+   2) 기술 스택
+   3) 요구사항
+   4) 테스트 기술서()
+   5) 서비스 아키텍쳐
+   6) 소스코드 관리
+   7) 트러블 슈팅: 결제 및 환불, 성능 및 부하, 비용
 
 
 
