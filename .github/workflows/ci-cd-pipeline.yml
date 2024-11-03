@@ -71,7 +71,7 @@ jobs:
           DEBUG: ${{ secrets.DEBUG }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          SENTRY_DSN: ${{ secrets.sentry_dsn }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           IAMPORT_KEY: ${{ secrets.IAMPORT_KEY }}
           IAMPORT_SECRET: ${{ secrets.IAMPORT_SECRET }}
       
