@@ -43,14 +43,14 @@ jobs:
           echo "DEBUG=$DEBUG" >> .env
           echo "SECRET_KEY=$SECRET_KEY" >> .env
           echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
-          echo "sentry_dsn=$sentry_dsn" >> .env
+          echo "SENTRY_DSN=$SENTRY_DSN" >> .env
           echo "IAMPORT_KEY=$IAMPORT_KEY" >> .env
           echo "IAMPORT_SECRET=$IAMPORT_SECRET" >> .env
         env:
           DEBUG: ${{ secrets.DEBUG }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          sentry_dsn: ${{ secrets.SENTRY_DSN }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           IAMPORT_KEY: ${{ secrets.IAMPORT_KEY }}
           IAMPORT_SECRET: ${{ secrets.IAMPORT_SECRET }}
       
@@ -71,7 +71,7 @@ jobs:
           DEBUG: ${{ secrets.DEBUG }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          sentry_dsn: ${{ secrets.sentry_dsn }}
+          SENTRY_DSN: ${{ secrets.sentry_dsn }}
           IAMPORT_KEY: ${{ secrets.IAMPORT_KEY }}
           IAMPORT_SECRET: ${{ secrets.IAMPORT_SECRET }}
       
