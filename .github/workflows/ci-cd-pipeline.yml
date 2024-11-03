@@ -43,7 +43,7 @@ jobs:
           echo "DEBUG=$DEBUG" >> .env
           echo "SECRET_KEY=$SECRET_KEY" >> .env
           echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
-          echo "sentry_dsn=$sentry_dsn" >> .env
+          echo "SENTRY_DSN=$SENTRY_DSN" >> .env
           echo "IAMPORT_KEY=$IAMPORT_KEY" >> .env
           echo "IAMPORT_SECRET=$IAMPORT_SECRET" >> .env
         env:
