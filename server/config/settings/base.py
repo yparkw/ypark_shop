@@ -289,16 +289,18 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.logging import LoggingIntegration
+import logging
 
 sentry_sdk.init(
     dsn=env('SENTRY_DSN'),
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for tracing.
+    integrations=[
+        DjangoIntegration(),
+        LoggingIntegration(level=logging.WARNING, event_level=logging.WARNING),
+    ],
     traces_sample_rate=1.0,
     _experiments={
-        # Set continuous_profiling_auto_start to True
-        # to automatically start the profiler on when
-        # possible.
         "continuous_profiling_auto_start": True,
     },
 )
