@@ -25,7 +25,7 @@ jobs:
           echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
           echo "sentry_dsn=$sentry_dsn" >> .env
           echo "IAMPORT_KEY=$IAMPORT_KEY" >> .env
-          echo "IAMPORT_SECRET=$IAMPORT_SECRET"
+          echo "IAMPORT_SECRET=$IAMPORT_SECRET" >> .env
         env:
           DEBUG: ${{ secrets.DEBUG }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
